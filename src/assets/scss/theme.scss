@@ -1,0 +1,96 @@
+@mixin app-theme-core() {
+    // Grey nuances
+    --c-white: 255 255 255;
+    --c-black: 24 24 24;
+
+    // Tone colors
+    --c-red: 237 60 80;
+    --c-blue: 59 142 237;
+    --c-green: 66 184 131;
+    --c-orange: 255 197 23;
+
+    // App
+    --app-font-family-base: "Roboto Flex", sans-serif;
+    --app-family-special: serif;
+    --app-font-size: 16px;
+    --app-line-height: 1.1875;
+
+    // Layout
+    $m: 8px;
+
+    @for $i from 1 through 12 {
+        --app-m-#{$i}: #{$m * $i};
+    }
+}
+
+@mixin app-theme-relative {
+    // Background
+    --app-background-color: var(--app-theme-color);
+    --app-background-color-surface: var(--app-theme-color-surface);
+    --app-background-color-soft-surface: var(--app-theme-color-surface) / 0.1;
+    --app-background-color-on-primary: var(--app-background-color);
+
+    // Shapes
+    --app-border-radius: 4px;
+    --app-opacity-disabled: 0.2;
+
+    // Text
+    --app-text-color: var(--app-theme-color-surface);
+    --app-text-color-soft: var(--app-theme-color-surface) / 0.6;
+    --app-text-color-on-surface: var(--app-theme-color);
+    --app-heading-color: var(--app-theme-color-surface);
+    --app-heading-color-on-surface: var(--app-theme-color);
+    --app-text-color-on-primary: var(--app-text-color-on-surface);
+
+    // Borders
+    --app-border-opacity: 0.05;
+    --app-border-opacity-hover: 0.02;
+    --app-border-color-base: var(--app-theme-color-surface);
+    --app-border-color: var(--app-border-color-base) / var(--app-border-opacity);
+    --app-border-color-hover: var(--app-theme-color-surface) / var(--app-border-opacity-hover);
+
+    // Tone feedback
+    --app-info-color: var(--c-blue);
+    --app-success-color: var(--c-green);
+    --app-warning-color: var(--c-orange);
+    --app-error-color: var(--c-red);
+}
+
+@mixin light-theme() {
+    color-scheme: light;
+
+    --app-primary-color: 0 144 247;
+
+    // Theme
+    --app-theme-color: var(--c-white);
+    --app-theme-color-surface: var(--c-black);
+
+    // OVERRIDE
+
+    // Background
+    --app-background-color-soft: var(--app-theme-color-surface) / 0.01;
+    --app-background-color-on-primary: var(--c-white);
+
+    // Text
+    --app-text-color-on-primary: var(--c-white);
+}
+
+@mixin dark-theme() {
+    color-scheme: dark;
+
+    --app-primary-color: 0 144 247;
+
+    // Theme
+    --app-theme-color: var(--c-black);
+    --app-theme-color-surface: var(--c-white);
+
+    // OVERRIDE
+
+    // Background
+    --app-background-color-soft: var(--app-theme-color-surface) / 0.05;
+    --app-background-color-on-primary: var(--c-white);
+
+    // Text
+    --app-text-color-on-primary: var(--c-white);
+    --app-border-opacity: 0.09;
+}

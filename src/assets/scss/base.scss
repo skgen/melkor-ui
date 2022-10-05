@@ -1,0 +1,76 @@
+html {
+    box-sizing: border-box;
+    font-size: var(--app-font-size);
+    line-height: var(--app-line-height);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: var(--app-font-family-base), Oxygen, -apple-system, Ubuntu, sans-serif;
+    color: rgb(var(--app-text-color));
+    background-color: rgb(var(--app-background-color));
+    text-rendering: optimizelegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6, {
+    color: var(--app-heading-color);
+}
+
+#app {
+    min-height: 100vh;
+}
+
+b,
+strong {
+    font-weight: 500;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    background: transparent;
+    border: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+svg {
+    display: block;
+}
+
+[data-scrollbar-hidden] {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+[data-scrollbar-hidden]::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+}

@@ -1,0 +1,38 @@
+/* stylelint-disable-next-line selector-class-pattern */
+.v-popper {
+    $this: &;
+
+    &--theme-menu {
+        &#{$this}__popper--shown {
+            transition: opacity 500ms;
+        }
+
+        #{$this} {
+            &__inner {
+                color: inherit;
+                background-color: rgb(var(--app-background-color));
+
+                // background: transparent;
+                border: 1px solid rgb(var(--app-border-color));
+
+                // border: 0;
+                box-shadow: none;
+            }
+
+            &__arrow {
+                &-container {
+                    display: none;
+                }
+
+                // color: inherit;
+                // background-color: var(--app-background-color);
+
+                // // background: transparent;
+                // border: 1px solid var(--app-border-color);
+
+                // // border: 0;
+                // box-shadow: none;
+            }
+        }
+    }
+}

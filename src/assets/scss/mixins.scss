@@ -1,0 +1,128 @@
+@use "sass:math";
+@import "variables";
+
+@mixin pseudo($content: "", $pos: absolute, $display: block) {
+    position: $pos;
+    display: $display;
+    content: $content;
+}
+
+@mixin a11y-hidden() {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    border: 0;
+}
+
+@mixin expand-click-area($width: 8px, $height: 8px, $pseudo: before) {
+    position: relative;
+
+    &:#{$pseudo} {
+        @include pseudo;
+
+        top: -#{$height};
+        right: -#{$width};
+        bottom: -#{$height};
+        left: -#{$width};
+        cursor: pointer;
+    }
+}
+
+@mixin line-height($font-size, $height) {
+    line-height: math.div($height, $font-size);
+}
+
+@mixin underline($size: 1px, $speed: 0.3s, $reverse: false) {
+    text-decoration: none;
+    background-image: linear-gradient(currentcolor, currentcolor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 100% $size;
+
+    &:hover,
+    &:focus {
+        animation: underline-#{$size} 400ms ease-in-out;
+    }
+
+    @if $reverse {
+        background-position: 100% 100%;
+        background-size: 0 $size;
+        transition: background-size $speed ease-in-out;
+
+        &:hover,
+        &:focus {
+            background-position: 0 100%;
+            background-size: 100% $size;
+            animation: none;
+        }
+    }
+
+    /* stylelint-disable-next-line keyframes-name-pattern */
+    @keyframes underline-#{$size} {
+        0% {
+            background-position: 100% 100%;
+            background-size: 100% $size;
+        }
+
+        50% {
+            background-position: 100% 100%;
+            background-size: 0 $size;
+        }
+
+        51% {
+            background-position: 0 100%;
+            background-size: 0 $size;
+        }
+
+        100% {
+            background-position: 0 100%;
+            background-size: 100% $size;
+        }
+    }
+}
+
+@mixin mq-to($bp) {
+    @media screen and (max-width: map-get($bps, $bp)) {
+        @content;
+    }
+}
+
+@mixin mq-from($bp) {
+    @media screen and (min-width: map-get($bps, $bp) + 1) {
+        @content;
+    }
+}
+
+@mixin mq-from-to($bp_min, $bp_max) {
+    @media screen and (min-width: map-get($bps, $bp_min) + 1) and (max-width: map-get($bps, $bp_max)) {
+        @content;
+    }
+}
+
+@mixin dark() {
+    &[data-theme="dark"] {
+        @content;
+    }
+}
+
+@mixin light() {
+    &[data-theme="light"] {
+        @content;
+    }
+}
+
+@mixin c-dark() {
+    *[data-theme="dark"] & {
+        @content;
+    }
+}
+
+@mixin c-light() {
+    *[data-theme="light"] & {
+        @content;
+    }
+}
