@@ -23,7 +23,7 @@
 <script lang="ts" setup>
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputCheckable from '@src/components/io/abstract/AppInputCheckable.vue';
-import AppInputError from '@src/components/io/AppInputError.vue';
+import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 
 type Value = any;
 

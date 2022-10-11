@@ -1,4 +1,4 @@
-import type { Ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import { isValue } from '@src/lib/modules/definition';
 
@@ -28,6 +28,16 @@ export default function useInput
 <TValue>(params: HookParams<TValue>) {
   const { emits, state, validate } = params;
 
+  const focus = ref(false);
+
+  function onFocus() {
+    focus.value = true;
+  }
+
+  function onBlur() {
+    focus.value = false;
+  }
+
   function onChange(value: TValue) {
     // console.log(mirrorState.value.touched);
     let error: ReturnType<ValidateInput<TValue>> = null;
@@ -48,6 +58,9 @@ export default function useInput
 
   return {
     onChange,
+    onFocus,
+    onBlur,
+    focus,
     state,
   };
 }

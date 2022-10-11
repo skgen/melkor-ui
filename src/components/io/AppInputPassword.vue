@@ -1,32 +1,42 @@
 <template>
-  <label class="mk-AppInputPassword">
-    <input
-      :name="props.name"
-      :type="type"
-      :value="state.value"
-      @input="handleChange"
-    >
-    <AppButton
-      class="mk-AppInputPassword-toggle"
-      @click="handleToggle"
-    >
-      <!-- <EyeIcon v-if="!encrypted" />
-      <EyeSlashIcon v-else /> -->
-    </AppButton>
-    <AppInputError
-      v-if="state.error"
-      :error="state.error"
-    />
-  </label>
+  <div
+    class="mk-AppInputPassword"
+    :data-focus="focus || undefined"
+    :data-fill="props.fill || undefined"
+  >
+    <label>
+      <AppInputLabel v-if="props.label">
+        {{ props.label }}
+      </AppInputLabel>
+      <div class="mk-AppInputPassword-input">
+        <input
+          :name="props.name"
+          :type="type"
+          :value="state.value"
+          @input="handleChange"
+          @focus="onFocus"
+          @blur="onBlur"
+        >
+        <button
+          class="mk-AppInputPassword-toggle"
+          @click="handleToggle"
+        >
+          <AppIcon :icon="icon" />
+        </button>
+      </div>
+    </label>
+    <AppInputHint v-if="props.hint">
+      {{ props.hint }}
+    </AppInputHint>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-// import EyeIcon from '@heroicons/vue/24/outline/EyeIcon';
-// import EyeSlashIcon from '@heroicons/vue/24/outline/EyeSlashIcon';
 import type { InputState, ValidateInput } from '@src/definition';
-import AppInputError from '@src/components/io/AppInputError.vue';
-import AppButton from '@src/components/AppButton.vue';
+import AppIcon from '@src/components/AppIcon.vue';
+import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
+import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
 
 type Value = string;
@@ -35,6 +45,9 @@ type Props = {
   modelValue: InputState<Value>;
   name?: string;
   validate?: ValidateInput<Value>;
+  fill?: boolean;
+  hint?: string;
+  label?: string;
 };
 
 type Emits = {
@@ -47,8 +60,11 @@ const emits = defineEmits<Emits>();
 const encrypted = ref(true);
 
 const type = computed(() => (encrypted.value ? 'password' : 'text'));
+const icon = computed(() => (type.value === 'password' ? 'visibility' : 'visibility_off'));
 
-const { onChange, state } = useInput<Value>({
+const {
+  onChange, onFocus, onBlur, state, focus,
+} = useInput<Value>({
   state: computed(() => props.modelValue),
   emits,
   validate: props.validate,
@@ -66,16 +82,68 @@ function handleChange(evt: Event) {
 
   onChange(value);
 }
+
 </script>
 
 <style lang="scss">
+@import "@style/mixins";
+
 .mk-AppInputPassword {
-    display: flex;
+    --mk-input-password-padding-x: var(--app-input-padding-x);
+    --mk-input-password-padding-y: var(--app-input-padding-y);
+    --mk-input-password-border-radius: var(--app-border-radius);
+    --mk-input-password-background-color: var(--app-input-background-color);
+    --mk-input-password-border-color: var(--app-input-border-color);
+
+    display: inline-block;
+
+    input {
+        flex: 1;
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        outline: none;
+    }
+
+    &-input {
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+        padding: var(--mk-input-password-padding-y) var(--mk-input-password-padding-x);
+        background-color: rgb(var(--mk-input-password-background-color));
+        border: 1px solid rgb(var(--mk-input-password-border-color));
+        border-radius: var(--mk-input-password-border-radius);
+        transition: border-color var(--app-transition-duration-1);
+    }
+
+    &[data-focus="true"] {
+        --mk-input-password-border-color: var(--app-primary-color);
+    }
+
+    &[data-fill="true"] {
+        display: block;
+    }
 
     &-toggle {
-        svg {
-            width: 18px;
+        @include expand-click-area;
+
+        align-self: flex-end;
+        padding: 0;
+        font-size: 20px;
+
+        .mk-AppIcon {
+            display: block;
         }
+    }
+
+    .mk-AppInputLabel {
+        display: block;
+        margin-bottom: var(--app-m-1);
+    }
+
+    .mk-AppInputHint {
+        display: block;
+        margin-top: var(--app-m-1);
     }
 }
 </style>

@@ -41,7 +41,7 @@ import type {
 } from '@src/definition';
 import AppButton from '@src/components/AppButton.vue';
 import AppFilePreview from '@src/components/AppFilePreview.vue';
-import AppInputError from '@src/components/io/AppInputError.vue';
+import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import useInput from '@src/composables/useInput';
 import { isValue } from '@src/lib/modules/definition';
 import { fileToFileModel } from '@src/lib/modules/file';

@@ -1,22 +1,35 @@
 <template>
-  <label class="mk-AppInputTextarea">
-    <textarea
-      :name="props.name"
-      :value="state.value"
-      :rows="props.rows"
-      @input="handleChange"
-    />
-    <AppInputError
-      v-if="state.error"
-      :error="state.error"
-    />
-  </label>
+  <div
+    class="mk-AppInputTextarea"
+    :data-focus="focus || undefined"
+    :data-fill="props.fill || undefined"
+  >
+    <label>
+      <AppInputLabel v-if="props.label">
+        {{ props.label }}
+      </AppInputLabel>
+      <div class="mk-AppInputTextarea-input">
+        <textarea
+          :name="props.name"
+          :value="state.value"
+          :rows="props.rows"
+          @input="handleChange"
+          @focus="onFocus"
+          @blur="onBlur"
+        />
+      </div>
+    </label>
+    <AppInputHint v-if="props.hint">
+      {{ props.hint }}
+    </AppInputHint>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
-import AppInputError from '@src/components/io/AppInputError.vue';
+import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
+import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
 
 type Value = string;
@@ -26,6 +39,9 @@ type Props = {
   name?: string;
   validate?: ValidateInput<Value>;
   rows?: number;
+  fill?: boolean;
+  hint?: string;
+  label?: string;
 };
 
 type Emits = {
@@ -36,10 +52,14 @@ const props = withDefaults(defineProps<Props>(), {
   rows: 2,
   name: undefined,
   validate: undefined,
+  hint: undefined,
+  label: undefined,
 });
 const emits = defineEmits<Emits>();
 
-const { state, onChange } = useInput<Value>({
+const {
+  onChange, onFocus, onBlur, state, focus,
+} = useInput<Value>({
   state: computed(() => props.modelValue),
   emits,
   validate: props.validate,
@@ -55,3 +75,43 @@ function handleChange(evt: Event) {
 }
 
 </script>
+
+<style lang="scss">
+.mk-AppInputTextarea {
+    --mk-input-textarea-padding-x: var(--app-input-padding-x);
+    --mk-input-textarea-padding-y: var(--app-input-padding-y);
+    --mk-input-textarea-border-radius: var(--app-border-radius);
+    --mk-input-textarea-background-color: var(--app-input-background-color);
+    --mk-input-textarea-border-color: var(--app-input-border-color);
+
+    display: inline-block;
+
+    textarea {
+        width: 100%;
+        padding: var(--mk-input-textarea-padding-y) var(--mk-input-textarea-padding-x);
+        background-color: rgb(var(--mk-input-textarea-background-color));
+        border: 1px solid rgb(var(--mk-input-textarea-border-color));
+        border-radius: var(--mk-input-textarea-border-radius);
+        outline: none;
+        transition: border-color var(--app-transition-duration-1);
+    }
+
+    &[data-focus="true"] {
+        --mk-input-textarea-border-color: var(--app-primary-color);
+    }
+
+    &[data-fill="true"] {
+        display: block;
+    }
+
+    .mk-AppInputLabel {
+        display: block;
+        margin-bottom: var(--app-m-1);
+    }
+
+    .mk-AppInputHint {
+        display: block;
+        margin-top: var(--app-m-1);
+    }
+}
+</style>
