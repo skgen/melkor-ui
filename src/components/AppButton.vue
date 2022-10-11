@@ -36,6 +36,8 @@ const disabled = computed(() => props.disabled || undefined);
 </script>
 
 <style lang="scss">
+@import "@style/mixins";
+
 .mk-AppButton {
     --mk-button-border-opacity: 0.2;
     --mk-button-padding-x: var(--app-m-2);
