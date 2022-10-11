@@ -1,5 +1,4 @@
 import 'normalize.css';
-import 'github-markdown-css';
 import 'floating-vue/dist/style.css';
 import '@style/main.scss';
 
@@ -9,7 +8,6 @@ export * from '@src/definition';
 
 export * from '@src/composables/useForm';
 export * from '@src/composables/useInput';
-export * from '@src/composables/useTheme';
 
 export * from '@src/lib/modules/clipboard';
 export * from '@src/lib/modules/date';

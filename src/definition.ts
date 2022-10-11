@@ -1,5 +1,28 @@
 import type { FileType } from '@src/lib/modules/file';
 
+// Theme
+
+export enum Theme {
+  light,
+  dark,
+  auto,
+}
+
+export enum ThemeScheme {
+  light,
+  dark,
+}
+
+export enum ThemeMode {
+  manual,
+  auto,
+}
+
+export type ThemeData = {
+  scheme: ThemeScheme;
+  mode: ThemeMode;
+};
+
 // Input
 export type InputState<T> = {
   value: T;
@@ -11,6 +34,8 @@ export type InputState<T> = {
 export type InputOptions<TValue> = {
   name?: string;
   validate?: ValidateInput<TValue>;
+  label?: string;
+  hint?: string;
 };
 
 export type ValidateInput<TValue> = (value: TValue) => InputState<TValue>['error'];
@@ -39,6 +64,16 @@ export type CheckableOptions<TChecked = true, TUnchecked = false>
 export type CheckableInputModel
 <TChecked = true, TUnchecked = TChecked extends true ? false : true> =
 InputModel<TChecked | TUnchecked, CheckableOptions<TChecked, TUnchecked>>;
+
+// Toggle
+export type ToggleOptions<TChecked = true, TUnchecked = false> = CheckableOptions<TChecked, TUnchecked> & {
+  checkedLabel?: string;
+  uncheckedLabel?: string;
+};
+
+export type ToggleInputModel
+<TChecked = true, TUnchecked = TChecked extends true ? false : true> =
+InputModel<TChecked | TUnchecked, ToggleOptions<TChecked, TUnchecked>>;
 
 // Radio
 export type RadioInputModel<TValues extends Readonly<unknown[]>> =

@@ -15,6 +15,7 @@ type PluginOptions = {
 };
 
 let debugMode = false;
+
 export function isDebugMode() {
   return debugMode;
 }

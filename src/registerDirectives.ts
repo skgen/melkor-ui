@@ -1,16 +1,17 @@
 import type { App } from 'vue';
-import { isThemeEnum, Theme } from '@src/lib/modules/theme';
+import { isThemeScheme } from '@src/lib/modules/theme';
 import { isDebugMode } from '@src/plugin';
+import { ThemeScheme } from '@src/definition';
 
 export default function registerDirectives(app: App) {
   app.directive('theme', (el, binding) => {
-    const { theme } = binding.value;
-    if (!isThemeEnum(theme)) {
-      if (isDebugMode()) {
-        throw new Error('theme attribute must be of type Theme');
-      }
+    const { scheme } = binding.value;
+    if (isThemeScheme(scheme)) {
+      el.setAttribute('data-theme', ThemeScheme[scheme]);
       return;
     }
-    el.setAttribute('data-theme', Theme[theme]);
+    if (isDebugMode()) {
+      throw new Error('scheme attribute must be of type ThemeScheme');
+    }
   });
 }

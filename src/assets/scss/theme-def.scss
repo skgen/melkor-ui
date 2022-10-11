@@ -2,30 +2,19 @@
 @import "theme";
 
 :root {
-    @include app-theme-core;
-    @include app-theme-relative;
-
-    @media (prefers-color-scheme: light) {
-        @include light-theme;
-    }
-
-    @media (prefers-color-scheme: dark) {
-        @include dark-theme;
-    }
+    @include app-root-theme;
 }
 
-* {
-    @include light {
-        @include app-theme-relative;
-        @include light-theme;
+@include light {
+    @include app-generic-theme;
+    @include app-light-theme;
 
-        color: rgb(var(--app-text-color));
-    }
+    color: rgb(var(--app-text-color));
+}
 
-    @include dark {
-        @include app-theme-relative;
-        @include dark-theme;
+@include dark {
+    @include app-generic-theme;
+    @include app-dark-theme;
 
-        color: rgb(var(--app-text-color));
-    }
+    color: rgb(var(--app-text-color));
 }

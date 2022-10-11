@@ -37,7 +37,6 @@
       "date-fns": "^2.29.2",
       "filesize": "^9.0.11",
       "floating-vue": "^2.0.0-beta.20",
-      "github-markdown-css": "^5.1.0",
       "lodash": "^4.17.21",
       "normalize.css": "^8.0.1",
       "pinia": "^2.0.16",

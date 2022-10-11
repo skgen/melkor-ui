@@ -1,4 +1,4 @@
-@mixin app-theme-core() {
+@mixin app-root-theme() {
     // Grey nuances
     --c-white: 255 255 255;
     --c-black: 24 24 24;
@@ -6,7 +6,7 @@
     // Tone colors
     --c-red: 237 60 80;
     --c-blue: 59 142 237;
-    --c-green: 66 184 131;
+    --c-green: 45 190 42;
     --c-orange: 255 197 23;
 
     // App
@@ -23,7 +23,7 @@
     }
 }
 
-@mixin app-theme-relative {
+@mixin app-generic-theme {
     // Background
     --app-background-color: var(--app-theme-color);
     --app-background-color-surface: var(--app-theme-color-surface);
@@ -54,9 +54,20 @@
     --app-success-color: var(--c-green);
     --app-warning-color: var(--c-orange);
     --app-error-color: var(--c-red);
+
+    // Transitions
+    --app-transition-duration-1: 128ms;
+    --app-transition-duration-2: 256ms;
+    --app-transition-duration-3: 512ms;
+
+    // Inputs
+    --app-input-padding-x: var(--app-m-2);
+    --app-input-padding-y: var(--app-m-1);
+    --app-input-background-color: var(--app-background-color-soft);
+    --app-input-border-color: var(--app-border-color);
 }
 
-@mixin light-theme() {
+@mixin app-light-theme() {
     color-scheme: light;
 
     --app-primary-color: 0 144 247;
@@ -75,7 +86,7 @@
     --app-text-color-on-primary: var(--c-white);
 }
 
-@mixin dark-theme() {
+@mixin app-dark-theme() {
     color-scheme: dark;
 
     --app-primary-color: 0 144 247;
