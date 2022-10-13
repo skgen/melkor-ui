@@ -52,6 +52,51 @@
     --mk-wysiwyg-preview-danger-fg: #cf222e;
 }
 
+@include dark {
+    --mk-wysiwyg-preview-prettylights-syntax-comment: #8b949e;
+    --mk-wysiwyg-preview-prettylights-syntax-constant: #79c0ff;
+    --mk-wysiwyg-preview-prettylights-syntax-entity: #d2a8ff;
+    --mk-wysiwyg-preview-prettylights-syntax-storage-modifier-import: #c9d1d9;
+    --mk-wysiwyg-preview-prettylights-syntax-entity-tag: #7ee787;
+    --mk-wysiwyg-preview-prettylights-syntax-keyword: #ff7b72;
+    --mk-wysiwyg-preview-prettylights-syntax-string: #a5d6ff;
+    --mk-wysiwyg-preview-prettylights-syntax-variable: #ffa657;
+    --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-unmatched: #f85149;
+    --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-text: #f0f6fc;
+    --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-bg: #8e1519;
+    --mk-wysiwyg-preview-prettylights-syntax-carriage-return-text: #f0f6fc;
+    --mk-wysiwyg-preview-prettylights-syntax-carriage-return-bg: #b62324;
+    --mk-wysiwyg-preview-prettylights-syntax-string-regexp: #7ee787;
+    --mk-wysiwyg-preview-prettylights-syntax-markup-list: #f2cc60;
+    --mk-wysiwyg-preview-prettylights-syntax-markup-heading: #1f6feb;
+    --mk-wysiwyg-preview-prettylights-syntax-markup-italic: #c9d1d9;
+    --mk-wysiwyg-preview-prettylights-syntax-markup-bold: #c9d1d9;
+    --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-text: #ffdcd7;
+    --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-bg: #67060c;
+    --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-text: #aff5b4;
+    --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-bg: #033a16;
+    --mk-wysiwyg-preview-prettylights-syntax-markup-changed-text: #ffdfb6;
+    --mk-wysiwyg-preview-prettylights-syntax-markup-changed-bg: #5a1e02;
+    --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-text: #c9d1d9;
+    --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-bg: #1158c7;
+    --mk-wysiwyg-preview-prettylights-syntax-meta-diff-range: #d2a8ff;
+    --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-angle: #8b949e;
+    --mk-wysiwyg-preview-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
+    --mk-wysiwyg-preview-prettylights-syntax-constant-other-reference-link: #a5d6ff;
+    --mk-wysiwyg-preview-fg-default: #c9d1d9;
+    --mk-wysiwyg-preview-fg-muted: #8b949e;
+    --mk-wysiwyg-preview-fg-subtle: #484f58;
+    --mk-wysiwyg-preview-canvas-default: transparent;
+    --mk-wysiwyg-preview-canvas-subtle: #161b22;
+    --mk-wysiwyg-preview-border-default: #30363d;
+    --mk-wysiwyg-preview-border-muted: #21262d;
+    --mk-wysiwyg-preview-neutral-muted: rgb(110 118 129 / 0.4);
+    --mk-wysiwyg-preview-accent-fg: #58a6ff;
+    --mk-wysiwyg-preview-accent-emphasis: #1f6feb;
+    --mk-wysiwyg-preview-attention-subtle: rgb(187 128 9 / 0.15);
+    --mk-wysiwyg-preview-danger-fg: #f85149;
+}
+
 .mk-AppWysiwygPreview {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
@@ -61,51 +106,6 @@
     word-wrap: break-word;
     background-color: var(--mk-wysiwyg-preview-canvas-default);
     text-size-adjust: 100%;
-
-    @include dark {
-        --mk-wysiwyg-preview-prettylights-syntax-comment: #8b949e;
-        --mk-wysiwyg-preview-prettylights-syntax-constant: #79c0ff;
-        --mk-wysiwyg-preview-prettylights-syntax-entity: #d2a8ff;
-        --mk-wysiwyg-preview-prettylights-syntax-storage-modifier-import: #c9d1d9;
-        --mk-wysiwyg-preview-prettylights-syntax-entity-tag: #7ee787;
-        --mk-wysiwyg-preview-prettylights-syntax-keyword: #ff7b72;
-        --mk-wysiwyg-preview-prettylights-syntax-string: #a5d6ff;
-        --mk-wysiwyg-preview-prettylights-syntax-variable: #ffa657;
-        --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-unmatched: #f85149;
-        --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-text: #f0f6fc;
-        --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-bg: #8e1519;
-        --mk-wysiwyg-preview-prettylights-syntax-carriage-return-text: #f0f6fc;
-        --mk-wysiwyg-preview-prettylights-syntax-carriage-return-bg: #b62324;
-        --mk-wysiwyg-preview-prettylights-syntax-string-regexp: #7ee787;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-list: #f2cc60;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-heading: #1f6feb;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-italic: #c9d1d9;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-bold: #c9d1d9;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-text: #ffdcd7;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-bg: #67060c;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-text: #aff5b4;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-bg: #033a16;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-changed-text: #ffdfb6;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-changed-bg: #5a1e02;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-text: #c9d1d9;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-bg: #1158c7;
-        --mk-wysiwyg-preview-prettylights-syntax-meta-diff-range: #d2a8ff;
-        --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-angle: #8b949e;
-        --mk-wysiwyg-preview-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
-        --mk-wysiwyg-preview-prettylights-syntax-constant-other-reference-link: #a5d6ff;
-        --mk-wysiwyg-preview-fg-default: #c9d1d9;
-        --mk-wysiwyg-preview-fg-muted: #8b949e;
-        --mk-wysiwyg-preview-fg-subtle: #484f58;
-        --mk-wysiwyg-preview-canvas-default: transparent;
-        --mk-wysiwyg-preview-canvas-subtle: #161b22;
-        --mk-wysiwyg-preview-border-default: #30363d;
-        --mk-wysiwyg-preview-border-muted: #21262d;
-        --mk-wysiwyg-preview-neutral-muted: rgb(110 118 129 / 0.4);
-        --mk-wysiwyg-preview-accent-fg: #58a6ff;
-        --mk-wysiwyg-preview-accent-emphasis: #1f6feb;
-        --mk-wysiwyg-preview-attention-subtle: rgb(187 128 9 / 0.15);
-        --mk-wysiwyg-preview-danger-fg: #f85149;
-    }
 
     > *:first-child {
         margin-top: 0 !important;
