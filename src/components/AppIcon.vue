@@ -14,11 +14,11 @@ const props = defineProps<Props>();
 
 <style lang="scss">
 .mk-AppIcon {
-    --mk-icon-width: inherit;
+    --mk-icon-size: inherit;
 
     display: inline-block;
     font-family: "Material Symbols Outlined", sans-serif;
-    font-size: var(--mk-icon-width);
+    font-size: var(--mk-icon-size);
     font-style: normal;
     font-weight: normal;
     font-feature-settings: "liga";

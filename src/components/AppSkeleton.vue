@@ -15,7 +15,6 @@ enum Shape {
 
 type Props = {
   circle?: boolean;
-  rectangle?: boolean;
   width?: string;
   height?: string;
   size?: string;
@@ -23,8 +22,6 @@ type Props = {
 
 const props = withDefaults(defineProps<Props>(), {
   circle: false,
-  rectangle: false,
-  square: true,
   width: undefined,
   height: undefined,
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
