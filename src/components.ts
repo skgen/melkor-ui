@@ -33,5 +33,9 @@ export { default as AppInputTextarea } from '@src/components/io/AppInputTextarea
 export { default as AppInputToggle } from '@src/components/io/AppInputToggle.vue';
 export { default as AppInputDate } from '@src/components/io/AppInputDate.vue';
 
+export { default as AppInputError } from '@src/components/io/decoration/AppInputError.vue';
+export { default as AppInputHint } from '@src/components/io/decoration/AppInputHint.vue';
+export { default as AppInputLabel } from '@src/components/io/decoration/AppInputLabel.vue';
+
 export { default as AppFullscreenView } from '@src/components/layout/AppFullscreenView.vue';
 export { default as AppFullscreenModal } from '@src/components/layout/AppFullscreenModal.vue';
