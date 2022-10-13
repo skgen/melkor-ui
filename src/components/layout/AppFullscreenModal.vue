@@ -81,7 +81,6 @@ function handleClickVeil() {
         right: 0;
         bottom: 0;
         left: 0;
-        background-color: rgb(var(--mk-veil-background-color));
     }
 
     &-content {
