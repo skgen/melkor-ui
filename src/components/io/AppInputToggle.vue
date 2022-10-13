@@ -95,6 +95,7 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
         display: flex;
         gap: var(--input-toggle-spacing);
         align-items: center;
+        cursor: pointer;
     }
 
     &-input {
@@ -103,7 +104,6 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
         padding: var(--input-toggle-padding);
         font-size: var(--input-togle-icon-size);
         color: rgb(var(--input-toggle-text-color));
-        cursor: pointer;
         background-color: rgb(var(--input-toggle-background-color));
         border-radius: var(--input-toggle-size);
         transition: background-color var(--app-transition-duration-1), color var(--app-transition-duration-1);

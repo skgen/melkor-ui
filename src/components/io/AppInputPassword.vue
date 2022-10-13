@@ -99,7 +99,8 @@ function handleChange(evt: Event) {
 
     input {
         flex: 1;
-        padding: 0;
+        width: 100%;
+        padding: var(--mk-input-password-padding-y) 0 var(--mk-input-password-padding-y) var(--mk-input-password-padding-x);
         background-color: transparent;
         border: none;
         outline: none;
@@ -107,9 +108,10 @@ function handleChange(evt: Event) {
 
     &-input {
         display: inline-flex;
+        gap: calc(var(--mk-input-password-padding-x) / 2);
         align-items: center;
         width: 100%;
-        padding: var(--mk-input-password-padding-y) var(--mk-input-password-padding-x);
+        padding-right: var(--mk-input-password-padding-x);
         background-color: rgb(var(--mk-input-password-background-color));
         border: 1px solid rgb(var(--mk-input-password-border-color));
         border-radius: var(--mk-input-password-border-radius);
@@ -127,7 +129,6 @@ function handleChange(evt: Event) {
     &-toggle {
         @include expand-click-area;
 
-        align-self: flex-end;
         padding: 0;
         font-size: 20px;
 

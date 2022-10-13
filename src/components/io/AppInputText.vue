@@ -83,7 +83,8 @@ function handleChange(evt: Event) {
     display: inline-block;
 
     input {
-        padding: 0;
+        width: 100%;
+        padding: var(--mk-input-text-padding-y) var(--mk-input-text-padding-x);
         background-color: transparent;
         border: none;
         outline: none;
@@ -91,7 +92,6 @@ function handleChange(evt: Event) {
 
     &-input {
         width: 100%;
-        padding: var(--mk-input-text-padding-y) var(--mk-input-text-padding-x);
         background-color: rgb(var(--mk-input-text-background-color));
         border: 1px solid rgb(var(--mk-input-text-border-color));
         border-radius: var(--mk-input-text-border-radius);
