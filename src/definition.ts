@@ -49,13 +49,18 @@ export type InputModel<TValue, TOptions extends InputOptions<TValue> = InputOpti
 export type StrInputModel = InputModel<string>;
 
 // Num
-export type NumInputModel = InputModel<number>;
+export type NumInputModel = InputModel<number, NumberInputOptions>;
 
-// Num
+export type NumberInputOptions = InputOptions<number> & {
+  min?: number;
+  max?: number;
+};
+
+// Date
 export type DateInputModel = InputModel<Date>;
 
 // Checkable
-export type CheckableOptions<TChecked = true, TUnchecked = false>
+export type CheckableInputOptions<TChecked = true, TUnchecked = false>
 = InputOptions<TChecked | TUnchecked> & {
   checked?: TChecked;
   unchecked?: TUnchecked;
@@ -63,40 +68,40 @@ export type CheckableOptions<TChecked = true, TUnchecked = false>
 
 export type CheckableInputModel
 <TChecked = true, TUnchecked = TChecked extends true ? false : true> =
-InputModel<TChecked | TUnchecked, CheckableOptions<TChecked, TUnchecked>>;
+InputModel<TChecked | TUnchecked, CheckableInputOptions<TChecked, TUnchecked>>;
 
 // Toggle
-export type ToggleOptions<TChecked = true, TUnchecked = false> = CheckableOptions<TChecked, TUnchecked> & {
+export type ToggleInputOptions<TChecked = true, TUnchecked = false> = CheckableInputOptions<TChecked, TUnchecked> & {
   checkedLabel?: string;
   uncheckedLabel?: string;
 };
 
 export type ToggleInputModel
 <TChecked = true, TUnchecked = TChecked extends true ? false : true> =
-InputModel<TChecked | TUnchecked, ToggleOptions<TChecked, TUnchecked>>;
+InputModel<TChecked | TUnchecked, ToggleInputOptions<TChecked, TUnchecked>>;
 
 // Radio
 export type RadioInputModel<TValues extends Readonly<unknown[]>> =
 InputModel<TValues[number]>;
 
 // Range
-export type RangeOptions<TValue> = InputOptions<TValue> & {
+export type RangeInputOptions<TValue> = InputOptions<TValue> & {
   min?: number;
   max?: number;
   step?: number;
 };
 
-export type RangeInputModel = InputModel<number, RangeOptions<number>>;
+export type RangeInputModel = InputModel<number, RangeInputOptions<number>>;
 
 // Select
-export type SelectOptions<TValue> = InputOptions<TValue> & {
+export type SelectInputOptions<TValue> = InputOptions<TValue> & {
   options: {
     label: string;
     value: TValue;
   }[];
 };
 
-export type SelectInputModel<TValue> = Required<InputModel<TValue, SelectOptions<TValue>>>;
+export type SelectInputModel<TValue> = Required<InputModel<TValue, SelectInputOptions<TValue>>>;
 
 // File
 export type FileInputModel = InputModel<FileModel[]>;

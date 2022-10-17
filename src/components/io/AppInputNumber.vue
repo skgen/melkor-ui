@@ -13,6 +13,8 @@
           :name="props.name"
           type="number"
           :value="state.value"
+          :min="props.min"
+          :max="props.max"
           @input="handleChange"
           @focus="onFocus"
           @blur="onBlur"
@@ -41,6 +43,8 @@ type Props = {
   fill?: boolean;
   hint?: string;
   label?: string;
+  min?: number;
+  max?: number;
 };
 
 type Emits = {
@@ -88,8 +92,8 @@ function handleChange(evt: Event) {
 
     &-input {
         width: 100%;
-        background-color: rgb(var(--mk-input-number-background-color));
-        border: 1px solid rgb(var(--mk-input-number-border-color));
+        background-color: var(--mk-input-number-background-color);
+        border: 1px solid var(--mk-input-number-border-color);
         border-radius: var(--mk-input-number-border-radius);
         transition: border-color var(--app-transition-duration-1);
     }
