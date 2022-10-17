@@ -1,6 +1,10 @@
 <template>
   <AppInputCheckable
-    v-bind="props"
+    :model-value="props.modelValue"
+    :name="props.name"
+    :validate="props.validate"
+    :checked="props.checked"
+    :unchecked="props.unchecked"
     @update:model-value="(state: Value) => emit('update:modelValue', state)"
   >
     <template #default="{ inputName, checked: isChecked, onChange }">
@@ -78,12 +82,19 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
 <style lang="scss">
 @import "@style/mixins";
 
+@include light {
+    --input-toggle-background-color: var(--c-grey-60);
+}
+
+@include dark {
+    --input-toggle-background-color: var(--c-grey-60);
+}
+
 .mk-AppInputToggle {
     --input-toggle-spacing: var(--app-m-1);
     --input-toggle-size: 16px;
     --input-toggle-padding: 2px;
     --input-toggle-color-active: var(--app-success-color);
-    --input-toggle-background-color: var(--app-background-color-surface) / 0.6;
     --input-toggle-text-color: var(--input-toggle-color-active);
     --input-toggle-inner-space: var(--input-toggle-size) * 2;
     --input-toggle-outer-space: var(--input-toggle-padding) * 2;
@@ -103,8 +114,8 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
         width: calc(var(--input-toggle-inner-space) + var(--input-toggle-outer-space));
         padding: var(--input-toggle-padding);
         font-size: var(--input-togle-icon-size);
-        color: rgb(var(--input-toggle-text-color));
-        background-color: rgb(var(--input-toggle-background-color));
+        color: var(--input-toggle-text-color);
+        background-color: var(--input-toggle-background-color);
         border-radius: var(--input-toggle-size);
         transition: background-color var(--app-transition-duration-1), color var(--app-transition-duration-1);
     }
@@ -117,7 +128,7 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
         height: var(--input-toggle-size);
         content: "";
         user-select: none;
-        background-color: rgb(var(--app-background-color));
+        background-color: var(--app-background-color);
         border-radius: 10px;
         transition: transform 128ms;
 

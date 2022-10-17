@@ -1,6 +1,10 @@
 <template>
   <AppInputCheckable
-    v-bind="props"
+    :model-value="props.modelValue"
+    :name="props.name"
+    :validate="props.validate"
+    :checked="props.checked"
+    :unchecked="props.unchecked"
     @update:model-value="(state: Value) => emit('update:modelValue', state)"
   >
     <template #default="{ inputName, checked: isChecked, onChange, error }">
