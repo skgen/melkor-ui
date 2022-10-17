@@ -112,8 +112,8 @@ function handleChange(evt: Event) {
         align-items: center;
         width: 100%;
         padding-right: var(--mk-input-password-padding-x);
-        background-color: rgb(var(--mk-input-password-background-color));
-        border: 1px solid rgb(var(--mk-input-password-border-color));
+        background-color: var(--mk-input-password-background-color);
+        border: 1px solid var(--mk-input-password-border-color);
         border-radius: var(--mk-input-password-border-radius);
         transition: border-color var(--app-transition-duration-1);
     }

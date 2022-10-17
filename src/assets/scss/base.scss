@@ -12,8 +12,8 @@ html {
 
 body {
     font-family: var(--app-font-family-base), Oxygen, -apple-system, Ubuntu, sans-serif;
-    color: rgb(var(--app-text-color));
-    background-color: rgb(var(--app-background-color));
+    color: var(--app-text-color);
+    background-color: var(--app-background-color);
     text-rendering: optimizelegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

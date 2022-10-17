@@ -68,11 +68,11 @@ const props = withDefaults(
 
     position: relative;
     padding: var(--app-m-1) var(--app-m-2);
-    background-color: rgb(var(--mk-table-cell-background-color));
-    border-bottom: 1px solid rgb(var(--mk-table-cell-border-color));
+    background-color: var(--mk-table-cell-background-color);
+    border-bottom: 1px solid var(--mk-table-cell-border-color);
 
     & + & {
-        border-left: 1px solid rgb(var(--mk-table-cell-border-color));
+        border-left: 1px solid var(--mk-table-cell-border-color);
     }
 
     &[data-header="true"] {
@@ -94,7 +94,7 @@ const props = withDefaults(
     }
 
     &[data-current-row="true"] {
-        border-bottom-color: rgb(var(--mk-table-cell-border-color-highlighted));
+        border-bottom-color: var(--mk-table-cell-border-color-highlighted);
     }
 
     &[data-current-row="true"],

@@ -43,7 +43,6 @@ type Props = {
 };
 
 const props = defineProps<Props>();
-
 </script>
 
 <style lang="scss">
@@ -57,13 +56,16 @@ const props = defineProps<Props>();
         align-items: center;
         padding: 0;
         font-size: 1rem;
-        color: rgb(var(--mk-link-text-color));
+        color: var(--mk-link-text-color);
         text-decoration: none;
-        cursor: pointer;
 
         &[data-active="true"] {
-            color: rgb(var(--mk-link-text-active-color));
+            color: var(--mk-link-text-active-color);
             cursor: default;
+        }
+
+        &:not(span) {
+            cursor: pointer;
         }
     }
 }

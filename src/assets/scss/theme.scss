@@ -1,13 +1,25 @@
 @mixin app-root-theme() {
     // Grey nuances
-    --c-white: 255 255 255;
-    --c-black: 24 24 24;
+    --c-white: #fff;
+    --c-black: #000;
+    --c-grey-99: #fcfcfc;
+    --c-grey-98: #f9f9f9;
+    --c-grey-95: #f2f2f2;
+    --c-grey-60: #999;
+    --c-grey-48: #7a7a7a;
+    --c-grey-20: #333;
+    --c-grey-5: #0d0d0d;
+    --c-grey-3: #080808;
 
     // Tone colors
-    --c-red: 237 60 80;
-    --c-blue: 59 142 237;
-    --c-green: 45 190 42;
-    --c-orange: 255 197 23;
+    --c-red: #ff474d;
+    --c-red-5: #fff6f6;
+    --c-blue: #0090f7;
+    --c-blue-5: #f2f9ff;
+    --c-green: #2dbe2a;
+    --c-green-5: #f5fcf4;
+    --c-orange: #fb9f2c;
+    --c-orange-5: #fffaf4;
 
     // App
     --app-font-family-base: "Roboto Flex", sans-serif;
@@ -21,39 +33,10 @@
     @for $i from 1 through 12 {
         --app-m-#{$i}: #{$m * $i};
     }
-}
-
-@mixin app-generic-theme {
-    // Background
-    --app-background-color: var(--app-theme-color);
-    --app-background-color-surface: var(--app-theme-color-surface);
-    --app-background-color-soft-surface: var(--app-theme-color-surface) / 0.1;
-    --app-background-color-on-primary: var(--app-background-color);
 
     // Shapes
     --app-border-radius: 4px;
     --app-opacity-disabled: 0.2;
-
-    // Text
-    --app-text-color: var(--app-theme-color-surface);
-    --app-text-color-soft: var(--app-theme-color-surface) / 0.6;
-    --app-text-color-on-surface: var(--app-theme-color);
-    --app-heading-color: var(--app-theme-color-surface);
-    --app-heading-color-on-surface: var(--app-theme-color);
-    --app-text-color-on-primary: var(--app-text-color-on-surface);
-
-    // Borders
-    --app-border-opacity: 0.05;
-    --app-border-opacity-hover: 0.02;
-    --app-border-color-base: var(--app-theme-color-surface);
-    --app-border-color: var(--app-border-color-base) / var(--app-border-opacity);
-    --app-border-color-hover: var(--app-theme-color-surface) / var(--app-border-opacity-hover);
-
-    // Tone feedback
-    --app-info-color: var(--c-blue);
-    --app-success-color: var(--c-green);
-    --app-warning-color: var(--c-orange);
-    --app-error-color: var(--c-red);
 
     // Transitions
     --app-transition-duration-1: 128ms;
@@ -63,45 +46,88 @@
     // Inputs
     --app-input-padding-x: var(--app-m-2);
     --app-input-padding-y: var(--app-m-1);
-    --app-input-background-color: var(--app-background-color-soft);
-    --app-input-border-color: var(--app-border-color);
 }
 
 @mixin app-light-theme() {
     color-scheme: light;
 
-    --app-primary-color: 0 144 247;
+    --app-primary-color: #0090f7;
 
     // Theme
     --app-theme-color: var(--c-white);
     --app-theme-color-surface: var(--c-black);
 
-    // OVERRIDE
-
     // Background
-    --app-background-color-soft: var(--app-theme-color-surface) / 0.01;
-    --app-background-color-on-primary: var(--c-white);
+    --app-background-color: var(--app-theme-color);
+    --app-background-color-soft: var(--c-grey-99);
+    --app-background-color-surface: var(--app-theme-color-surface);
+    --app-background-color-on-primary: var(--app-background-color);
 
     // Text
-    --app-text-color-on-primary: var(--c-white);
+    --app-text-color: var(--app-theme-color-surface);
+    --app-text-color-soft: var(--c-grey-60);
+    --app-text-color-on-surface: var(--app-theme-color);
+    --app-heading-color: var(--app-theme-color-surface);
+    --app-heading-color-on-surface: var(--app-theme-color);
+    --app-text-color-on-primary: var(--app-text-color-on-surface);
+
+    // Borders
+    --app-border-color: var(--c-grey-95);
+
+    // Tone feedback
+    --app-info-color: var(--c-blue);
+    --app-info-color-soft: var(--c-blue-5);
+    --app-success-color: var(--c-green);
+    --app-success-color-soft: var(--c-green-5);
+    --app-warning-color: var(--c-orange);
+    --app-warning-color-soft: var(--c-orange-5);
+    --app-error-color: var(--c-red);
+    --app-error-color-soft: var(--c-red-5);
+
+    // Inputs
+    --app-input-background-color: var(--app-background-color-soft);
+    --app-input-background-color-focus: var(--c-grey-98);
+    --app-input-border-color: var(--app-border-color);
 }
 
 @mixin app-dark-theme() {
     color-scheme: dark;
 
-    --app-primary-color: 0 144 247;
+    --app-primary-color: #0090f7;
 
     // Theme
     --app-theme-color: var(--c-black);
     --app-theme-color-surface: var(--c-white);
 
-    // OVERRIDE
-
     // Background
-    --app-background-color-soft: var(--app-theme-color-surface) / 0.05;
-    --app-background-color-on-primary: var(--c-white);
+    --app-background-color: var(--app-theme-color);
+    --app-background-color-soft: var(--c-grey-5);
+    --app-background-color-surface: var(--app-theme-color-surface);
+    --app-background-color-on-primary: var(--app-background-color-surface);
 
     // Text
-    --app-text-color-on-primary: var(--c-white);
-    --app-border-opacity: 0.09;
+    --app-text-color: var(--app-theme-color-surface);
+    --app-text-color-soft: var(--c-grey-60);
+    --app-text-color-on-surface: var(--app-theme-color);
+    --app-heading-color: var(--app-theme-color-surface);
+    --app-heading-color-on-surface: var(--app-theme-color);
+    --app-text-color-on-primary: var(--app-text-color);
+
+    // Borders
+    --app-border-color: var(--c-grey-20);
+
+    // Tone feedback
+    --app-info-color: var(--c-blue);
+    --app-info-color-soft: var(--c-blue-5);
+    --app-success-color: var(--c-green);
+    --app-success-color-soft: var(--c-green-5);
+    --app-warning-color: var(--c-orange);
+    --app-warning-color-soft: var(--c-orange-5);
+    --app-error-color: var(--c-red);
+    --app-error-color-soft: var(--c-red-5);
+
+    // Inputs
+    --app-input-background-color: var(--app-background-color-soft);
+    --app-input-background-color-focus: var(--c-grey-3);
+    --app-input-border-color: var(--app-border-color);
 }

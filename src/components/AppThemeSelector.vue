@@ -39,17 +39,20 @@ function handleChange(evt: Event) {
 @import "@style/mixins";
 
 .mk-AppThemeSelector {
+    --mk-theme-selector-background-color: var(--app-input-background-color);
+    --mk-theme-selector-border-color: var(--app-border-color);
+
     position: relative;
     display: inline-flex;
     overflow: hidden;
-    background-color: rgb(var(--app-background-color-soft));
-    border: 1px solid rgb(var(--app-border-color));
+    background-color: var(--mk-theme-selector-background-color);
+    border: 1px solid var(--mk-theme-selector-border-color);
     border-radius: 5px;
 
     select {
         width: 100%;
         padding: 5px 10px;
-        color: rgb(var(--app-text-color));
+        color: var(--app-text-color);
         background-color: inherit;
         border: none;
         outline: none;
@@ -72,7 +75,7 @@ function handleChange(evt: Event) {
         width: 15px;
         height: 100%;
         pointer-events: none;
-        background-color: black;
+        background-color: var(--mk-theme-selector-background-color);
     }
 }
 </style>

@@ -9,6 +9,6 @@
     --input-hint-color: var(--app-text-color-soft);
 
     font-size: 0.8rem;
-    color: rgb(var(--input-hint-color));
+    color: var(--input-hint-color);
 }
 </style>

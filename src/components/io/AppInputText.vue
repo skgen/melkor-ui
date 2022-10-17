@@ -92,8 +92,8 @@ function handleChange(evt: Event) {
 
     &-input {
         width: 100%;
-        background-color: rgb(var(--mk-input-text-background-color));
-        border: 1px solid rgb(var(--mk-input-text-border-color));
+        background-color: var(--mk-input-text-background-color);
+        border: 1px solid var(--mk-input-text-border-color);
         border-radius: var(--mk-input-text-border-radius);
         transition: border-color var(--app-transition-duration-1);
     }

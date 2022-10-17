@@ -128,8 +128,8 @@ function handleTextChange(evt: Event) {
         align-items: center;
         width: 100%;
         padding: var(--mk-input-color-padding-y) var(--mk-input-color-padding-x);
-        background-color: rgb(var(--mk-input-color-background-color));
-        border: 1px solid rgb(var(--mk-input-color-border-color));
+        background-color: var(--mk-input-color-background-color);
+        border: 1px solid var(--mk-input-color-border-color);
         border-radius: var(--mk-input-color-border-radius);
         transition: border-color var(--app-transition-duration-1);
     }
@@ -137,7 +137,7 @@ function handleTextChange(evt: Event) {
     &-color {
         width: 40px;
         height: 20px;
-        border: 1px solid rgb(var(--mk-input-color-border-color-absolute));
+        border: 1px solid var(--mk-input-color-border-color-absolute);
         border-radius: var(--mk-input-color-border-radius);
     }
 

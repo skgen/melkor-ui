@@ -6,15 +6,13 @@
 }
 
 @include light {
-    @include app-generic-theme;
     @include app-light-theme;
 
-    color: rgb(var(--app-text-color));
+    color: var(--app-text-color);
 }
 
 @include dark {
-    @include app-generic-theme;
     @include app-dark-theme;
 
-    color: rgb(var(--app-text-color));
+    color: var(--app-text-color);
 }

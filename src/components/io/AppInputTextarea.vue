@@ -89,8 +89,8 @@ function handleChange(evt: Event) {
     textarea {
         width: 100%;
         padding: var(--mk-input-textarea-padding-y) var(--mk-input-textarea-padding-x);
-        background-color: rgb(var(--mk-input-textarea-background-color));
-        border: 1px solid rgb(var(--mk-input-textarea-border-color));
+        background-color: var(--mk-input-textarea-background-color);
+        border: 1px solid var(--mk-input-textarea-border-color);
         border-radius: var(--mk-input-textarea-border-radius);
         outline: none;
         transition: border-color var(--app-transition-duration-1);

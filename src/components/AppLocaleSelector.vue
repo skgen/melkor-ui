@@ -33,17 +33,20 @@ watch(locale, persistLocale);
 @import "@style/mixins";
 
 .mk-AppLocaleSelector {
+    --mk-locale-selector-background-color: var(--app-input-background-color);
+    --mk-locale-selector-border-color: var(--app-border-color);
+
     position: relative;
     display: inline-flex;
     overflow: hidden;
-    background-color: rgb(var(--app-background-color-soft));
-    border: 1px solid rgb(var(--app-border-color));
+    background-color: var(--mk-locale-selector-background-color);
+    border: 1px solid var(--mk-locale-selector-border-color);
     border-radius: 5px;
 
     select {
         width: 100%;
         padding: 5px 10px;
-        color: rgb(var(--app-text-color));
+        color: var(--app-text-color);
         background-color: inherit;
         border: none;
         outline: none;
@@ -66,7 +69,7 @@ watch(locale, persistLocale);
         width: 15px;
         height: 100%;
         pointer-events: none;
-        background-color: black;
+        background-color: var(--mk-locale-selector-background-color);
     }
 }
 </style>

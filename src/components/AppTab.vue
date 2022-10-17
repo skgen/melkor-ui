@@ -60,7 +60,7 @@ function handleClick() {
         left: 0;
         width: 100%;
         height: var(--mk-tab-border-size);
-        background-color: rgb(var(--app-primary-color));
+        background-color: var(--app-primary-color);
         opacity: 0;
         transition: opacity 128ms;
     }
