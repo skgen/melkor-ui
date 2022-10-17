@@ -41,8 +41,8 @@ export const useThemeStore = defineStore({
     },
     isCurrentTheme(themeCandidate: Theme) {
       const scheme = getThemeSchemeFromTheme(themeCandidate);
-      if (this.theme.mode === ThemeMode.auto && themeCandidate === Theme.auto) {
-        return true;
+      if (this.theme.mode === ThemeMode.auto) {
+        return themeCandidate === Theme.auto;
       }
       if (themeCandidate === Theme.auto) {
         return false;
