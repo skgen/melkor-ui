@@ -34,15 +34,15 @@ import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
 
-type Value = number;
+type Value = number | null;
 
 type Props = {
   modelValue: InputState<Value>;
   name?: string;
   validate?: ValidateInput<Value>;
-  fill?: boolean;
-  hint?: string;
   label?: string;
+  hint?: string;
+  fill?: boolean;
   min?: number;
   max?: number;
 };
@@ -57,9 +57,8 @@ const emits = defineEmits<Emits>();
 const {
   onChange, onFocus, onBlur, state, focus,
 } = useInput<Value>({
-  state: computed(() => props.modelValue),
+  props: computed(() => props),
   emits,
-  validate: props.validate,
 });
 
 function handleChange(evt: Event) {
@@ -68,7 +67,11 @@ function handleChange(evt: Event) {
   }
   const { value } = evt.target as HTMLInputElement;
 
-  onChange(parseFloat(value));
+  if (value === '') {
+    onChange(null);
+  } else {
+    onChange(parseFloat(value));
+  }
 }
 </script>
 
@@ -95,7 +98,7 @@ function handleChange(evt: Event) {
         background-color: var(--mk-input-number-background-color);
         border: 1px solid var(--mk-input-number-border-color);
         border-radius: var(--mk-input-number-border-radius);
-        transition: border-color var(--app-transition-duration-1);
+        transition: border-color var(--app-transition-duration-border);
     }
 
     &[data-focus="true"] {

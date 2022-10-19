@@ -39,15 +39,15 @@ import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
 
-type Value = string;
+type Value = string | null;
 
 type Props = {
   modelValue: InputState<Value>;
   name?: string;
   validate?: ValidateInput<Value>;
-  fill?: boolean;
   hint?: string;
   label?: string;
+  fill?: boolean;
 };
 
 type Emits = {
@@ -65,9 +65,8 @@ const icon = computed(() => (type.value === 'password' ? 'visibility' : 'visibil
 const {
   onChange, onFocus, onBlur, state, focus,
 } = useInput<Value>({
-  state: computed(() => props.modelValue),
+  props: computed(() => props),
   emits,
-  validate: props.validate,
 });
 
 function handleToggle() {
@@ -80,7 +79,11 @@ function handleChange(evt: Event) {
   }
   const { value } = evt.target as HTMLInputElement;
 
-  onChange(value);
+  if (value === '') {
+    onChange(null);
+  } else {
+    onChange(value);
+  }
 }
 
 </script>
@@ -115,7 +118,7 @@ function handleChange(evt: Event) {
         background-color: var(--mk-input-password-background-color);
         border: 1px solid var(--mk-input-password-border-color);
         border-radius: var(--mk-input-password-border-radius);
-        transition: border-color var(--app-transition-duration-1);
+        transition: border-color var(--app-transition-duration-border);
     }
 
     &[data-focus="true"] {

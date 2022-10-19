@@ -23,6 +23,12 @@ export type ThemeData = {
   mode: ThemeMode;
 };
 
+// InputComponent
+
+export type InputComponentBaseProps<TValue> = {
+  modelValue: InputState<TValue>;
+} & InputOptions<TValue>;
+
 // Input
 export type InputState<T> = {
   value: T;
@@ -45,13 +51,39 @@ export type InputModel<TValue, TOptions extends InputOptions<TValue> = InputOpti
   options?: TOptions;
 };
 
-// Str
-export type StrInputModel = InputModel<string>;
+// Text
+export type TextInputValue = string | null;
+
+export type TextInputOptions = InputOptions<TextInputValue> & {
+  fill?: boolean;
+};
+
+// Textarea
+export type TextareaInputValue = string | null;
+
+export type TextareaInputOptions = InputOptions<TextareaInputValue> & {
+  fill?: boolean;
+  rows?: number;
+};
+
+export type TextareaInputModel = InputModel<TextareaInputValue, TextareaInputOptions>;
+
+// Password
+export type PasswordInputValue = string | null;
+
+export type PasswordInputOptions = InputOptions<PasswordInputValue> & {
+  fill?: boolean;
+};
+
+export type PasswordInputModel = InputModel<PasswordInputValue, PasswordInputOptions>;
 
 // Num
-export type NumInputModel = InputModel<number, NumberInputOptions>;
+export type NumberInputValue = number | null;
 
-export type NumberInputOptions = InputOptions<number> & {
+export type NumberInputModel = InputModel<NumberInputValue, NumberInputOptions>;
+
+export type NumberInputOptions = InputOptions<NumberInputValue> & {
+  fill?: boolean;
   min?: number;
   max?: number;
 };
@@ -85,13 +117,15 @@ export type RadioInputModel<TValues extends Readonly<unknown[]>> =
 InputModel<TValues[number]>;
 
 // Range
-export type RangeInputOptions<TValue> = InputOptions<TValue> & {
+export type RangeInputValue = number;
+
+export type RangeInputOptions = InputOptions<RangeInputValue> & {
   min?: number;
   max?: number;
   step?: number;
 };
 
-export type RangeInputModel = InputModel<number, RangeInputOptions<number>>;
+export type RangeInputModel = InputModel<RangeInputValue, RangeInputOptions>;
 
 // Select
 export type SelectInputOptions<TValue> = InputOptions<TValue> & {
@@ -104,7 +138,11 @@ export type SelectInputOptions<TValue> = InputOptions<TValue> & {
 export type SelectInputModel<TValue> = Required<InputModel<TValue, SelectInputOptions<TValue>>>;
 
 // File
-export type FileInputModel = InputModel<FileModel[]>;
+export type FileInputValue = FileModel[];
+
+export type FileInputOptions = InputOptions<FileInputValue>;
+
+export type FileInputModel = InputModel<FileInputValue, FileInputOptions>;
 
 // Misc
 

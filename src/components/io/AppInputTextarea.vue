@@ -11,7 +11,7 @@
       <div class="mk-AppInputTextarea-input">
         <textarea
           :name="props.name"
-          :value="state.value"
+          :value="state.value?? undefined"
           :rows="props.rows"
           @input="handleChange"
           @focus="onFocus"
@@ -32,16 +32,16 @@ import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
 
-type Value = string;
+type Value = string | null;
 
 type Props = {
   modelValue: InputState<Value>;
   name?: string;
   validate?: ValidateInput<Value>;
-  rows?: number;
-  fill?: boolean;
-  hint?: string;
   label?: string;
+  hint?: string;
+  fill?: boolean;
+  rows?: number;
 };
 
 type Emits = {
@@ -60,9 +60,8 @@ const emits = defineEmits<Emits>();
 const {
   onChange, onFocus, onBlur, state, focus,
 } = useInput<Value>({
-  state: computed(() => props.modelValue),
+  props: computed(() => props),
   emits,
-  validate: props.validate,
 });
 
 function handleChange(evt: Event) {
@@ -71,7 +70,11 @@ function handleChange(evt: Event) {
   }
   const { value } = evt.target as HTMLTextAreaElement;
 
-  onChange(value);
+  if (value === '') {
+    onChange(null);
+  } else {
+    onChange(value);
+  }
 }
 
 </script>
@@ -93,7 +96,7 @@ function handleChange(evt: Event) {
         border: 1px solid var(--mk-input-textarea-border-color);
         border-radius: var(--mk-input-textarea-border-radius);
         outline: none;
-        transition: border-color var(--app-transition-duration-1);
+        transition: border-color var(--app-transition-duration-border);
     }
 
     &[data-focus="true"] {

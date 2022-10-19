@@ -71,9 +71,8 @@ const emits = defineEmits<Emits>();
 const {
   onChange, onFocus, onBlur, state, focus,
 } = useInput<Value>({
-  state: computed(() => props.modelValue),
+  props: computed(() => props),
   emits,
-  validate: props.validate,
 });
 
 const absoluteValue = computed(() => state.value.value.replace('#', ''));
@@ -131,7 +130,7 @@ function handleTextChange(evt: Event) {
         background-color: var(--mk-input-color-background-color);
         border: 1px solid var(--mk-input-color-border-color);
         border-radius: var(--mk-input-color-border-radius);
-        transition: border-color var(--app-transition-duration-1);
+        transition: border-color var(--app-transition-duration-border);
     }
 
     &-color {

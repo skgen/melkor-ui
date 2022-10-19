@@ -1,5 +1,7 @@
-import { ref, type Ref } from 'vue';
-import type { InputState, ValidateInput } from '@src/definition';
+import {
+  computed, ref, type ComputedRef,
+} from 'vue';
+import type { InputComponentBaseProps, InputState, ValidateInput } from '@src/definition';
 import { isValue } from '@src/lib/modules/definition';
 
 // cant use in defineProps because of compiler
@@ -12,21 +14,22 @@ import { isValue } from '@src/lib/modules/definition';
 export function createInputState<T>(params: Partial<InputState<T>> & { value: InputState<T>['value'] }): InputState<T> {
   return {
     value: params.value,
-    valid: params.valid ?? false,
+    valid: params.valid ?? true,
     touched: params.touched ?? false,
     error: params.error ?? null,
   };
 }
 
 type HookParams<TValue> = {
-  state: Ref<InputState<TValue>>;
+  props: ComputedRef<InputComponentBaseProps<TValue>>;
   emits: (event: 'update:modelValue', value : InputState<TValue>) => void;
-  validate?: ValidateInput<TValue>;
 };
 
-export default function useInput
-<TValue>(params: HookParams<TValue>) {
-  const { emits, state, validate } = params;
+export default function useInput<TValue>(params: HookParams<TValue>) {
+  const { emits, props } = params;
+
+  const state = computed(() => props.value.modelValue);
+  const validate = computed(() => props.value.validate);
 
   const focus = ref(false);
 
@@ -39,11 +42,10 @@ export default function useInput
   }
 
   function onChange(value: TValue) {
-    // console.log(mirrorState.value.touched);
     let error: ReturnType<ValidateInput<TValue>> = null;
     let newValid = state.value.valid;
-    if (isValue(validate)) {
-      error = validate(value);
+    if (isValue(validate.value)) {
+      error = validate.value(value);
       newValid = !error;
     }
 

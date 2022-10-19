@@ -16,9 +16,8 @@ type Emits = {
   (event: 'update:modelValue', value : unknown): void;
 };
 
-const emit = defineEmits<Emits>();
-
 const props = defineProps<Props>();
+const emit = defineEmits<Emits>();
 
 const index = computed({
   get() {

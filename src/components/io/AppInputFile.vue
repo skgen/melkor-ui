@@ -1,5 +1,30 @@
 <template>
   <div class="mk-AppInputFile">
+    <label>
+      <AppInputLabel v-if="props.label">
+        {{ props.label }}
+      </AppInputLabel>
+      <div class="mk-AppInputFile-dropzone">
+        <input
+          ref="inputRef"
+          :name="props.name"
+          type="file"
+          multiple
+          @input="handleChange"
+        >
+        <i18n-t
+          keypath="melkor.component.inputFile.dragdrop"
+          scope="global"
+        >
+          <template #search>
+            <em>{{ t(`melkor.component.inputFile.search`) }}</em>
+          </template>
+        </i18n-t>
+      </div>
+    </label>
+    <AppInputHint v-if="props.hint">
+      {{ props.hint }}
+    </AppInputHint>
     <div
       v-if="state.value.length > 0"
       class="mk-AppInputFile-previews"
@@ -9,24 +34,9 @@
         :key="index"
         class="mk-AppInputFile-previews-item"
         :file="file"
-        @click="() => handleDelete(index)"
+        @delete="() => handleDelete(index)"
       />
     </div>
-
-    <label class="mk-AppInputFile-label">
-      <input
-        ref="inputRef"
-        :name="props.name"
-        type="file"
-        multiple
-        @input="handleChange"
-      >
-      <AppButton @click="handleProxyInput">
-        Select files <span v-if="state.value.length > 0">({{ state.value.length }})</span>
-      </AppButton>
-
-    </label>
-
     <AppInputError
       v-if="state.error"
       :error="state.error"
@@ -39,12 +49,14 @@ import { computed, ref } from 'vue';
 import type {
   FileModel, InputState, ValidateInput,
 } from '@src/definition';
-import AppButton from '@src/components/AppButton.vue';
 import AppFilePreview from '@src/components/AppFilePreview.vue';
+import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
+import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import useInput from '@src/composables/useInput';
 import { isValue } from '@src/lib/modules/definition';
 import { fileToFileModel } from '@src/lib/modules/file';
+import { useI18n } from 'vue-i18n';
 
 type Value = FileModel[];
 
@@ -52,6 +64,8 @@ type Props = {
   modelValue: InputState<Value>;
   name?: string;
   validate?: ValidateInput<Value>;
+  label?: string;
+  hint?: string;
 };
 
 type Emits = {
@@ -61,10 +75,11 @@ type Emits = {
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
+const { t } = useI18n();
+
 const { onChange, state } = useInput<Value>({
-  state: computed(() => props.modelValue),
+  props: computed(() => props),
   emits,
-  validate: props.validate,
 });
 
 const inputRef = ref<HTMLInputElement | null>(null);
@@ -72,14 +87,6 @@ const inputRef = ref<HTMLInputElement | null>(null);
 function handleDelete(indexToRemove: number) {
   const newValue = state.value.value.filter((v, index) => index !== indexToRemove);
   onChange(newValue);
-}
-
-function handleProxyInput() {
-  if (!isValue(inputRef.value)) {
-    return;
-  }
-
-  inputRef.value.click();
 }
 
 function handleChange(evt: Event) {
@@ -104,27 +111,48 @@ function handleChange(evt: Event) {
 @import "@style/mixins";
 
 .mk-AppInputFile {
-    &-label {
-        display: inline-flex;
+    --mk-input-file-border-color: var(--app-border-color-highlight);
+    --mk-input-file-dropzone-background-color: var(--app-background-color-soft);
+    --mk-input-file-dropzone-border-width: 1px;
+    --mk-input-file-dropzone-border-radius: var(--app-border-radius);
+
+    &-dropzone {
+        padding: var(--app-m-3);
+        font-size: 0.875rem;
+        color: var(--app-text-color-soft);
+        text-align: center;
+        cursor: pointer;
+        background-color: var(--mk-input-file-dropzone-background-color);
+        border: var(--mk-input-file-dropzone-border-width) dashed var(--mk-input-file-border-color);
+        border-radius: var(--mk-input-file-dropzone-border-radius);
+
+        em {
+            font-style: normal;
+            color: var(--app-primary-color);
+
+            @include underline;
+        }
+
+        input {
+            @include a11y-hidden;
+        }
     }
 
     &-previews {
         display: flex;
-        gap: 8px;
-        margin: 0 0 8px;
-
-        &-item {
-            cursor: pointer;
-            transition: opacity 128ms;
-
-            &:hover {
-                opacity: 0.5;
-            }
-        }
+        flex-direction: column;
+        gap: var(--app-m-2);
+        margin: var(--app-m-2) 0 0 0;
     }
 
-    input {
-        @include a11y-hidden;
+    .mk-AppInputLabel {
+        display: block;
+        margin-bottom: var(--app-m-1);
+    }
+
+    .mk-AppInputHint {
+        display: block;
+        margin-top: var(--app-m-1);
     }
 }
 </style>

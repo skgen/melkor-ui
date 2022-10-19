@@ -32,15 +32,16 @@ const props = withDefaults(
 @include light {
     // Cell
     --mk-table-cell-border-color: var(--app-border-color);
-    --mk-table-cell-border-color-highlighted: var(--app-primary-color) / calc(var(--app-border-opacity) * 3);
-    --mk-table-cell-background-color-highlighted: var(--app-primary-color) / 0.05;
-    --mk-table-cell-background-color-active: var(--app-primary-color) / 0.1;
+    --mk-table-cell-border-color-highlighted: var(--app-primary-color-10);
+    --mk-table-cell-background-color: var(--app-background-color);
+    --mk-table-cell-background-color-highlighted: var(--app-primary-color-5);
+    --mk-table-cell-background-color-active: var(--app-primary-color-15);
 
     // Header
-    --mk-table-cell-header-border-color: var(--app-border-color-base) / calc(var(--app-border-opacity) * 2);
-    --mk-table-cell-header-border-color-highlighted: var(--app-primary-color) / calc(var(--app-border-opacity) * 3);
-    --mk-table-header-background-color: var(--app-theme-color-surface) / 0.05;
-    --mk-table-header-background-color-highlighted: var(--app-primary-color) / 0.1;
+    --mk-table-cell-header-border-color: var(--c-grey-90);
+    --mk-table-cell-header-border-color-highlighted: var(--app-primary-color-20-highlight);
+    --mk-table-header-background-color: var(--c-grey-95);
+    --mk-table-header-background-color-highlighted: var(--app-primary-color-15-highlight);
 
     // Row
     --mk-table-row-even-background-color: var(--app-background-color-soft);
@@ -49,23 +50,22 @@ const props = withDefaults(
 @include dark {
     // Cell
     --mk-table-cell-border-color: var(--app-border-color);
-    --mk-table-cell-border-color-highlighted: var(--app-primary-color) / calc(var(--app-border-opacity) * 3);
-    --mk-table-cell-background-color-highlighted: var(--app-primary-color) / 0.05;
-    --mk-table-cell-background-color-active: var(--app-primary-color) / 0.1;
+    --mk-table-cell-border-color-highlighted: var(--app-primary-color-10);
+    --mk-table-cell-background-color: var(--app-background-color);
+    --mk-table-cell-background-color-highlighted: var(--app-primary-color-5);
+    --mk-table-cell-background-color-active: var(--app-primary-color-15);
 
     // Header
-    --mk-table-cell-header-border-color: var(--app-border-color-base) / calc(var(--app-border-opacity) * 2);
-    --mk-table-cell-header-border-color-highlighted: var(--app-primary-color) / calc(var(--app-border-opacity) * 3);
-    --mk-table-header-background-color: var(--app-theme-color-surface) / 0.05;
-    --mk-table-header-background-color-highlighted: var(--app-primary-color) / 0.1;
+    --mk-table-cell-header-border-color: var(--c-grey-90);
+    --mk-table-cell-header-border-color-highlighted: var(--app-primary-color-20-highlight);
+    --mk-table-header-background-color: var(--c-grey-95);
+    --mk-table-header-background-color-highlighted: var(--app-primary-color-15-highlight);
 
     // Row
     --mk-table-row-even-background-color: var(--app-background-color-soft);
 }
 
 .mk-AppTableCell {
-    --mk-table-cell-background-color: transparent;
-
     position: relative;
     padding: var(--app-m-1) var(--app-m-2);
     background-color: var(--mk-table-cell-background-color);

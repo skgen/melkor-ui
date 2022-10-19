@@ -58,11 +58,11 @@ type Props = {
   modelValue: InputState<Value>;
   name?: string;
   validate?: ValidateInput<Value>;
+  label?: string;
+  hint?: string;
+  fill?: boolean;
   checked?: Value;
   unchecked?: Value;
-  fill?: boolean;
-  hint?: string;
-  label?: string;
   checkedLabel?: string;
   uncheckedLabel?: string;
 };
@@ -83,49 +83,49 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
 @import "@style/mixins";
 
 @include light {
-    --input-toggle-background-color: var(--c-grey-60);
+    --mk-input-toggle-background-color: var(--c-grey-60);
 }
 
 @include dark {
-    --input-toggle-background-color: var(--c-grey-60);
+    --mk-input-toggle-background-color: var(--c-grey-60);
 }
 
 .mk-AppInputToggle {
-    --input-toggle-spacing: var(--app-m-1);
-    --input-toggle-size: 16px;
-    --input-toggle-padding: 2px;
-    --input-toggle-color-active: var(--app-success-color);
-    --input-toggle-text-color: var(--input-toggle-color-active);
-    --input-toggle-inner-space: var(--input-toggle-size) * 2;
-    --input-toggle-outer-space: var(--input-toggle-padding) * 2;
-    --input-togle-icon-size: calc(var(--input-toggle-size) - calc(var(--input-toggle-padding)));
+    --mk-input-toggle-spacing: var(--app-m-1);
+    --mk-input-toggle-size: 16px;
+    --mk-input-toggle-padding: 2px;
+    --mk-input-toggle-color-active: var(--app-success-color);
+    --mk-input-toggle-text-color: var(--mk-input-toggle-color-active);
+    --mk-input-toggle-inner-spacing: var(--mk-input-toggle-size) * 2;
+    --mk-input-toggle-outer-spacing: var(--mk-input-toggle-padding) * 2;
+    --mk-input-toggle-icon-size: calc(var(--mk-input-toggle-size) - calc(var(--mk-input-toggle-padding)));
 
     display: inline-block;
 
     &-label {
         display: flex;
-        gap: var(--input-toggle-spacing);
+        gap: var(--mk-input-toggle-spacing);
         align-items: center;
         cursor: pointer;
     }
 
     &-input {
         display: block;
-        width: calc(var(--input-toggle-inner-space) + var(--input-toggle-outer-space));
-        padding: var(--input-toggle-padding);
+        width: calc(var(--mk-input-toggle-inner-spacing) + var(--mk-input-toggle-outer-spacing));
+        padding: var(--mk-input-toggle-padding);
         font-size: var(--input-togle-icon-size);
-        color: var(--input-toggle-text-color);
-        background-color: var(--input-toggle-background-color);
-        border-radius: var(--input-toggle-size);
-        transition: background-color var(--app-transition-duration-1), color var(--app-transition-duration-1);
+        color: var(--mk-input-toggle-text-color);
+        background-color: var(--mk-input-toggle-background-color);
+        border-radius: var(--mk-input-toggle-size);
+        transition: background-color var(--app-transition-duration-background), color var(--app-transition-duration-color);
     }
 
     &-target {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: var(--input-toggle-size);
-        height: var(--input-toggle-size);
+        width: var(--mk-input-toggle-size);
+        height: var(--mk-input-toggle-size);
         content: "";
         user-select: none;
         background-color: var(--app-background-color);
@@ -134,7 +134,7 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
 
         .mk-AppIcon {
             opacity: 0;
-            transition: opacity var(--app-transition-duration-1);
+            transition: opacity var(--app-transition-duration-opacity);
         }
     }
 
@@ -143,7 +143,7 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
     }
 
     &[data-checked="true"] {
-        --input-toggle-background-color: var(--input-toggle-color-active);
+        --mk-input-toggle-background-color: var(--mk-input-toggle-color-active);
 
         .mk-AppInputToggle {
             &-target {
@@ -168,6 +168,7 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
 
     .mk-AppInputLabel {
         flex: 1;
+        padding: 0 var(--app-m-2) 0 0;
     }
 }
 </style>

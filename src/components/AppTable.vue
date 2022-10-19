@@ -215,10 +215,6 @@ export const defaultOptions: Required<TableOptions> = {
     font-size: 0.875rem;
     border-collapse: collapse;
 
-    // border-top: 1px solid var(--app-border-color);
-    // border-right: 1px solid var(--app-border-color);
-    // border-left: 1px solid var(--app-border-color);
-
     &-head {
         &-text {
             font-weight: 500;

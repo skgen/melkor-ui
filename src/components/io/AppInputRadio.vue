@@ -37,9 +37,8 @@ const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
 const { onChange, state } = useInput<Value>({
-  state: computed(() => props.modelValue),
+  props: computed(() => props),
   emits,
-  validate: props.validate,
 });
 
 const renderChecked = computed(() => isEqual(state.value.value, props.value));

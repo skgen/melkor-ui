@@ -48,9 +48,8 @@ const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
 const { onChange, state } = useInput<Value>({
-  state: computed(() => props.modelValue),
+  props: computed(() => props),
   emits,
-  validate: props.validate,
 });
 
 function isSelectedOption(option: Value) {

@@ -34,10 +34,11 @@ type Emits = {
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
-const { onChange, state } = useInput<Value>({
-  state: computed(() => props.modelValue),
+const {
+  onChange, state,
+} = useInput<Value>({
+  props: computed(() => props),
   emits,
-  validate: props.validate,
 });
 
 function handleChange(evt: Event) {
