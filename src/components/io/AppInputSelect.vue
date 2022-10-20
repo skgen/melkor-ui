@@ -14,10 +14,10 @@
       </option>
 
     </select>
-    <AppInputError
+    <!-- <AppInputError
       v-if="state.error"
       :error="state.error"
-    />
+    /> -->
   </label>
 </template>
 
