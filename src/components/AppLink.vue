@@ -49,10 +49,11 @@ const props = defineProps<Props>();
 .mk-AppLink {
     --mk-link-text-color: var(--app-text-color);
     --mk-link-text-active-color: var(--app-primary-color);
+    --mk-link-gap: var(--app-m-1);
 
     &:not([data-wrapper="true"]) {
         display: inline-flex;
-        gap: 8px;
+        gap: var(--mk-link-gap);
         align-items: center;
         padding: 0;
         font-size: 1rem;

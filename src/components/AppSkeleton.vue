@@ -63,6 +63,8 @@ const defaultSize = '100%';
 
 <style lang="scss">
 .mk-AppSkeleton {
+    --mk-skeleton-rectangle-border-radius: calc(var(--app-border-radius) * 2);
+
     position: relative;
     width: v-bind("width");
     height: v-bind("height");
@@ -75,17 +77,14 @@ const defaultSize = '100%';
             rgb(130 130 130 / 0.2) 33%
         );
     background-size: 3200px 400px;
+    border-radius: var(--mk-skeleton-rectangle-border-radius);
     animation-name: skeleton-animation;
     animation-duration: 2000ms;
     animation-timing-function: ease-out;
     animation-iteration-count: infinite;
 
-    &[data-shape="rectangle"] {
-        border-radius: 8px;
-    }
-
     &[data-shape="circle"] {
-        border-radius: 50%;
+        --mk-skeleton-rectangle-border-radius: 50%;
     }
 
     @keyframes skeleton-animation {
