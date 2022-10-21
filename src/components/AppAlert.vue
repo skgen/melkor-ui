@@ -4,7 +4,10 @@
     :data-type="type"
   >
     <div class="mk-AppAlert-wrapper">
-      <mk-icon :icon="icon" />
+      <mk-icon
+        :icon="icon"
+        fill
+      />
       <div class="mk-AppAlert-main">
         <span class="mk-AppAlert-title">
           <slot />
@@ -104,11 +107,7 @@ const icon = computed(() => {
 
     .mk-AppIcon {
         --mk-icon-size: var(--mk-alert-icon-size);
-
-        // width:
-        // height: var(--mk-alert-icon-size);
-        font-variation-settings: "FILL" 1;
-        color: var(--mk-alert-border-color);
+        --mk-icon-color: var(--mk-alert-border-color);
     }
 
     &-title {

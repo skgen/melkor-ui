@@ -1,5 +1,8 @@
 <template>
-  <span class="mk-AppIcon">
+  <span
+    class="mk-AppIcon"
+    :data-fill="props.fill || undefined"
+  >
     {{ props.icon }}
   </span>
 </template>
@@ -7,6 +10,7 @@
 <script lang="ts" setup>
 type Props = {
   icon: string;
+  fill?: boolean;
 };
 
 const props = defineProps<Props>();
@@ -15,6 +19,7 @@ const props = defineProps<Props>();
 <style lang="scss">
 .mk-AppIcon {
     --mk-icon-size: inherit;
+    --mk-icon-color: currentcolor;
 
     display: inline-block;
     font-family: "Material Symbols Outlined", sans-serif;
@@ -23,11 +28,16 @@ const props = defineProps<Props>();
     font-weight: normal;
     font-feature-settings: "liga";
     line-height: 1;
+    color: var(--mk-icon-color);
     text-transform: none;
     letter-spacing: normal;
     word-wrap: normal;
     white-space: nowrap;
     direction: ltr;
     -webkit-font-smoothing: antialiased;
+
+    &[data-fill="true"] {
+        font-variation-settings: "FILL" 1;
+    }
 }
 </style>
