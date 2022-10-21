@@ -54,6 +54,8 @@ export type InputModel<TValue, TOptions extends InputOptions<TValue> = InputOpti
 // Text
 export type TextInputValue = string | null;
 
+export type TextInputModel = InputModel<TextInputValue, TextInputOptions>;
+
 export type TextInputOptions = InputOptions<TextInputValue> & {
   fill?: boolean;
 };
@@ -61,21 +63,21 @@ export type TextInputOptions = InputOptions<TextInputValue> & {
 // Textarea
 export type TextareaInputValue = string | null;
 
+export type TextareaInputModel = InputModel<TextareaInputValue, TextareaInputOptions>;
+
 export type TextareaInputOptions = InputOptions<TextareaInputValue> & {
   fill?: boolean;
   rows?: number;
 };
 
-export type TextareaInputModel = InputModel<TextareaInputValue, TextareaInputOptions>;
-
 // Password
 export type PasswordInputValue = string | null;
+
+export type PasswordInputModel = InputModel<PasswordInputValue, PasswordInputOptions>;
 
 export type PasswordInputOptions = InputOptions<PasswordInputValue> & {
   fill?: boolean;
 };
-
-export type PasswordInputModel = InputModel<PasswordInputValue, PasswordInputOptions>;
 
 // Num
 export type NumberInputValue = number | null;
@@ -92,25 +94,26 @@ export type NumberInputOptions = InputOptions<NumberInputValue> & {
 export type DateInputModel = InputModel<Date>;
 
 // Checkable
+export type CheckableInputModel
+<TChecked = true, TUnchecked = TChecked extends true ? false : true> =
+InputModel<TChecked | TUnchecked, CheckableInputOptions<TChecked, TUnchecked>>;
+
 export type CheckableInputOptions<TChecked = true, TUnchecked = false>
 = InputOptions<TChecked | TUnchecked> & {
   checked?: TChecked;
   unchecked?: TUnchecked;
 };
 
-export type CheckableInputModel
-<TChecked = true, TUnchecked = TChecked extends true ? false : true> =
-InputModel<TChecked | TUnchecked, CheckableInputOptions<TChecked, TUnchecked>>;
-
 // Toggle
-export type ToggleInputOptions<TChecked = true, TUnchecked = false> = CheckableInputOptions<TChecked, TUnchecked> & {
-  checkedLabel?: string;
-  uncheckedLabel?: string;
-};
 
 export type ToggleInputModel
 <TChecked = true, TUnchecked = TChecked extends true ? false : true> =
 InputModel<TChecked | TUnchecked, ToggleInputOptions<TChecked, TUnchecked>>;
+
+export type ToggleInputOptions<TChecked = true, TUnchecked = false> = CheckableInputOptions<TChecked, TUnchecked> & {
+  checkedLabel?: string;
+  uncheckedLabel?: string;
+};
 
 // Radio
 export type RadioInputModel<TValues extends Readonly<unknown[]>> =
@@ -119,15 +122,17 @@ InputModel<TValues[number]>;
 // Range
 export type RangeInputValue = number;
 
+export type RangeInputModel = InputModel<RangeInputValue, RangeInputOptions>;
+
 export type RangeInputOptions = InputOptions<RangeInputValue> & {
   min?: number;
   max?: number;
   step?: number;
 };
 
-export type RangeInputModel = InputModel<RangeInputValue, RangeInputOptions>;
-
 // Select
+export type SelectInputModel<TValue> = Required<InputModel<TValue, SelectInputOptions<TValue>>>;
+
 export type SelectInputOptions<TValue> = InputOptions<TValue> & {
   options: {
     label: string;
@@ -135,14 +140,12 @@ export type SelectInputOptions<TValue> = InputOptions<TValue> & {
   }[];
 };
 
-export type SelectInputModel<TValue> = Required<InputModel<TValue, SelectInputOptions<TValue>>>;
-
 // File
 export type FileInputValue = FileModel[];
 
-export type FileInputOptions = InputOptions<FileInputValue>;
-
 export type FileInputModel = InputModel<FileInputValue, FileInputOptions>;
+
+export type FileInputOptions = InputOptions<FileInputValue>;
 
 // Misc
 
