@@ -21,10 +21,10 @@
           @focus="onFocus"
           @blur="onBlur"
         >
-        <span>
+        <span class="mk-AppInputColor-value">
           #<input
             type="text"
-            :value="absoluteValue"
+            :value="absoluteValue ?? ''"
             @input="handleTextChange"
             @focus="onFocus"
             @blur="onBlur"
@@ -50,15 +50,15 @@ import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppIcon from '@src/components/AppIcon.vue';
 
-type Value = string;
+type Value = string | null;
 
 type Props = {
   modelValue: InputState<Value>;
   name?: string;
   validate?: ValidateInput<Value>;
-  fill?: boolean;
-  hint?: string;
   label?: string;
+  hint?: string;
+  fill?: boolean;
 };
 
 type Emits = {
@@ -75,7 +75,7 @@ const {
   emits,
 });
 
-const absoluteValue = computed(() => state.value.value.replace('#', ''));
+const absoluteValue = computed(() => (state.value.value ? state.value.value.replace('#', '') : null));
 
 function handleChange(evt: Event) {
   if (!evt.target) {
@@ -92,7 +92,11 @@ function handleTextChange(evt: Event) {
   }
   const { value } = evt.target as HTMLInputElement;
 
-  onChange(`#${value}`);
+  if (value === '') {
+    onChange(null);
+  } else {
+    onChange(`#${value}`);
+  }
 }
 </script>
 
@@ -125,8 +129,10 @@ function handleTextChange(evt: Event) {
         display: flex;
         gap: var(--mk-input-color-spacing);
         align-items: center;
+        justify-content: space-between;
         width: 100%;
         padding: var(--mk-input-color-padding-y) var(--mk-input-color-padding-x);
+        cursor: pointer;
         background-color: var(--mk-input-color-background-color);
         border: 1px solid var(--mk-input-color-border-color);
         border-radius: var(--mk-input-color-border-radius);
@@ -143,6 +149,10 @@ function handleTextChange(evt: Event) {
     &-icon {
         align-self: flex-end;
         font-size: 20px;
+    }
+
+    &-value {
+        flex: 1;
     }
 
     &[data-focus="true"] {

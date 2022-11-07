@@ -38,8 +38,8 @@ export type InputState<T> = {
 };
 
 export type InputOptions<TValue> = {
-  name?: string;
   validate?: ValidateInput<TValue>;
+  name?: string;
   label?: string;
   hint?: string;
 };
@@ -88,6 +88,15 @@ export type NumberInputOptions = InputOptions<NumberInputValue> & {
   fill?: boolean;
   min?: number;
   max?: number;
+};
+
+// Color
+export type ColorInputValue = string | null;
+
+export type ColorInputModel = InputModel<ColorInputValue, ColorInputOptions>;
+
+export type ColorInputOptions = InputOptions<ColorInputValue> & {
+  fill?: boolean;
 };
 
 // Date
