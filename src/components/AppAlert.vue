@@ -1,5 +1,6 @@
 <template>
   <div
+    v-theme="{ scheme }"
     class="mk-AppAlert"
     :data-type="type"
   >
@@ -24,6 +25,8 @@
 import { isValue } from '@src/lib/modules/definition';
 import { computed } from 'vue';
 
+import useComponentTheme from '@src/composables/useComponentTheme';
+
 enum Type {
   basic = 'basic',
   success = 'success',
@@ -41,6 +44,8 @@ type Props = {
 };
 
 const props = defineProps<Props>();
+
+const { scheme } = useComponentTheme();
 
 const type = computed(() => {
   if (props.success) {

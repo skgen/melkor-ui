@@ -1,5 +1,8 @@
 <template>
-  <label class="mk-AppInpupSelect">
+  <label
+    v-theme="{ scheme }"
+    class="mk-AppInpupSelect"
+  >
     <select
       :name="props.name"
       @input="handleChange"
@@ -14,10 +17,9 @@
       </option>
 
     </select>
-    <!-- <AppInputError
-      v-if="state.error"
-      :error="state.error"
-    /> -->
+    <!-- <AppInputError v-if="state.error">
+      {{ state.error }}
+    </AppInputError> -->
   </label>
 </template>
 
@@ -27,6 +29,8 @@ import isEqual from 'lodash/isEqual';
 import type { InputState, ValidateInput } from '@src/definition';
 // import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import useInput from '@src/composables/useInput';
+
+import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Value = any;
 
@@ -46,6 +50,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
+
+const { scheme } = useComponentTheme();
 
 const { onChange, state } = useInput<Value>({
   props: computed(() => props),

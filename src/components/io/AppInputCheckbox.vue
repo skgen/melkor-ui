@@ -8,17 +8,19 @@
     @update:model-value="(state: Value) => emit('update:modelValue', state)"
   >
     <template #default="{ inputName, checked: isChecked, onChange, error }">
-      <label class="mk-AppInputCheckbox">
+      <label
+        v-theme="{ scheme }"
+        class="mk-AppInputCheckbox"
+      >
         <input
           :name="inputName"
           type="checkbox"
           :checked="isChecked"
           @input="onChange"
         >
-        <AppInputError
-          v-if="error"
-          :error="error"
-        />
+        <AppInputError v-if="error">
+          {{ error }}
+        </AppInputError>
       </label>
     </template>
   </AppInputCheckable>
@@ -28,6 +30,8 @@
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputCheckable from '@src/components/io/abstract/AppInputCheckable.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
+
+import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Value = any;
 
@@ -45,5 +49,7 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+
+const { scheme } = useComponentTheme();
 
 </script>

@@ -1,24 +1,41 @@
 <template>
-  <router-link
+  <template
     v-if="props.to"
-    v-slot="{ href, navigate, isActive, isExactActive }"
-    :to="props.to"
-    custom
   >
+    <router-link
+      v-if="isRelative"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+      :to="props.to"
+      custom
+    >
+      <a
+        v-theme="{ scheme }"
+        :href="href"
+        class="mk-AppLink"
+        :data-wrapper="asWrapper ? 'true' : null"
+        :data-active="isActive ? true : null"
+        :data-exact-active="isExactActive ? true : null"
+        v-bind="$attrs"
+        @click="navigate"
+      >
+        <slot />
+      </a>
+    </router-link>
     <a
-      :href="href"
+      v-else
+      v-theme="{ scheme }"
+      :href="props.to"
       class="mk-AppLink"
       :data-wrapper="asWrapper ? 'true' : null"
-      :data-active="isActive ? true : null"
-      :data-exact-active="isExactActive ? true : null"
       v-bind="$attrs"
-      @click="navigate"
     >
       <slot />
     </a>
-  </router-link>
+  </template>
+
   <button
     v-else-if="props.asButton"
+    v-theme="{ scheme }"
     class="mk-AppLink"
     :data-wrapper="asWrapper ? 'true' : null"
     v-bind="$attrs"
@@ -26,16 +43,20 @@
     <slot />
   </button>
   <template v-else>
-    <span
+    <div
+      v-theme="{ scheme }"
       v-bind="$attrs"
       class="mk-AppLink"
     >
       <slot />
-    </span>
+    </div>
   </template>
 </template>
 
 <script lang="ts" setup>
+import useComponentTheme from '@src/composables/useComponentTheme';
+import { computed } from 'vue';
+
 type Props = {
   to?: string;
   asButton?: boolean;
@@ -43,6 +64,10 @@ type Props = {
 };
 
 const props = defineProps<Props>();
+
+const { scheme } = useComponentTheme();
+
+const isRelative = computed(() => (props.to ? !/^(http:\/\/|https:\/\/|file:\/\/|tel:|mailto:)/i.test(props.to) : false));
 </script>
 
 <style lang="scss">

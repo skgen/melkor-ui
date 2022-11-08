@@ -5,14 +5,16 @@
     @include app-root-theme;
 }
 
-@include light {
-    @include app-light-theme;
+* {
+    @include light {
+        @include app-light-theme;
 
-    color: var(--app-text-color);
-}
+        color: var(--app-text-color);
+    }
 
-@include dark {
-    @include app-dark-theme;
+    @include dark {
+        @include app-dark-theme;
 
-    color: var(--app-text-color);
+        color: var(--app-text-color);
+    }
 }

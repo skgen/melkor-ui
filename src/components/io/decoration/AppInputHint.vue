@@ -1,8 +1,17 @@
 <template>
-  <span class="mk-AppInputHint">
+  <span
+    v-theme="{ scheme }"
+    class="mk-AppInputHint"
+  >
     <slot />
   </span>
 </template>
+
+<script lang="ts" setup>
+import useComponentTheme from '@src/composables/useComponentTheme';
+
+const { scheme } = useComponentTheme();
+</script>
 
 <style lang="scss">
 .mk-AppInputHint {

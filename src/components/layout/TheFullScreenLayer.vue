@@ -1,11 +1,15 @@
 <template>
   <div
     id="fs-layer"
+    v-theme="{ scheme }"
     class="mk-TheFullScreenLayer"
   />
 </template>
 
 <script lang="ts" setup>
+import useComponentTheme from '@src/composables/useComponentTheme';
+
+const { scheme } = useComponentTheme();
 </script>
 
 <style lang="scss">

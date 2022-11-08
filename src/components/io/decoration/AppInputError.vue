@@ -1,15 +1,16 @@
 <template>
-  <div class="mk-AppInputError">
-    {{ props.error }}
+  <div
+    v-theme="{ scheme }"
+    class="mk-AppInputError"
+  >
+    <slot />
   </div>
 </template>
 
 <script lang="ts" setup>
-type Props = {
-  error: string;
-};
+import useComponentTheme from '@src/composables/useComponentTheme';
 
-const props = defineProps<Props>();
+const { scheme } = useComponentTheme();
 </script>
 
 <style lang="scss">

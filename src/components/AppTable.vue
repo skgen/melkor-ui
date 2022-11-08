@@ -1,5 +1,8 @@
 <template>
-  <table class="mk-AppTable">
+  <table
+    v-theme="{ scheme }"
+    class="mk-AppTable"
+  >
     <thead
       v-if="isValue(headers) && headers?.length > 0"
       class="mk-AppTable-head"
@@ -72,6 +75,8 @@ import type {
   TableCellAsGeneric, TableHeader, TableItem, TableOptions,
 } from '@src/definition';
 
+import useComponentTheme from '@src/composables/useComponentTheme';
+
 type Props = {
   headers?: TableHeader[];
   items: TableItem[];
@@ -82,6 +87,8 @@ const props = withDefaults(defineProps<Props>(), {
   headers: undefined,
   options: () => defaultOptions,
 });
+
+const { scheme } = useComponentTheme();
 
 const options = computed(() => ({ ...defaultOptions, ...props.options }));
 

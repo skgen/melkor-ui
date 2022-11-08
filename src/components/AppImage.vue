@@ -1,5 +1,6 @@
 <template>
   <div
+    v-theme="{ scheme }"
     class="mk-AppImage"
     :data-ratio="!!ratio || undefined"
     :data-fit="fit ?? undefined"
@@ -14,6 +15,8 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+
+import useComponentTheme from '@src/composables/useComponentTheme';
 
 enum Fit {
   cover = 'cover',
@@ -30,6 +33,8 @@ type Props = {
 };
 
 const props = defineProps<Props>();
+
+const { scheme } = useComponentTheme();
 
 const ratio = computed(() => {
   if (props.ratio && props.ratio[0] && props.ratio[1]) {

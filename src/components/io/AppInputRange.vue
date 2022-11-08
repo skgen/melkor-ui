@@ -1,5 +1,8 @@
 <template>
-  <label class="mk-AppInpupRange">
+  <label
+    v-theme="{ scheme }"
+    class="mk-AppInpupRange"
+  >
     <input
       :name="props.name"
       type="range"
@@ -9,10 +12,9 @@
       :step="props.step"
       @input="handleChange"
     >
-    <AppInputError
-      v-if="state.error"
-      :error="state.error"
-    />
+    <AppInputError v-if="state.error">
+      {{ state.error }}
+    </AppInputError>
   </label>
 </template>
 
@@ -21,6 +23,8 @@ import { computed } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import useInput from '@src/composables/useInput';
+
+import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Value = number;
 
@@ -39,6 +43,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
+
+const { scheme } = useComponentTheme();
 
 const { onChange, state } = useInput<Value>({
   props: computed(() => props),

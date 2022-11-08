@@ -1,12 +1,12 @@
 <template>
   <div
+    v-theme="{ scheme }"
     class="mk-AppTab"
     role="tab"
     :aria-selected="active"
     @click="handleClick"
   >
     <span>
-
       <slot />
     </span>
   </div>
@@ -18,12 +18,15 @@ import {
   computed,
   inject,
 } from 'vue';
+import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Props = {
   value: unknown;
 };
 
 const props = defineProps<Props>();
+
+const { scheme } = useComponentTheme();
 
 const index = inject<WritableComputedRef<unknown>>('tabs-index');
 

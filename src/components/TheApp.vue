@@ -1,19 +1,27 @@
 <template>
-  <div class="mk-TheApp">
-    <slot />
-    <teleport to="body">
-      <TheFloatingLayer />
-    </teleport>
-    <teleport to="body">
-      <TheFullScreenLayer />
-    </teleport>
+  <div
+    v-theme="{ scheme: themeStore.theme.scheme }"
+    class="mk-TheApp"
+  >
+    <AppThemeContext>
+      <slot />
+      <teleport to="body">
+        <TheFloatingLayer />
+      </teleport>
+      <teleport to="body">
+        <TheFullScreenLayer />
+      </teleport>
+    </AppThemeContext>
   </div>
 </template>
 
 <script lang="ts" setup>
 import TheFullScreenLayer from '@src/components/layout/TheFullScreenLayer.vue';
 import TheFloatingLayer from '@src/components/floating/TheFloatingLayer.vue';
+import AppThemeContext from '@src/components/AppThemeContext.vue';
+import { useThemeStore } from '@src/stores/theme';
 
+const themeStore = useThemeStore();
 </script>
 
 <style lang="scss">

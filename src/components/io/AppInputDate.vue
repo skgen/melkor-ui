@@ -1,15 +1,17 @@
 <template>
-  <label class="mk-AppInputDate">
+  <label
+    v-theme="{ scheme }"
+    class="mk-AppInputDate"
+  >
     <input
       :name="props.name"
       type="datetime-local"
       :value="state.value.toISOString()"
       @input="handleChange"
     >
-    <AppInputError
-      v-if="state.error"
-      :error="state.error"
-    />
+    <AppInputError v-if="state.error">
+      {{ state.error }}
+    </AppInputError>
   </label>
 </template>
 
@@ -18,6 +20,8 @@ import { computed } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import useInput from '@src/composables/useInput';
+
+import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Value = Date;
 
@@ -33,6 +37,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
+
+const { scheme } = useComponentTheme();
 
 const {
   onChange, state,

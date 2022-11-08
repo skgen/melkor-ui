@@ -1,103 +1,112 @@
 <template>
-  <div class="mk-AppWysiwygPreview">
+  <div
+    v-theme="{ scheme }"
+    class="mk-AppWysiwygPreview"
+  >
     <slot />
   </div>
 </template>
 
+<script lang="ts" setup>
+import useComponentTheme from '@src/composables/useComponentTheme';
+
+const { scheme } = useComponentTheme();
+</script>
+
 <style lang="scss">
 @import "@style/mixins";
 
-@include light {
-    --mk-wysiwyg-preview-prettylights-syntax-comment: #6e7781;
-    --mk-wysiwyg-preview-prettylights-syntax-constant: #0550ae;
-    --mk-wysiwyg-preview-prettylights-syntax-entity: #8250df;
-    --mk-wysiwyg-preview-prettylights-syntax-storage-modifier-import: #24292f;
-    --mk-wysiwyg-preview-prettylights-syntax-entity-tag: #116329;
-    --mk-wysiwyg-preview-prettylights-syntax-keyword: #cf222e;
-    --mk-wysiwyg-preview-prettylights-syntax-string: #0a3069;
-    --mk-wysiwyg-preview-prettylights-syntax-variable: #953800;
-    --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-unmatched: #82071e;
-    --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-text: #f6f8fa;
-    --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-bg: #82071e;
-    --mk-wysiwyg-preview-prettylights-syntax-carriage-return-text: #f6f8fa;
-    --mk-wysiwyg-preview-prettylights-syntax-carriage-return-bg: #cf222e;
-    --mk-wysiwyg-preview-prettylights-syntax-string-regexp: #116329;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-list: #3b2300;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-heading: #0550ae;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-italic: #24292f;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-bold: #24292f;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-text: #82071e;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-bg: #ffebe9;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-text: #116329;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-bg: #dafbe1;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-changed-text: #953800;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-changed-bg: #ffd8b5;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-text: #eaeef2;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-bg: #0550ae;
-    --mk-wysiwyg-preview-prettylights-syntax-meta-diff-range: #8250df;
-    --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-angle: #57606a;
-    --mk-wysiwyg-preview-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
-    --mk-wysiwyg-preview-prettylights-syntax-constant-other-reference-link: #0a3069;
-    --mk-wysiwyg-preview-fg-default: #24292f;
-    --mk-wysiwyg-preview-fg-muted: #57606a;
-    --mk-wysiwyg-preview-fg-subtle: #6e7781;
-    --mk-wysiwyg-preview-canvas-default: transparent;
-    --mk-wysiwyg-preview-canvas-subtle: #f6f8fa;
-    --mk-wysiwyg-preview-border-default: #d0d7de;
-    --mk-wysiwyg-preview-border-muted: hsl(210deg 18% 87% / 1);
-    --mk-wysiwyg-preview-neutral-muted: rgb(175 184 193 / 0.2);
-    --mk-wysiwyg-preview-accent-fg: #0969da;
-    --mk-wysiwyg-preview-accent-emphasis: #0969da;
-    --mk-wysiwyg-preview-attention-subtle: #fff8c5;
-    --mk-wysiwyg-preview-danger-fg: #cf222e;
-}
-
-@include dark {
-    --mk-wysiwyg-preview-prettylights-syntax-comment: #8b949e;
-    --mk-wysiwyg-preview-prettylights-syntax-constant: #79c0ff;
-    --mk-wysiwyg-preview-prettylights-syntax-entity: #d2a8ff;
-    --mk-wysiwyg-preview-prettylights-syntax-storage-modifier-import: #c9d1d9;
-    --mk-wysiwyg-preview-prettylights-syntax-entity-tag: #7ee787;
-    --mk-wysiwyg-preview-prettylights-syntax-keyword: #ff7b72;
-    --mk-wysiwyg-preview-prettylights-syntax-string: #a5d6ff;
-    --mk-wysiwyg-preview-prettylights-syntax-variable: #ffa657;
-    --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-unmatched: #f85149;
-    --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-text: #f0f6fc;
-    --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-bg: #8e1519;
-    --mk-wysiwyg-preview-prettylights-syntax-carriage-return-text: #f0f6fc;
-    --mk-wysiwyg-preview-prettylights-syntax-carriage-return-bg: #b62324;
-    --mk-wysiwyg-preview-prettylights-syntax-string-regexp: #7ee787;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-list: #f2cc60;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-heading: #1f6feb;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-italic: #c9d1d9;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-bold: #c9d1d9;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-text: #ffdcd7;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-bg: #67060c;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-text: #aff5b4;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-bg: #033a16;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-changed-text: #ffdfb6;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-changed-bg: #5a1e02;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-text: #c9d1d9;
-    --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-bg: #1158c7;
-    --mk-wysiwyg-preview-prettylights-syntax-meta-diff-range: #d2a8ff;
-    --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-angle: #8b949e;
-    --mk-wysiwyg-preview-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
-    --mk-wysiwyg-preview-prettylights-syntax-constant-other-reference-link: #a5d6ff;
-    --mk-wysiwyg-preview-fg-default: #c9d1d9;
-    --mk-wysiwyg-preview-fg-muted: #8b949e;
-    --mk-wysiwyg-preview-fg-subtle: #484f58;
-    --mk-wysiwyg-preview-canvas-default: transparent;
-    --mk-wysiwyg-preview-canvas-subtle: #161b22;
-    --mk-wysiwyg-preview-border-default: #30363d;
-    --mk-wysiwyg-preview-border-muted: #21262d;
-    --mk-wysiwyg-preview-neutral-muted: rgb(110 118 129 / 0.4);
-    --mk-wysiwyg-preview-accent-fg: #58a6ff;
-    --mk-wysiwyg-preview-accent-emphasis: #1f6feb;
-    --mk-wysiwyg-preview-attention-subtle: rgb(187 128 9 / 0.15);
-    --mk-wysiwyg-preview-danger-fg: #f85149;
-}
-
 .mk-AppWysiwygPreview {
+    @include light {
+        --mk-wysiwyg-preview-prettylights-syntax-comment: #6e7781;
+        --mk-wysiwyg-preview-prettylights-syntax-constant: #0550ae;
+        --mk-wysiwyg-preview-prettylights-syntax-entity: #8250df;
+        --mk-wysiwyg-preview-prettylights-syntax-storage-modifier-import: #24292f;
+        --mk-wysiwyg-preview-prettylights-syntax-entity-tag: #116329;
+        --mk-wysiwyg-preview-prettylights-syntax-keyword: #cf222e;
+        --mk-wysiwyg-preview-prettylights-syntax-string: #0a3069;
+        --mk-wysiwyg-preview-prettylights-syntax-variable: #953800;
+        --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-unmatched: #82071e;
+        --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-text: #f6f8fa;
+        --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-bg: #82071e;
+        --mk-wysiwyg-preview-prettylights-syntax-carriage-return-text: #f6f8fa;
+        --mk-wysiwyg-preview-prettylights-syntax-carriage-return-bg: #cf222e;
+        --mk-wysiwyg-preview-prettylights-syntax-string-regexp: #116329;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-list: #3b2300;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-heading: #0550ae;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-italic: #24292f;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-bold: #24292f;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-text: #82071e;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-bg: #ffebe9;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-text: #116329;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-bg: #dafbe1;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-changed-text: #953800;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-changed-bg: #ffd8b5;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-text: #eaeef2;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-bg: #0550ae;
+        --mk-wysiwyg-preview-prettylights-syntax-meta-diff-range: #8250df;
+        --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-angle: #57606a;
+        --mk-wysiwyg-preview-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
+        --mk-wysiwyg-preview-prettylights-syntax-constant-other-reference-link: #0a3069;
+        --mk-wysiwyg-preview-fg-default: #24292f;
+        --mk-wysiwyg-preview-fg-muted: #57606a;
+        --mk-wysiwyg-preview-fg-subtle: #6e7781;
+        --mk-wysiwyg-preview-canvas-default: transparent;
+        --mk-wysiwyg-preview-canvas-subtle: #f6f8fa;
+        --mk-wysiwyg-preview-border-default: #d0d7de;
+        --mk-wysiwyg-preview-border-muted: hsl(210deg 18% 87% / 1);
+        --mk-wysiwyg-preview-neutral-muted: rgb(175 184 193 / 0.2);
+        --mk-wysiwyg-preview-accent-fg: #0969da;
+        --mk-wysiwyg-preview-accent-emphasis: #0969da;
+        --mk-wysiwyg-preview-attention-subtle: #fff8c5;
+        --mk-wysiwyg-preview-danger-fg: #cf222e;
+    }
+
+    @include dark {
+        --mk-wysiwyg-preview-prettylights-syntax-comment: #8b949e;
+        --mk-wysiwyg-preview-prettylights-syntax-constant: #79c0ff;
+        --mk-wysiwyg-preview-prettylights-syntax-entity: #d2a8ff;
+        --mk-wysiwyg-preview-prettylights-syntax-storage-modifier-import: #c9d1d9;
+        --mk-wysiwyg-preview-prettylights-syntax-entity-tag: #7ee787;
+        --mk-wysiwyg-preview-prettylights-syntax-keyword: #ff7b72;
+        --mk-wysiwyg-preview-prettylights-syntax-string: #a5d6ff;
+        --mk-wysiwyg-preview-prettylights-syntax-variable: #ffa657;
+        --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-unmatched: #f85149;
+        --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-text: #f0f6fc;
+        --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-bg: #8e1519;
+        --mk-wysiwyg-preview-prettylights-syntax-carriage-return-text: #f0f6fc;
+        --mk-wysiwyg-preview-prettylights-syntax-carriage-return-bg: #b62324;
+        --mk-wysiwyg-preview-prettylights-syntax-string-regexp: #7ee787;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-list: #f2cc60;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-heading: #1f6feb;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-italic: #c9d1d9;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-bold: #c9d1d9;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-text: #ffdcd7;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-bg: #67060c;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-text: #aff5b4;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-bg: #033a16;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-changed-text: #ffdfb6;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-changed-bg: #5a1e02;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-text: #c9d1d9;
+        --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-bg: #1158c7;
+        --mk-wysiwyg-preview-prettylights-syntax-meta-diff-range: #d2a8ff;
+        --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-angle: #8b949e;
+        --mk-wysiwyg-preview-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
+        --mk-wysiwyg-preview-prettylights-syntax-constant-other-reference-link: #a5d6ff;
+        --mk-wysiwyg-preview-fg-default: #c9d1d9;
+        --mk-wysiwyg-preview-fg-muted: #8b949e;
+        --mk-wysiwyg-preview-fg-subtle: #484f58;
+        --mk-wysiwyg-preview-canvas-default: transparent;
+        --mk-wysiwyg-preview-canvas-subtle: #161b22;
+        --mk-wysiwyg-preview-border-default: #30363d;
+        --mk-wysiwyg-preview-border-muted: #21262d;
+        --mk-wysiwyg-preview-neutral-muted: rgb(110 118 129 / 0.4);
+        --mk-wysiwyg-preview-accent-fg: #58a6ff;
+        --mk-wysiwyg-preview-accent-emphasis: #1f6feb;
+        --mk-wysiwyg-preview-attention-subtle: rgb(187 128 9 / 0.15);
+        --mk-wysiwyg-preview-danger-fg: #f85149;
+    }
+
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
     font-size: 16px;
@@ -502,21 +511,21 @@
         content: "]";
     }
 
-    h1 tt,
-    h1 code,
-    h2 tt,
-    h2 code,
-    h3 tt,
-    h3 code,
-    h4 tt,
-    h4 code,
-    h5 tt,
-    h5 code,
-    h6 tt,
-    h6 code {
-        padding: 0 0.2em;
-        font-size: inherit;
-    }
+    // h1 tt,
+    // h1 code,
+    // h2 tt,
+    // h2 code,
+    // h3 tt,
+    // h3 code,
+    // h4 tt,
+    // h4 code,
+    // h5 tt,
+    // h5 code,
+    // h6 tt,
+    // h6 code {
+    //     padding: 0 0.2em;
+    //     font-size: inherit;
+    // }
 
     ol[type="1"] {
         list-style-type: decimal;

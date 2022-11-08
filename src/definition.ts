@@ -1,4 +1,5 @@
 import type { FileType } from '@src/lib/modules/file';
+import type { ComputedRef, InjectionKey } from 'vue';
 
 // Theme
 
@@ -186,3 +187,7 @@ export type TableProps = {
   items: TableItem[];
   options?: Partial<TableOptions>;
 };
+
+// Provide / inject keys
+
+export const themeContextKey = Symbol('Inject key of theme context') as InjectionKey<ComputedRef<ThemeScheme>>;

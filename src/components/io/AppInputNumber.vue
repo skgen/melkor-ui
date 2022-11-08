@@ -1,7 +1,9 @@
 <template>
   <div
+    v-theme="{ scheme }"
     class="mk-AppInputNumber"
     :data-focus="focus || undefined"
+
     :data-fill="props.fill || undefined"
   >
     <label>
@@ -34,6 +36,8 @@ import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
 
+import useComponentTheme from '@src/composables/useComponentTheme';
+
 type Value = number | null;
 
 type Props = {
@@ -53,6 +57,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
+
+const { scheme } = useComponentTheme();
 
 const {
   onChange, onFocus, onBlur, state, focus,

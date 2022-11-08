@@ -1,5 +1,8 @@
 <template>
-  <div class="mk-AppTabs">
+  <div
+    v-theme="{ scheme }"
+    class="mk-AppTabs"
+  >
     <slot />
   </div>
 </template>
@@ -7,6 +10,7 @@
 <script lang="ts" setup>
 import type { WritableComputedRef } from 'vue';
 import { computed, provide } from 'vue';
+import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Props = {
   modelValue: unknown;
@@ -18,6 +22,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+
+const { scheme } = useComponentTheme();
 
 const index = computed({
   get() {

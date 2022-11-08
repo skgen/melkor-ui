@@ -4,6 +4,7 @@
     to="#fs-layer"
   >
     <div
+      v-theme="{ scheme }"
       class="mk-AppFullscreenView"
     >
       <div
@@ -28,6 +29,8 @@ import {
 } from 'vue';
 import { useLayerStore } from '@src/stores/layer';
 
+import useComponentTheme from '@src/composables/useComponentTheme';
+
 type Props = {
   modelValue: boolean;
   center?: boolean;
@@ -42,6 +45,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 defineEmits<Emits>();
+
+const { scheme } = useComponentTheme();
 
 const renderActive = ref(false);
 const renderContent = ref(renderActive.value);

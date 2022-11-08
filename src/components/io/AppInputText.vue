@@ -1,5 +1,6 @@
 <template>
   <div
+    v-theme="{ scheme }"
     class="mk-AppInputText"
     :data-focus="focus || undefined"
     :data-fill="props.fill || undefined"
@@ -22,10 +23,9 @@
     <AppInputHint v-if="props.hint">
       {{ props.hint }}
     </AppInputHint>
-    <!-- <AppInputError
-      v-if="state.error"
-      :error="state.error"
-    /> -->
+    <!-- <AppInputError v-if="state.error">
+      {{ state.error }}
+    </AppInputError> -->
   </div>
 </template>
 
@@ -35,6 +35,8 @@ import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
+
+import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Value = string | null;
 
@@ -53,6 +55,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
+
+const { scheme } = useComponentTheme();
 
 const {
   onChange, onFocus, onBlur, state, focus,

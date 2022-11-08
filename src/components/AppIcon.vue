@@ -1,5 +1,6 @@
 <template>
   <span
+    v-theme="{ scheme }"
     class="mk-AppIcon"
     :data-fill="props.fill || undefined"
   >
@@ -8,12 +9,16 @@
 </template>
 
 <script lang="ts" setup>
+import useComponentTheme from '@src/composables/useComponentTheme';
+
 type Props = {
   icon: string;
   fill?: boolean;
 };
 
 const props = defineProps<Props>();
+
+const { scheme } = useComponentTheme();
 </script>
 
 <style lang="scss">

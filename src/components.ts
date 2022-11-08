@@ -16,6 +16,7 @@ export { default as AppSkeleton } from '@src/components/AppSkeleton.vue';
 export { default as AppAlert } from '@src/components/AppAlert.vue';
 export { default as AppImage } from '@src/components/AppImage.vue';
 export { default as AppIcon } from '@src/components/AppIcon.vue';
+export { default as AppThemeContext } from '@src/components/AppThemeContext.vue';
 
 export { default as AppTooltip } from '@src/components/floating/AppTooltip.vue';
 export { default as AppMenu } from '@src/components/floating/AppMenu.vue';

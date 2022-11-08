@@ -1,5 +1,8 @@
 <template>
-  <div class="mk-AppThemeSelector">
+  <div
+    v-theme="{ scheme }"
+    class="mk-AppThemeSelector"
+  >
     <select
       name="app-theme-selector"
       @change="handleChange"
@@ -22,6 +25,9 @@ import { useI18n } from 'vue-i18n';
 import { Theme } from '@src/definition';
 import { useThemeStore } from '@src/stores/theme';
 import AppIcon from '@src/components/AppIcon.vue';
+import useComponentTheme from '@src/composables/useComponentTheme';
+
+const { scheme } = useComponentTheme();
 
 const themeStore = useThemeStore();
 
@@ -32,7 +38,6 @@ function handleChange(evt: Event) {
   const newTheme: Theme = parseInt(target.value, 10);
   themeStore.updateTheme(newTheme);
 }
-
 </script>
 
 <style lang="scss">

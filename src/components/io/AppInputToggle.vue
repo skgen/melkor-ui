@@ -9,6 +9,7 @@
   >
     <template #default="{ inputName, checked: isChecked, onChange }">
       <div
+        v-theme="{ scheme }"
         class="mk-AppInputToggle"
         :data-checked="isChecked"
         :data-fill="props.fill || undefined"
@@ -33,10 +34,9 @@
         <AppInputHint v-if="props.hint">
           {{ props.hint }}
         </AppInputHint>
-        <!-- <AppInputError
-          v-if="error"
-          :error="error"
-        /> -->
+        <!-- <AppInputError v-if="state.error">
+          {{ state.error }}
+        </AppInputError> -->
       </div>
     </template>
   </AppInputCheckable>
@@ -50,6 +50,8 @@ import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import { computed } from 'vue';
 import { isEqual } from 'lodash';
+
+import useComponentTheme from '@src/composables/useComponentTheme';
 // import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 
 type Value = any;
@@ -74,6 +76,8 @@ type Emits = {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
+const { scheme } = useComponentTheme();
+
 const checked = computed(() => isEqual(props.modelValue.value, props.checked));
 const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.uncheckedLabel));
 
@@ -82,15 +86,15 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
 <style lang="scss">
 @import "@style/mixins";
 
-@include light {
-    --mk-input-toggle-background-color: var(--c-grey-60);
-}
-
-@include dark {
-    --mk-input-toggle-background-color: var(--c-grey-60);
-}
-
 .mk-AppInputToggle {
+    @include light {
+        --mk-input-toggle-background-color: var(--c-grey-60);
+    }
+
+    @include dark {
+        --mk-input-toggle-background-color: var(--c-grey-60);
+    }
+
     --mk-input-toggle-spacing: var(--app-m-1);
     --mk-input-toggle-size: 16px;
     --mk-input-toggle-padding: 2px;

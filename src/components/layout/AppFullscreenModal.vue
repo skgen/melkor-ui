@@ -5,7 +5,10 @@
     @update:model-value="(state: boolean) => emit('update:modelValue', state)"
   >
     <template #transition="{ active }">
-      <div class="mk-AppFullscreenModal">
+      <div
+        v-theme="{ scheme }"
+        class="mk-AppFullscreenModal"
+      >
         <div
           class="mk-AppFullscreenModal-veil"
           role="presentation"
@@ -30,6 +33,8 @@
 import { computed } from 'vue';
 import AppFullscreenView from '@src/components/layout/AppFullscreenView.vue';
 
+import useComponentTheme from '@src/composables/useComponentTheme';
+
 type Props = {
   modelValue: boolean;
   center?: boolean;
@@ -43,6 +48,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+
+const { scheme } = useComponentTheme();
 
 const centerAttr = computed(() => {
   if (props.center || (props.centerX && props.centerY)) {
@@ -66,15 +73,15 @@ function handleClickVeil() {
 <style lang="scss">
 @import "@style/mixins";
 
-@include light {
-    --mk-veil-background-color: var(--app-background-color) / 0.3;
-}
-
-@include dark {
-    --mk-veil-background-color: var(--app-background-color) / 0.7;
-}
-
 .mk-AppFullscreenModal {
+    @include light {
+        --mk-veil-background-color: var(--app-background-color) / 0.3;
+    }
+
+    @include dark {
+        --mk-veil-background-color: var(--app-background-color) / 0.7;
+    }
+
     &-veil {
         position: absolute;
         top: 0;

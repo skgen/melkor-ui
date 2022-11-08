@@ -1,5 +1,6 @@
 <template>
   <div
+    v-theme="{ scheme }"
     class="mk-AppInputTextarea"
     :data-focus="focus || undefined"
     :data-fill="props.fill || undefined"
@@ -32,6 +33,8 @@ import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
 
+import useComponentTheme from '@src/composables/useComponentTheme';
+
 type Value = string | null;
 
 type Props = {
@@ -56,6 +59,8 @@ const props = withDefaults(defineProps<Props>(), {
   label: undefined,
 });
 const emits = defineEmits<Emits>();
+
+const { scheme } = useComponentTheme();
 
 const {
   onChange, onFocus, onBlur, state, focus,

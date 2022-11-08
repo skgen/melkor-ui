@@ -1,5 +1,8 @@
 <template>
-  <div class="mk-AppLocaleSelector">
+  <div
+    v-theme="{ scheme }"
+    class="mk-AppLocaleSelector"
+  >
     <select
       v-model="locale"
       name="app-i18n-select"
@@ -22,6 +25,9 @@ import { watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppIcon from '@src/components/AppIcon.vue';
 import { persistLocale } from '@src/lib/modules/i18n';
+import useComponentTheme from '@src/composables/useComponentTheme';
+
+const { scheme } = useComponentTheme();
 
 const { t, locale, availableLocales } = useI18n();
 

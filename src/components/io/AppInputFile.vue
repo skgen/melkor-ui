@@ -1,5 +1,8 @@
 <template>
-  <div class="mk-AppInputFile">
+  <div
+    v-theme="{ scheme }"
+    class="mk-AppInputFile"
+  >
     <label>
       <AppInputLabel v-if="props.label">
         {{ props.label }}
@@ -37,10 +40,9 @@
         @delete="() => handleDelete(index)"
       />
     </div>
-    <AppInputError
-      v-if="state.error"
-      :error="state.error"
-    />
+    <AppInputError v-if="state.error">
+      {{ state.error }}
+    </AppInputError>
   </div>
 </template>
 
@@ -58,6 +60,8 @@ import { isValue } from '@src/lib/modules/definition';
 import { fileToFileModel } from '@src/lib/modules/file';
 import { useI18n } from 'vue-i18n';
 
+import useComponentTheme from '@src/composables/useComponentTheme';
+
 type Value = FileModel[];
 
 type Props = {
@@ -74,6 +78,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
+
+const { scheme } = useComponentTheme();
 
 const { t } = useI18n();
 
