@@ -74,7 +74,6 @@ import { isNumber, isString, isValue } from '@src/lib/modules/definition';
 import type {
   TableCellAsGeneric, TableHeader, TableItem, TableOptions,
 } from '@src/definition';
-
 import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Props = {

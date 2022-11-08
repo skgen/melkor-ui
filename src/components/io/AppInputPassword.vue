@@ -40,7 +40,6 @@ import AppIcon from '@src/components/AppIcon.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
-
 import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Value = string | null;

@@ -28,7 +28,6 @@ import {
   onMounted, ref, watch,
 } from 'vue';
 import { useLayerStore } from '@src/stores/layer';
-
 import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Props = {

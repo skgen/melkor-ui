@@ -29,7 +29,6 @@ import isEqual from 'lodash/isEqual';
 import type { InputState, ValidateInput } from '@src/definition';
 // import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import useInput from '@src/composables/useInput';
-
 import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Value = any;

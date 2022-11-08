@@ -59,7 +59,6 @@ import useInput from '@src/composables/useInput';
 import { isValue } from '@src/lib/modules/definition';
 import { fileToFileModel } from '@src/lib/modules/file';
 import { useI18n } from 'vue-i18n';
-
 import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Value = FileModel[];

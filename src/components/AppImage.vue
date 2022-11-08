@@ -15,7 +15,6 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-
 import useComponentTheme from '@src/composables/useComponentTheme';
 
 enum Fit {

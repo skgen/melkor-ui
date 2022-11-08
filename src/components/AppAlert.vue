@@ -24,7 +24,6 @@
 <script lang="ts" setup>
 import { isValue } from '@src/lib/modules/definition';
 import { computed } from 'vue';
-
 import useComponentTheme from '@src/composables/useComponentTheme';
 
 enum Type {

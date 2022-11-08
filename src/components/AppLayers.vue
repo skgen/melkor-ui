@@ -10,7 +10,6 @@
 <script lang="ts" setup>
 import type { WritableComputedRef } from 'vue';
 import { computed, provide } from 'vue';
-
 import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Props = {

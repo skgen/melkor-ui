@@ -49,7 +49,6 @@ import fileSize from 'filesize';
 import type { FileModel } from '@src/definition';
 import { isFileModel, fileToFileModel, FileType } from '@src/lib/modules/file';
 import AppIcon from '@src/components/AppIcon.vue';
-
 import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Props = {

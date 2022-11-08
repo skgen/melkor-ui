@@ -14,7 +14,6 @@ import {
   computed,
   inject,
 } from 'vue';
-
 import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Props = {
