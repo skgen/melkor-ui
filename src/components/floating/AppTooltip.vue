@@ -1,5 +1,6 @@
 <template>
   <Tooltip
+    v-theme="{ scheme }"
     class="mk-AppTooltip"
     :data-fill="props.fill || undefined"
     v-bind="props"
@@ -13,12 +14,15 @@
 
 <script lang="ts" setup>
 import { Tooltip } from 'floating-vue';
+import useComponentTheme from '@src/composables/useComponentTheme';
 
 type Props = {
   fill?: boolean;
 };
 
 const props = defineProps<Props>();
+
+const { scheme } = useComponentTheme();
 </script>
 
 <style lang="scss">

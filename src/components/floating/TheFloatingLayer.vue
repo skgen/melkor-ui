@@ -1,11 +1,15 @@
 <template>
   <div
     id="fl-layer"
+    v-theme="{ scheme }"
     class="mk-TheFloatingLayer"
   />
 </template>
 
 <script lang="ts" setup>
+import useComponentTheme from '@src/composables/useComponentTheme';
+
+const { scheme } = useComponentTheme();
 </script>
 
 <style lang="scss">
