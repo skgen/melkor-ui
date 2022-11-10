@@ -1,37 +1,34 @@
 <template>
-  <template
-    v-if="props.to"
+  <router-link
+    v-if="props.to && isRelative"
+    v-slot="{ href, navigate, isActive, isExactActive }"
+    :to="props.to"
+    custom
   >
-    <router-link
-      v-if="isRelative"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-      :to="props.to"
-      custom
-    >
-      <a
-        v-theme="{ scheme }"
-        :href="href"
-        class="mk-AppLink"
-        :data-wrapper="asWrapper ? 'true' : null"
-        :data-active="isActive ? true : null"
-        :data-exact-active="isExactActive ? true : null"
-        v-bind="$attrs"
-        @click="navigate"
-      >
-        <slot />
-      </a>
-    </router-link>
     <a
-      v-else
       v-theme="{ scheme }"
-      :href="props.to"
+      :href="href"
       class="mk-AppLink"
       :data-wrapper="asWrapper ? 'true' : null"
+      :data-active="isActive ? true : null"
+      :data-exact-active="isExactActive ? true : null"
       v-bind="$attrs"
+      @click="navigate"
     >
       <slot />
     </a>
-  </template>
+  </router-link>
+
+  <a
+    v-else-if="props.to && !isRelative"
+    v-theme="{ scheme }"
+    :href="props.to"
+    class="mk-AppLink"
+    :data-wrapper="asWrapper ? 'true' : null"
+    v-bind="$attrs"
+  >
+    <slot />
+  </a>
 
   <button
     v-else-if="props.asButton"
@@ -42,15 +39,15 @@
   >
     <slot />
   </button>
-  <template v-else>
-    <div
-      v-theme="{ scheme }"
-      v-bind="$attrs"
-      class="mk-AppLink"
-    >
-      <slot />
-    </div>
-  </template>
+
+  <div
+    v-else
+    v-theme="{ scheme }"
+    v-bind="$attrs"
+    class="mk-AppLink"
+  >
+    <slot />
+  </div>
 </template>
 
 <script lang="ts" setup>
