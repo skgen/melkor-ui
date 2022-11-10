@@ -91,6 +91,15 @@ export type NumberInputOptions = InputOptions<NumberInputValue> & {
   max?: number;
 };
 
+// Wysiwyg
+export type WysiwygInputValue = string | null;
+
+export type WysiwygInputModel = InputModel<WysiwygInputValue, WysiwygInputOptions>;
+
+export type WysiwygInputOptions = InputOptions<WysiwygInputValue> & {
+  fill?: boolean;
+};
+
 // Color
 export type ColorInputValue = string | null;
 
@@ -143,11 +152,14 @@ export type RangeInputOptions = InputOptions<RangeInputValue> & {
 // Select
 export type SelectInputModel<TValue> = Required<InputModel<TValue, SelectInputOptions<TValue>>>;
 
+export type SelectInputOption<TValue> = {
+  label: string;
+  value: TValue;
+};
+
 export type SelectInputOptions<TValue> = InputOptions<TValue> & {
-  options: {
-    label: string;
-    value: TValue;
-  }[];
+  fill?: boolean;
+  options: SelectInputOption<TValue>[];
 };
 
 // File

@@ -33,6 +33,8 @@
         "test:unit": "vitest --environment jsdom"
     },
     "dependencies": {
+      "@tiptap/starter-kit": "^2.0.0-beta.202",
+      "@tiptap/vue-3": "^2.0.0-beta.202",
       "change-case": "^4.1.2",
       "date-fns": "^2.29.2",
       "filesize": "^9.0.11",

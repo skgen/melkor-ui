@@ -1,16 +1,29 @@
 <template>
   <div
+    v-if="!props.html"
     v-theme="{ scheme }"
     class="mk-AppWysiwygPreview"
   >
     <slot />
   </div>
+  <div
+    v-else
+    v-theme="{ scheme }"
+    class="mk-AppWysiwygPreview"
+    v-html="props.html"
+  />
 </template>
 
 <script lang="ts" setup>
 import useComponentTheme from '@src/composables/useComponentTheme';
 
 const { scheme } = useComponentTheme();
+
+type Props = {
+  html?: string;
+};
+
+const props = defineProps<Props>();
 </script>
 
 <style lang="scss">

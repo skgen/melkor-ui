@@ -33,6 +33,7 @@ export { default as AppInputText } from '@src/components/io/AppInputText.vue';
 export { default as AppInputTextarea } from '@src/components/io/AppInputTextarea.vue';
 export { default as AppInputToggle } from '@src/components/io/AppInputToggle.vue';
 export { default as AppInputDate } from '@src/components/io/AppInputDate.vue';
+export { default as AppInputWysiwyg } from '@src/components/io/AppInputWysiwyg.vue';
 
 export { default as AppInputError } from '@src/components/io/decoration/AppInputError.vue';
 export { default as AppInputHint } from '@src/components/io/decoration/AppInputHint.vue';
