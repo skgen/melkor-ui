@@ -1,81 +1,46 @@
 <template>
-  <div
-    v-theme="{ scheme }"
+  <AppInputSelect
+    v-model="state"
     class="mk-AppLocaleSelector"
-  >
-    <select
-      v-model="locale"
-      name="app-i18n-select"
-    >
-      <option
-        v-for="option in availableLocales"
-        :key="option"
-        :value="option"
-        :selected="option === locale"
-      >
-        {{ t(`app.i18n.${option}`) }}
-      </option>
-    </select>
-    <AppIcon icon="expand_more" />
-  </div>
+    :options="options"
+  />
 </template>
 
 <script lang="ts" setup>
-import { watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppIcon from '@src/components/AppIcon.vue';
 import { persistLocale } from '@src/lib/modules/i18n';
-import useComponentTheme from '@src/composables/useComponentTheme';
-
-const { scheme } = useComponentTheme();
+import AppInputSelect from '@src/components/io/AppInputSelect.vue';
+import type { InputState, SelectInputOption } from '@src/definition';
+import { createInputState } from '@src/composables/useInput';
 
 const { t, locale, availableLocales } = useI18n();
 
 watch(locale, persistLocale);
 
+type SelectInputValue = string;
+
+const options = computed<SelectInputOption<SelectInputValue>[]>(() => availableLocales.map((availableLocale) => ({
+  label: t(`app.i18n.${availableLocale}`),
+  value: availableLocale,
+})));
+
+const state = ref<InputState<SelectInputValue>>(
+  createInputState({
+    value: locale.value,
+  }),
+);
+
+watch(() => state.value.value, (newValue) => {
+  if (newValue !== locale.value) {
+    locale.value = newValue;
+  }
+});
+
+watch(locale, (newLocale) => {
+  if (newLocale !== state.value.value) {
+    state.value.value = newLocale;
+  }
+});
+
 </script>
-
-<style lang="scss">
-@import "@style/mixins";
-
-.mk-AppLocaleSelector {
-    --mk-locale-selector-background-color: var(--app-input-background-color);
-    --mk-locale-selector-border-color: var(--app-border-color);
-
-    position: relative;
-    display: inline-flex;
-    overflow: hidden;
-    background-color: var(--mk-locale-selector-background-color);
-    border: 1px solid var(--mk-locale-selector-border-color);
-    border-radius: 5px;
-
-    select {
-        width: 100%;
-        padding: 5px 10px;
-        color: var(--app-text-color);
-        background-color: inherit;
-        border: none;
-        outline: none;
-    }
-
-    .mk-AppIcon {
-        position: absolute;
-        top: 52%;
-        right: 0;
-        font-size: 16px;
-        pointer-events: none;
-        transform: translate(0, -50%);
-    }
-
-    &::before {
-        @include pseudo;
-
-        top: 0;
-        right: 0;
-        width: 15px;
-        height: 100%;
-        pointer-events: none;
-        background-color: var(--mk-locale-selector-background-color);
-    }
-}
-</style>
