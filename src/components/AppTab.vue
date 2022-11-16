@@ -47,11 +47,11 @@ function handleClick() {
 @import "@style/mixins";
 
 .mk-AppTab {
-    --mk-tab-border-size: 4px;
+    --mk-tab-border-height: 4px;
 
     position: relative;
     display: block;
-    padding-bottom: calc(var(--app-m-1) + var(--mk-tab-border-size));
+    padding-bottom: calc(var(--app-m-1) + var(--mk-tab-border-height));
     font-weight: 500;
     letter-spacing: 0.1em;
     cursor: pointer;
@@ -62,7 +62,7 @@ function handleClick() {
         bottom: 0;
         left: 0;
         width: 100%;
-        height: var(--mk-tab-border-size);
+        height: var(--mk-tab-border-height);
         background-color: var(--app-primary-color);
         opacity: 0;
         transition: opacity 128ms;

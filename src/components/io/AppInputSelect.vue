@@ -31,9 +31,9 @@
     <AppInputHint v-if="props.hint">
       {{ props.hint }}
     </AppInputHint>
-    <!-- <AppInputError v-if="state.error">
+    <AppInputError v-if="state.error">
       {{ state.error }}
-    </AppInputError> -->
+    </AppInputError>
   </div>
 </template>
 
@@ -43,7 +43,7 @@ import isEqual from 'lodash/isEqual';
 import type {
   InputState, ValidateInput,
 } from '@src/definition';
-// import AppInputError from '@src/components/io/decoration/AppInputError.vue';
+import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppIcon from '@src/components/AppIcon.vue';

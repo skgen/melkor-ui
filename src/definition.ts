@@ -134,10 +134,6 @@ export type ToggleInputOptions<TChecked = true, TUnchecked = false> = CheckableI
   uncheckedLabel?: string;
 };
 
-// Radio
-export type RadioInputModel<TValues extends Readonly<unknown[]>> =
-InputModel<TValues[number]>;
-
 // Range
 export type RangeInputValue = number;
 
@@ -160,6 +156,19 @@ export type SelectInputOption<TValue> = {
 export type SelectInputOptions<TValue> = InputOptions<TValue> & {
   fill?: boolean;
   options: SelectInputOption<TValue>[];
+};
+
+// Radio
+
+export type RadioInputModel<TValue> = Required<InputModel<TValue, RadioInputOptions<TValue>>>;
+
+export type RadioInputOption<TValue> = {
+  label: string;
+  value: TValue;
+};
+
+export type RadioInputOptions<TValue> = InputOptions<TValue> & {
+  options: RadioInputOption<TValue>[];
 };
 
 // File
