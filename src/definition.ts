@@ -132,6 +132,8 @@ InputModel<TChecked | TUnchecked, ToggleInputOptions<TChecked, TUnchecked>>;
 export type ToggleInputOptions<TChecked = true, TUnchecked = false> = CheckableInputOptions<TChecked, TUnchecked> & {
   checkedLabel?: string;
   uncheckedLabel?: string;
+  checkedIcon?: string;
+  uncheckedIcon?: string;
 };
 
 // Range
