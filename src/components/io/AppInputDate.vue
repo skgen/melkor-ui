@@ -101,6 +101,9 @@ function handleFocus() {
   if (!datePicker.value) {
     return;
   }
+  // @todo find why this triggers error on TS review
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   datePicker.value.showPicker();
   onFocus();
 }
