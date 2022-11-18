@@ -3,7 +3,6 @@
     v-theme="{ scheme }"
     class="mk-AppInputColor"
     :data-focus="focus || undefined"
-
     :data-fill="props.fill || undefined"
   >
     <label>
@@ -115,7 +114,6 @@ function handleTextChange(evt: Event) {
     --mk-input-color-border-radius: var(--app-border-radius);
     --mk-input-color-background-color: var(--app-input-background-color);
     --mk-input-color-border-color: var(--app-input-border-color);
-    --mk-input-color-border-color-absolute: var(--app-input-border-color);
 
     display: inline-block;
 
@@ -147,12 +145,11 @@ function handleTextChange(evt: Event) {
     &-color {
         width: 40px;
         height: 20px;
-        border: 1px solid var(--mk-input-color-border-color-absolute);
+        border: 1px solid var(--mk-input-color-border-color);
         border-radius: var(--mk-input-color-border-radius);
     }
 
     &-icon {
-        align-self: flex-end;
         font-size: 20px;
     }
 
@@ -161,7 +158,11 @@ function handleTextChange(evt: Event) {
     }
 
     &[data-focus="true"] {
-        --mk-input-color-border-color: var(--app-primary-color);
+        .mk-AppInputColor {
+            &-input {
+                border-color: var(--app-primary-color);
+            }
+        }
     }
 
     &[data-fill="true"] {

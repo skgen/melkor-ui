@@ -104,7 +104,9 @@ function handleChange(evt: Event) {
     }
 
     &[data-focus="true"] {
-        --mk-input-textarea-border-color: var(--app-primary-color);
+        textarea {
+            border-color: var(--app-primary-color);
+        }
     }
 
     &[data-fill="true"] {

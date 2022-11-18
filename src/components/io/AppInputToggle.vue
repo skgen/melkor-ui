@@ -13,6 +13,7 @@
         class="mk-AppInputToggle"
         :data-checked="isChecked"
         :data-fill="props.fill || undefined"
+        v-bind="$attrs"
       >
         <label class="mk-AppInputToggle-label">
           <AppInputLabel v-if="props.label">
@@ -100,22 +101,20 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
 
 .mk-AppInputToggle {
     @include light {
-        --mk-input-toggle-background-color: var(--c-grey-60);
+        --mk-input-toggle-color: var(--c-grey-60);
     }
 
     @include dark {
-        --mk-input-toggle-background-color: var(--c-grey-60);
+        --mk-input-toggle-color: var(--c-grey-60);
     }
 
+    --mk-input-toggle-color: var(--app-success-color);
+    --mk-input-toggle-color-active: var(--app-success-color);
     --mk-input-toggle-spacing: var(--app-m-1);
     --mk-input-toggle-size: 16px;
     --mk-input-toggle-padding: 2px;
-    --mk-input-toggle-color-active: var(--app-success-color);
-    --mk-input-toggle-target-color: var(--mk-input-toggle-background-color);
-    --mk-input-toggle-target-active-color: var(--mk-input-toggle-color-active);
-    --mk-input-toggle-inner-spacing: var(--mk-input-toggle-size) * 2;
-    --mk-input-toggle-outer-spacing: var(--mk-input-toggle-padding) * 2;
-    --mk-input-toggle-icon-size: calc(var(--mk-input-toggle-size) - calc(var(--mk-input-toggle-padding)));
+    --mk-input-toggle-target-padding: calc(var(--mk-input-toggle-padding) / 2);
+    --mk-input-toggle-icon-size: calc(var(--mk-input-toggle-size) - calc(var(--mk-input-toggle-target-padding) * 2));
 
     display: inline-block;
 
@@ -128,11 +127,11 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
 
     &-input {
         display: block;
-        width: calc(var(--mk-input-toggle-inner-spacing) + var(--mk-input-toggle-outer-spacing));
+        width: calc(var(--mk-input-toggle-size) * 2 + var(--mk-input-toggle-padding) * 2);
         padding: var(--mk-input-toggle-padding);
         font-size: var(--input-togle-icon-size);
         color: var(--mk-input-toggle-target-color);
-        background-color: var(--mk-input-toggle-background-color);
+        background-color: var(--mk-input-toggle-color);
         border-radius: var(--mk-input-toggle-size);
         transition: background-color var(--app-transition-duration-background), color var(--app-transition-duration-color);
     }
@@ -143,7 +142,7 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
         height: var(--mk-input-toggle-size);
         user-select: none;
         background-color: var(--app-background-color);
-        border-radius: 10px;
+        border-radius: 50%;
         transition: transform var(--app-transition-duration-1);
 
         .mk-AppIcon {
@@ -151,6 +150,9 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+
+            --mk-icon-size: var(--mk-input-toggle-icon-size);
+            --mk-icon-color: var(--mk-input-toggle-color);
 
             &-enter-active,
             &-leave-active {
@@ -169,15 +171,17 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
     }
 
     &[data-checked="true"] {
-        --mk-input-toggle-background-color: var(--mk-input-toggle-color-active);
-
         .mk-AppInputToggle {
             &-target {
                 transform: translate(100%, 0);
+
+                .mk-AppIcon {
+                    --mk-icon-color: var(--mk-input-toggle-color-active);
+                }
             }
 
             &-input {
-                --mk-input-toggle-target-active-color: var(--mk-input-toggle-target-active-color);
+                background-color: var(--mk-input-toggle-color-active);
             }
         }
     }

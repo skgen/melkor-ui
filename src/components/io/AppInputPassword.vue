@@ -127,7 +127,11 @@ function handleChange(evt: Event) {
     }
 
     &[data-focus="true"] {
-        --mk-input-password-border-color: var(--app-primary-color);
+        .mk-AppInputPassword {
+            &-input {
+                border-color: var(--app-primary-color);
+            }
+        }
     }
 
     &[data-fill="true"] {

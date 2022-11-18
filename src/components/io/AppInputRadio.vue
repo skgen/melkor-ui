@@ -112,6 +112,17 @@ function handleChange(evt: Event) {
 
     display: inline-block;
 
+    &-input {
+        display: block;
+        width: calc(var(--mk-input-radio-inner-spacing) + var(--mk-input-radio-outer-spacing));
+        width: var(--mk-input-radio-size);
+        height: var(--mk-input-radio-size);
+        user-select: none;
+        border: var(--mk-input-radio-border-width) solid var(--mk-input-radio-border-color);
+        border-radius: 50%;
+        transition: border-width var(--app-transition-duration-border);
+    }
+
     &-option {
         display: flex;
         gap: var(--mk-input-radio-spacing);
@@ -124,20 +135,13 @@ function handleChange(evt: Event) {
         }
 
         &[data-checked="true"] {
-            --mk-input-radio-border-color: var(--mk-input-radio-color-active);
-            --mk-input-radio-border-width: var(--mk-input-radio-border-width-active);
+            .mk-AppInputRadio {
+                &-input {
+                    border-color: var(--mk-input-radio-color-active);
+                    border-width: var(--mk-input-radio-border-width-active);
+                }
+            }
         }
-    }
-
-    &-input {
-        display: block;
-        width: calc(var(--mk-input-radio-inner-spacing) + var(--mk-input-radio-outer-spacing));
-        width: var(--mk-input-radio-size);
-        height: var(--mk-input-radio-size);
-        user-select: none;
-        border: var(--mk-input-radio-border-width) solid var(--mk-input-radio-border-color);
-        border-radius: 50%;
-        transition: border-width var(--app-transition-duration-border);
     }
 
     input {

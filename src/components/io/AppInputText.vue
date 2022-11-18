@@ -105,7 +105,11 @@ function handleChange(evt: Event) {
     }
 
     &[data-focus="true"] {
-        --mk-input-text-border-color: var(--app-primary-color);
+        .mk-AppInputText {
+            &-input {
+                border-color: var(--app-primary-color);
+            }
+        }
     }
 
     &[data-fill="true"] {

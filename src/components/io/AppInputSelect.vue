@@ -139,7 +139,9 @@ function handleChange(evt: Event) {
     }
 
     &[data-focus="true"] {
-        --mk-input-select-border-color: var(--app-primary-color);
+        select {
+            border-color: var(--app-primary-color);
+        }
     }
 
     &[data-fill="true"] {

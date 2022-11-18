@@ -1,8 +1,8 @@
 import { inject } from 'vue';
-import { themeContextKey, type ThemeScheme } from '@src/definition';
+import { themeContextKey } from '@src/definition';
 
 export default function useComponentTheme() {
-  const scheme = inject<ThemeScheme>(themeContextKey) as ThemeScheme;
+  const scheme = inject(themeContextKey);
 
   return {
     scheme,
