@@ -232,7 +232,7 @@ export const defaultOptions: Required<TableOptions> = {
             align-items: center;
 
             .mk-AppIcon {
-                font-size: 12px;
+                --mk-icon-size: 12px;
             }
         }
     }

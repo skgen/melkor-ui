@@ -140,6 +140,10 @@ function handleTextChange(evt: Event) {
         border: 1px solid var(--mk-input-color-border-color);
         border-radius: var(--mk-input-color-border-radius);
         transition: border-color var(--app-transition-duration-border);
+
+        .mk-AppIcon {
+            --mk-icon-size: 20px;
+        }
     }
 
     &-color {
@@ -147,10 +151,6 @@ function handleTextChange(evt: Event) {
         height: 20px;
         border: 1px solid var(--mk-input-color-border-color);
         border-radius: var(--mk-input-color-border-radius);
-    }
-
-    &-icon {
-        font-size: 20px;
     }
 
     &-value {

@@ -30,10 +30,7 @@
         <span class="mk-AppInputDate-value">
           {{ formatedValue }}
         </span>
-        <AppIcon
-          icon="calendar_month"
-          class="mk-AppInputDate-icon"
-        />
+        <AppIcon icon="calendar_month" />
       </div>
     </label>
     <AppInputHint v-if="props.hint">
@@ -146,10 +143,10 @@ function handleChange(evt: Event) {
         border: 1px solid var(--mk-input-date-border-color);
         border-radius: var(--mk-input-date-border-radius);
         transition: border-color var(--app-transition-duration-border);
-    }
 
-    &-icon {
-        font-size: 20px;
+        .mk-AppIcon {
+            --mk-icon-size: 20px;
+        }
     }
 
     &-value {

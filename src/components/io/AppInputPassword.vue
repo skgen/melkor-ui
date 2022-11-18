@@ -142,10 +142,11 @@ function handleChange(evt: Event) {
         @include expand-click-area;
 
         padding: 0;
-        font-size: 20px;
 
         .mk-AppIcon {
             display: block;
+
+            --mk-icon-size: 20px;
         }
     }
 

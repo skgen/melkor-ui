@@ -64,10 +64,11 @@ function handleChange(evt: Event) {
     }
 
     .mk-AppIcon {
+        --mk-icon-size: 16px;
+
         position: absolute;
         top: 52%;
         right: 0;
-        font-size: 16px;
         pointer-events: none;
         transform: translate(0, -50%);
     }
