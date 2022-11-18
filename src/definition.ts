@@ -150,6 +150,7 @@ export type RangeInputValue = number;
 export type RangeInputModel = InputModel<RangeInputValue, RangeInputOptions>;
 
 export type RangeInputOptions = InputOptions<RangeInputValue> & {
+  fill?: boolean;
   min?: number;
   max?: number;
   step?: number;

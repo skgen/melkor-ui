@@ -114,7 +114,6 @@ function handleChange(evt: Event) {
 
     &-input {
         display: block;
-        width: calc(var(--mk-input-radio-inner-spacing) + var(--mk-input-radio-outer-spacing));
         width: var(--mk-input-radio-size);
         height: var(--mk-input-radio-size);
         user-select: none;
