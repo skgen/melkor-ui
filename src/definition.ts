@@ -110,7 +110,15 @@ export type ColorInputOptions = InputOptions<ColorInputValue> & {
 };
 
 // Date
-export type DateInputModel = InputModel<Date>;
+export type DateInputValue = Date | null;
+
+export type DateInputModel = InputModel<DateInputValue, DateInputOptions>;
+
+export type DateInputOptions = InputOptions<DateInputValue> & {
+  fill?: boolean;
+  datetime?: boolean;
+  showTimezone?: boolean;
+};
 
 // Checkable
 export type CheckableInputModel
