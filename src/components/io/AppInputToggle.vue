@@ -28,17 +28,43 @@
               @input="onChange"
             >
             <div class="mk-AppInputToggle-target">
+              <template v-if="!props.iconInBackground">
+                <transition name="mk-AppIcon">
+                  <slot
+                    v-if="checked"
+                    name="checked-icon"
+                  />
+                </transition>
+                <transition name="mk-AppIcon">
+                  <slot
+                    v-if="!checked"
+                    name="unchecked-icon"
+                  />
+                </transition>
+              </template>
+            </div>
+            <div
+              v-if="props.iconInBackground"
+              class="mk-AppInputToggle-icons"
+            >
               <transition name="mk-AppIcon">
-                <AppIcon
-                  v-if="props.checkedIcon && checked"
-                  :icon="props.checkedIcon"
-                />
+                <div
+                  v-if="checked && $slots['checked-icon']"
+                  class="mk-AppInputToggle-icon"
+                  data-state="checked"
+                >
+
+                  <slot name="checked-icon" />
+                </div>
               </transition>
               <transition name="mk-AppIcon">
-                <AppIcon
-                  v-if="props.uncheckedIcon && !checked"
-                  :icon="props.uncheckedIcon"
-                />
+                <div
+                  v-if="!checked && $slots['unchecked-icon']"
+                  class="mk-AppInputToggle-icon"
+                  data-state="unchecked"
+                >
+                  <slot name="unchecked-icon" />
+                </div>
               </transition>
             </div>
           </div>
@@ -57,7 +83,6 @@
 <script lang="ts" setup>
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputCheckable from '@src/components/io/abstract/AppInputCheckable.vue';
-import AppIcon from '@src/components/AppIcon.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import { computed } from 'vue';
@@ -78,8 +103,7 @@ type Props = {
   unchecked?: Value;
   checkedLabel?: string;
   uncheckedLabel?: string;
-  checkedIcon?: string;
-  uncheckedIcon?: string;
+  iconInBackground?: boolean;
 };
 
 type Emits = {
@@ -100,16 +124,10 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
 @import "@style/mixins";
 
 .mk-AppInputToggle {
-    @include light {
-        --mk-input-toggle-color: var(--c-grey-60);
-    }
-
-    @include dark {
-        --mk-input-toggle-color: var(--c-grey-60);
-    }
-
-    --mk-input-toggle-color: var(--app-success-color);
     --mk-input-toggle-color-active: var(--app-success-color);
+    --mk-input-toggle-color-on-active: var(--c-white);
+    --mk-input-toggle-background-color: var(--c-grey-60);
+    --mk-input-toggle-color-on-background: var(--c-white);
     --mk-input-toggle-spacing: var(--app-m-1);
     --mk-input-toggle-size: 16px;
     --mk-input-toggle-padding: 2px;
@@ -126,12 +144,13 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
     }
 
     &-input {
+        position: relative;
         display: block;
         width: calc(var(--mk-input-toggle-size) * 2 + var(--mk-input-toggle-padding) * 2);
         padding: var(--mk-input-toggle-padding);
         font-size: var(--input-togle-icon-size);
         color: var(--mk-input-toggle-target-color);
-        background-color: var(--mk-input-toggle-color);
+        background-color: var(--mk-input-toggle-background-color);
         border-radius: var(--mk-input-toggle-size);
         transition: background-color var(--app-transition-duration-background), color var(--app-transition-duration-color);
     }
@@ -141,7 +160,7 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
         width: var(--mk-input-toggle-size);
         height: var(--mk-input-toggle-size);
         user-select: none;
-        background-color: var(--app-background-color);
+        background-color: var(--mk-input-toggle-color-on-background);
         border-radius: 50%;
         transition: transform var(--app-transition-duration-1);
 
@@ -151,17 +170,48 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
             left: 50%;
             transform: translate(-50%, -50%);
 
-            --mk-icon-size: var(--mk-input-toggle-icon-size);
-            --mk-icon-color: var(--mk-input-toggle-color);
+            --mk-icon-color: var(--mk-input-toggle-background-color);
+        }
+    }
 
-            &-enter-active,
-            &-leave-active {
-                transition: opacity var(--app-transition-duration-opacity);
+    .mk-AppIcon {
+        --mk-icon-size: var(--mk-input-toggle-icon-size);
+
+        &-enter-active,
+        &-leave-active {
+            transition: opacity var(--app-transition-duration-opacity);
+        }
+
+        &-enter-from,
+        &-leave-to {
+            opacity: 0;
+        }
+    }
+
+    &-icon {
+        position: absolute;
+        top: 50%;
+
+        .mk-AppIcon {
+            display: block;
+            opacity: 0.6;
+        }
+
+        &[data-state="checked"] {
+            left: calc((var(--mk-input-toggle-padding) + var(--mk-input-toggle-size) / 2));
+            transform: translate(-50%, -50%);
+
+            .mk-AppIcon {
+                --mk-icon-color: var(--mk-input-toggle-color-on-active);
             }
+        }
 
-            &-enter-from,
-            &-leave-to {
-                opacity: 0;
+        &[data-state="unchecked"] {
+            right: calc((var(--mk-input-toggle-padding) + var(--mk-input-toggle-size) / 2));
+            transform: translate(50%, -50%);
+
+            .mk-AppIcon {
+                --mk-icon-color: var(--mk-input-toggle-color-on-background);
             }
         }
     }
@@ -173,6 +223,7 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
     &[data-checked="true"] {
         .mk-AppInputToggle {
             &-target {
+                background-color: var(--mk-input-toggle-color-on-active);
                 transform: translate(100%, 0);
 
                 .mk-AppIcon {

@@ -142,6 +142,7 @@ export type ToggleInputOptions<TChecked = true, TUnchecked = false> = CheckableI
   uncheckedLabel?: string;
   checkedIcon?: string;
   uncheckedIcon?: string;
+  iconInBackground?: boolean;
 };
 
 // Range
