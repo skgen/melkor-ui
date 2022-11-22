@@ -10,14 +10,6 @@
         {{ props.label }}
       </AppInputLabel>
       <div class="mk-AppInputRange-input">
-        <!-- <input
-          :name="props.name"
-          type="text"
-          :value="state.value"
-          @input="handleChange"
-          @focus="onFocus"
-          @blur="onBlur"
-        > -->
         <div class="mk-AppInputRange-placeholder">
           <div class="mk-AppInputRange-placeholder-track">
             <div class="mk-AppInputRange-placeholder-track-active" />
