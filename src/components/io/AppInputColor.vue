@@ -32,9 +32,11 @@
           >
         </span>
         <AppIcon
+          v-if="!$slots['icon']"
           icon="palette"
           class="mk-AppInputColor-icon"
         />
+        <slot name="icon" />
       </div>
     </label>
     <AppInputHint v-if="props.hint">
@@ -114,6 +116,8 @@ function handleTextChange(evt: Event) {
     --mk-input-color-border-radius: var(--app-border-radius);
     --mk-input-color-background-color: var(--app-input-background-color);
     --mk-input-color-border-color: var(--app-input-border-color);
+    --mk-input-color-icon-color: var(--app-input-icon-color);
+    --mk-input-color-icon-size: 20px;
 
     display: inline-block;
 
@@ -142,7 +146,8 @@ function handleTextChange(evt: Event) {
         transition: border-color var(--app-transition-duration-border);
 
         .mk-AppIcon {
-            --mk-icon-size: 20px;
+            --mk-icon-size: var(--mk-input-color-icon-size);
+            --mk-icon-color: var(--mk-input-color-icon-color);
         }
     }
 

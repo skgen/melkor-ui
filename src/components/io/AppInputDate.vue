@@ -12,7 +12,7 @@
 
         </AppInputLabel>
         <span
-          v-if="props.showTimezone"
+          v-if="props.showTimezone && isValue(state.value)"
           class="mk-AppInputDate-timezone"
         >
           {{ formatDate(state.value, 'OOO') }}
@@ -30,15 +30,19 @@
         <span class="mk-AppInputDate-value">
           {{ formatedValue }}
         </span>
-        <AppIcon icon="calendar_month" />
+        <AppIcon
+          v-if="!$slots.icon"
+          icon="calendar_month"
+        />
+        <slot name="icon" />
       </div>
     </label>
     <AppInputHint v-if="props.hint">
       {{ props.hint }}
     </AppInputHint>
-    <!-- <AppInputError v-if="state.error">
+    <AppInputError v-if="state.error">
       {{ state.error }}
-    </AppInputError> -->
+    </AppInputError>
   </div>
 </template>
 
@@ -47,14 +51,16 @@ import {
   computed, ref,
 } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
+import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
 import AppIcon from '@src/components/AppIcon.vue';
 import useComponentTheme from '@src/composables/useComponentTheme';
 import { classicDate, classicTime, formatDate } from '@src/lib/modules/date';
+import { isValue } from '@src/lib/modules/definition';
 
-type Value = Date;
+type Value = Date | null;
 
 type Props = {
   modelValue: InputState<Value>;
@@ -88,6 +94,9 @@ const {
 const type = computed(() => (props.datetime ? 'datetime-local' : 'date'));
 
 const formatedValue = computed(() => {
+  if (!isValue(state.value.value)) {
+    return null;
+  }
   if (props.datetime) {
     return `${classicDate(state.value.value)} - ${classicTime(state.value.value)}`;
   }
@@ -111,7 +120,11 @@ function handleChange(evt: Event) {
   }
   const { value } = evt.target as HTMLInputElement;
 
-  onChange(new Date(value));
+  if (value === '') {
+    onChange(null);
+  } else {
+    onChange(new Date(value));
+  }
 }
 </script>
 
@@ -125,6 +138,8 @@ function handleChange(evt: Event) {
     --mk-input-date-border-radius: var(--app-border-radius);
     --mk-input-date-background-color: var(--app-input-background-color);
     --mk-input-date-border-color: var(--app-input-border-color);
+    --mk-input-date-icon-color: var(--app-input-icon-color);
+    --mk-input-date-icon-size: 20px;
 
     display: inline-block;
 
@@ -138,6 +153,7 @@ function handleChange(evt: Event) {
         align-items: center;
         justify-content: space-between;
         width: 100%;
+        min-width: 200px;
         padding: var(--mk-input-date-padding-y) var(--mk-input-date-padding-x);
         background-color: var(--mk-input-date-background-color);
         border: 1px solid var(--mk-input-date-border-color);
@@ -145,7 +161,8 @@ function handleChange(evt: Event) {
         transition: border-color var(--app-transition-duration-border);
 
         .mk-AppIcon {
-            --mk-icon-size: 20px;
+            --mk-icon-size: var(--mk-input-date-icon-size);
+            --mk-icon-color: var(--mk-input-date-icon-color);
         }
     }
 

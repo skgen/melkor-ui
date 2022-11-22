@@ -5,7 +5,9 @@
     :data-type="type"
   >
     <div class="mk-AppAlert-wrapper">
+      <slot name="icon" />
       <mk-icon
+        v-if="!$slots.icon"
         :icon="icon"
         fill
       />
@@ -23,7 +25,7 @@
 
 <script lang="ts" setup>
 import { isValue } from '@src/lib/modules/definition';
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 import useComponentTheme from '@src/composables/useComponentTheme';
 
 enum Type {
@@ -39,10 +41,11 @@ type Props = {
   warning?: boolean;
   error?: boolean;
   info?: boolean;
-  icon?: string;
 };
 
 const props = defineProps<Props>();
+
+const slots = useSlots();
 
 const { scheme } = useComponentTheme();
 
@@ -63,8 +66,8 @@ const type = computed(() => {
 });
 
 const icon = computed(() => {
-  if (isValue(props.icon)) {
-    return props.icon;
+  if (isValue(slots.icon)) {
+    return null;
   }
   if (props.success) {
     return 'check_circle';

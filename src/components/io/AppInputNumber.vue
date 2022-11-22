@@ -21,6 +21,7 @@
           @focus="onFocus"
           @blur="onBlur"
         >
+        <slot name="icon" />
       </div>
     </label>
     <AppInputHint v-if="props.hint">
@@ -87,23 +88,34 @@ function handleChange(evt: Event) {
     --mk-input-number-border-radius: var(--app-border-radius);
     --mk-input-number-background-color: var(--app-input-background-color);
     --mk-input-number-border-color: var(--app-input-border-color);
+    --mk-input-number-icon-color: var(--app-input-icon-color);
+    --mk-input-number-icon-size: 20px;
 
     display: inline-block;
 
     input {
         width: 100%;
-        padding: var(--mk-input-number-padding-y) var(--mk-input-number-padding-x);
+        padding: var(--mk-input-number-padding-y) 0;
         background-color: transparent;
         border: none;
         outline: none;
     }
 
     &-input {
+        display: flex;
+        gap: var(--mk-input-number-padding-x);
+        align-items: center;
         width: 100%;
+        padding: 0 var(--mk-input-number-padding-x);
         background-color: var(--mk-input-number-background-color);
         border: 1px solid var(--mk-input-number-border-color);
         border-radius: var(--mk-input-number-border-radius);
         transition: border-color var(--app-transition-duration-border);
+
+        .mk-AppIcon {
+            --mk-icon-size: var(--mk-input-number-icon-size);
+            --mk-icon-color: var(--mk-input-number-icon-color);
+        }
     }
 
     &[data-focus="true"] {
