@@ -19,6 +19,7 @@ export function registerTooltipConfig() {
   FloatingVue.options.themes.menu.triggers = [];
   FloatingVue.options.themes.menu.popperTriggers = [];
   FloatingVue.options.themes.menu.autoHide = false;
+  FloatingVue.options.container = '#fl-layer';
 
 //   FloatingVue.options = {
 //     // Disable popper components
