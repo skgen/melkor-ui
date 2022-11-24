@@ -1,5 +1,5 @@
 import type { FileType } from '@src/lib/modules/file';
-import type { ComputedRef, InjectionKey } from 'vue';
+import type { ComputedRef, InjectionKey, WritableComputedRef } from 'vue';
 
 // Theme
 
@@ -224,3 +224,5 @@ export type TableProps = {
 // Provide / inject keys
 
 export const themeContextKey = Symbol('Inject key of theme context') as InjectionKey<ComputedRef<ThemeScheme>>;
+export const tabsContextKey = Symbol('Inject key of tabs/tab') as InjectionKey<WritableComputedRef<unknown>>;
+export const layersContextKey = Symbol('Inject key of layers/layer') as InjectionKey<WritableComputedRef<unknown>>;

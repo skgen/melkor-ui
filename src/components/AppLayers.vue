@@ -8,9 +8,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { WritableComputedRef } from 'vue';
 import { computed, provide } from 'vue';
 import useComponentTheme from '@src/composables/useComponentTheme';
+import { layersContextKey } from '@src/definition';
 
 type Props = {
   modelValue: unknown;
@@ -34,5 +34,5 @@ const index = computed({
   },
 });
 
-provide<WritableComputedRef<unknown>>('layer-index', index);
+provide(layersContextKey, index);
 </script>

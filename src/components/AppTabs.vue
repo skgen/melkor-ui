@@ -8,9 +8,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { WritableComputedRef } from 'vue';
 import { computed, provide } from 'vue';
 import useComponentTheme from '@src/composables/useComponentTheme';
+import { tabsContextKey } from '@src/definition';
 
 type Props = {
   modelValue: unknown;
@@ -34,7 +34,7 @@ const index = computed({
   },
 });
 
-provide<WritableComputedRef<unknown>>('tabs-index', index);
+provide(tabsContextKey, index);
 </script>
 
 <style lang="scss">

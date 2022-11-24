@@ -13,12 +13,14 @@
 </template>
 
 <script lang="ts" setup>
-import type { WritableComputedRef } from 'vue';
 import {
   computed,
   inject,
 } from 'vue';
 import useComponentTheme from '@src/composables/useComponentTheme';
+import { tabsContextKey } from '@src/definition';
+
+import isEqual from 'lodash/isEqual';
 
 type Props = {
   value: unknown;
@@ -28,9 +30,9 @@ const props = defineProps<Props>();
 
 const { scheme } = useComponentTheme();
 
-const index = inject<WritableComputedRef<unknown>>('tabs-index');
+const index = inject(tabsContextKey);
 
-const active = computed(() => index?.value === props.value);
+const active = computed(() => isEqual(index?.value, props.value));
 
 function handleClick() {
   if (index) {
