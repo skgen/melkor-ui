@@ -88,7 +88,7 @@ const defaultSize = '100%';
     animation-iteration-count: infinite;
 
     &[data-shape="circle"] {
-        --mk-skeleton-rectangle-border-radius: 50%;
+        border-radius: 50%;
     }
 
     @keyframes skeleton-animation {

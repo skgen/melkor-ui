@@ -165,16 +165,18 @@ watch(state, (newState) => {
 
 <style lang="scss">
 .mk-AppInputWysiwyg {
-    --mk-input-wysiwyg-padding-x: var(--app-input-padding-x);
-    --mk-input-wysiwyg-padding-y: var(--app-input-padding-y);
+    --mk-input-wysiwyg-padding-x: var(--app-m-3);
+    --mk-input-wysiwyg-padding-y: var(--app-m-3);
     --mk-input-wysiwyg-border-radius: var(--app-border-radius);
-    --mk-input-wysiwyg-background-color: var(--app-input-background-color);
+
+    // --mk-input-wysiwyg-background-color: var(--app-input-background-color);
     --mk-input-wysiwyg-border-color: var(--app-input-border-color);
 
     display: inline-block;
 
     &-controls {
         display: flex;
+        flex-wrap: wrap;
         gap: var(--app-m-1);
         align-items: center;
         margin: 0 0 var(--app-m-1) 0;
