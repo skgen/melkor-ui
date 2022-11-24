@@ -30,103 +30,30 @@ const props = defineProps<Props>();
 @import "@style/mixins";
 
 .mk-AppWysiwygPreview {
+    --mk-wysiwyg-preview-text-color: var(--app-text-color);
+    --mk-wysiwyg-preview-text-color-accent: var(--app-primary-color);
+    --mk-wysiwyg-preview-text-color-soft: var(--app-text-color-soft);
+    --mk-wysiwyg-preview-background-color: transparent;
+    --mk-wysiwyg-preview-background-color-soft: var(--app-background-color-soft);
+    --mk-wysiwyg-preview-background-color-highlight: var(--app-background-color-highlight);
+    --mk-wysiwyg-preview-border-color: var(--app-border-color);
+    --mk-wysiwyg-preview-border-color-soft: var(--app-border-color-highlight);
+
     @include light {
-        --mk-wysiwyg-preview-prettylights-syntax-comment: #6e7781;
-        --mk-wysiwyg-preview-prettylights-syntax-constant: #0550ae;
-        --mk-wysiwyg-preview-prettylights-syntax-entity: #8250df;
-        --mk-wysiwyg-preview-prettylights-syntax-storage-modifier-import: #24292f;
-        --mk-wysiwyg-preview-prettylights-syntax-entity-tag: #116329;
-        --mk-wysiwyg-preview-prettylights-syntax-keyword: #cf222e;
-        --mk-wysiwyg-preview-prettylights-syntax-string: #0a3069;
-        --mk-wysiwyg-preview-prettylights-syntax-variable: #953800;
-        --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-unmatched: #82071e;
-        --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-text: #f6f8fa;
-        --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-bg: #82071e;
-        --mk-wysiwyg-preview-prettylights-syntax-carriage-return-text: #f6f8fa;
-        --mk-wysiwyg-preview-prettylights-syntax-carriage-return-bg: #cf222e;
-        --mk-wysiwyg-preview-prettylights-syntax-string-regexp: #116329;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-list: #3b2300;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-heading: #0550ae;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-italic: #24292f;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-bold: #24292f;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-text: #82071e;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-bg: #ffebe9;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-text: #116329;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-bg: #dafbe1;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-changed-text: #953800;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-changed-bg: #ffd8b5;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-text: #eaeef2;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-bg: #0550ae;
-        --mk-wysiwyg-preview-prettylights-syntax-meta-diff-range: #8250df;
-        --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-angle: #57606a;
-        --mk-wysiwyg-preview-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
-        --mk-wysiwyg-preview-prettylights-syntax-constant-other-reference-link: #0a3069;
-        --mk-wysiwyg-preview-fg-default: #24292f;
-        --mk-wysiwyg-preview-fg-muted: #57606a;
-        --mk-wysiwyg-preview-fg-subtle: #6e7781;
-        --mk-wysiwyg-preview-canvas-default: transparent;
-        --mk-wysiwyg-preview-canvas-subtle: #f6f8fa;
-        --mk-wysiwyg-preview-border-default: #d0d7de;
-        --mk-wysiwyg-preview-border-muted: hsl(210deg 18% 87% / 1);
-        --mk-wysiwyg-preview-neutral-muted: rgb(175 184 193 / 0.2);
-        --mk-wysiwyg-preview-accent-fg: #0969da;
-        --mk-wysiwyg-preview-accent-emphasis: #0969da;
-        --mk-wysiwyg-preview-attention-subtle: #fff8c5;
-        --mk-wysiwyg-preview-danger-fg: #cf222e;
+        --mk-wysiwyg-preview-background-color-attention: var(--app-primary-color-15);
     }
 
     @include dark {
-        --mk-wysiwyg-preview-prettylights-syntax-comment: #8b949e;
-        --mk-wysiwyg-preview-prettylights-syntax-constant: #79c0ff;
-        --mk-wysiwyg-preview-prettylights-syntax-entity: #d2a8ff;
-        --mk-wysiwyg-preview-prettylights-syntax-storage-modifier-import: #c9d1d9;
-        --mk-wysiwyg-preview-prettylights-syntax-entity-tag: #7ee787;
-        --mk-wysiwyg-preview-prettylights-syntax-keyword: #ff7b72;
-        --mk-wysiwyg-preview-prettylights-syntax-string: #a5d6ff;
-        --mk-wysiwyg-preview-prettylights-syntax-variable: #ffa657;
-        --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-unmatched: #f85149;
-        --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-text: #f0f6fc;
-        --mk-wysiwyg-preview-prettylights-syntax-invalid-illegal-bg: #8e1519;
-        --mk-wysiwyg-preview-prettylights-syntax-carriage-return-text: #f0f6fc;
-        --mk-wysiwyg-preview-prettylights-syntax-carriage-return-bg: #b62324;
-        --mk-wysiwyg-preview-prettylights-syntax-string-regexp: #7ee787;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-list: #f2cc60;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-heading: #1f6feb;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-italic: #c9d1d9;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-bold: #c9d1d9;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-text: #ffdcd7;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-deleted-bg: #67060c;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-text: #aff5b4;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-inserted-bg: #033a16;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-changed-text: #ffdfb6;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-changed-bg: #5a1e02;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-text: #c9d1d9;
-        --mk-wysiwyg-preview-prettylights-syntax-markup-ignored-bg: #1158c7;
-        --mk-wysiwyg-preview-prettylights-syntax-meta-diff-range: #d2a8ff;
-        --mk-wysiwyg-preview-prettylights-syntax-brackethighlighter-angle: #8b949e;
-        --mk-wysiwyg-preview-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
-        --mk-wysiwyg-preview-prettylights-syntax-constant-other-reference-link: #a5d6ff;
-        --mk-wysiwyg-preview-fg-default: #c9d1d9;
-        --mk-wysiwyg-preview-fg-muted: #8b949e;
-        --mk-wysiwyg-preview-fg-subtle: #484f58;
-        --mk-wysiwyg-preview-canvas-default: transparent;
-        --mk-wysiwyg-preview-canvas-subtle: #161b22;
-        --mk-wysiwyg-preview-border-default: #30363d;
-        --mk-wysiwyg-preview-border-muted: #21262d;
-        --mk-wysiwyg-preview-neutral-muted: rgb(110 118 129 / 0.4);
-        --mk-wysiwyg-preview-accent-fg: #58a6ff;
-        --mk-wysiwyg-preview-accent-emphasis: #1f6feb;
-        --mk-wysiwyg-preview-attention-subtle: rgb(187 128 9 / 0.15);
-        --mk-wysiwyg-preview-danger-fg: #f85149;
+        --mk-wysiwyg-preview-background-color-attention: var(--app-primary-color);
     }
 
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
     font-size: 16px;
     line-height: 1.5;
-    color: var(--mk-wysiwyg-preview-fg-default);
+    color: var(--mk-wysiwyg-preview-text-color);
     word-wrap: break-word;
-    background-color: var(--mk-wysiwyg-preview-canvas-default);
+    background-color: var(--mk-wysiwyg-preview-background-color);
     text-size-adjust: 100%;
 
     > *:first-child {
@@ -152,7 +79,7 @@ const props = defineProps<Props>();
     }
 
     a {
-        color: var(--mk-wysiwyg-preview-accent-fg);
+        color: var(--mk-wysiwyg-preview-text-color-accent);
         text-decoration: none;
         background-color: transparent;
     }
@@ -177,8 +104,8 @@ const props = defineProps<Props>();
     }
 
     mark {
-        color: var(--mk-wysiwyg-preview-text-primary);
-        background-color: var(--mk-wysiwyg-preview-attention-subtle);
+        color: var(--mk-wysiwyg-preview-text-color);
+        background-color: var(--mk-wysiwyg-preview-background-color-attention);
     }
 
     small {
@@ -204,7 +131,6 @@ const props = defineProps<Props>();
     img {
         box-sizing: content-box;
         max-width: 100%;
-        background-color: var(--mk-wysiwyg-preview-canvas-default);
         border-style: none;
     }
 
@@ -227,9 +153,9 @@ const props = defineProps<Props>();
         margin: 24px 0;
         overflow: hidden;
         background: transparent;
-        background-color: var(--mk-wysiwyg-preview-border-default);
+        background-color: var(--mk-wysiwyg-preview-border-color);
         border: 0;
-        border-bottom: 1px solid var(--mk-wysiwyg-preview-border-muted);
+        border-bottom: 1px solid var(--mk-wysiwyg-preview-border-color-soft);
     }
 
     input {
@@ -326,15 +252,15 @@ const props = defineProps<Props>();
     kbd {
         display: inline-block;
         padding: 3px 5px;
-        font: 11px ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 11px;
         line-height: 10px;
-        color: var(--mk-wysiwyg-preview-fg-default);
+        color: var(--mk-wysiwyg-preview-text-color);
         vertical-align: middle;
-        background-color: var(--mk-wysiwyg-preview-canvas-subtle);
-        border: solid 1px var(--mk-wysiwyg-preview-neutral-muted);
-        border-bottom-color: var(--mk-wysiwyg-preview-neutral-muted);
+        background-color: var(--mk-wysiwyg-preview-background-color-soft);
+        border: solid 1px var(--app-border-color-highlight);
         border-radius: 6px;
-        box-shadow: inset 0 -1px 0 var(--mk-wysiwyg-preview-neutral-muted);
+        box-shadow: inset 0 -1px 0 var(--app-border-color-highlight);
     }
 
     h1,
@@ -354,14 +280,14 @@ const props = defineProps<Props>();
         margin: 0.67em 0;
         font-size: 2em;
         font-weight: 600;
-        border-bottom: 1px solid var(--mk-wysiwyg-preview-border-muted);
+        border-bottom: 1px solid var(--mk-wysiwyg-preview-border-color-soft);
     }
 
     h2 {
         padding-bottom: 0.3em;
         font-size: 1.5em;
         font-weight: 600;
-        border-bottom: 1px solid var(--mk-wysiwyg-preview-border-muted);
+        border-bottom: 1px solid var(--mk-wysiwyg-preview-border-color-soft);
     }
 
     h3 {
@@ -382,7 +308,7 @@ const props = defineProps<Props>();
     h6 {
         font-size: 0.85em;
         font-weight: 600;
-        color: var(--mk-wysiwyg-preview-fg-muted);
+        color: var(--mk-wysiwyg-preview-text-color-soft);
     }
 
     p {
@@ -393,8 +319,8 @@ const props = defineProps<Props>();
     blockquote {
         padding: 0 1em;
         margin: 0;
-        color: var(--mk-wysiwyg-preview-fg-muted);
-        border-left: 0.25em solid var(--mk-wysiwyg-preview-border-default);
+        color: var(--mk-wysiwyg-preview-text-color-soft);
+        border-left: 0.25em solid var(--mk-wysiwyg-preview-border-color);
     }
 
     p,
@@ -446,7 +372,7 @@ const props = defineProps<Props>();
         margin: 0;
         font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
         font-size: 85%;
-        background-color: var(--mk-wysiwyg-preview-neutral-muted);
+        background-color: var(--mk-wysiwyg-preview-background-color-highlight);
         border-radius: 6px;
     }
 
@@ -459,12 +385,12 @@ const props = defineProps<Props>();
         font-size: 85%;
         line-height: 1.45;
         word-wrap: normal;
-        background-color: var(--mk-wysiwyg-preview-canvas-subtle);
+        background-color: var(--mk-wysiwyg-preview-background-color-soft);
         border-radius: 6px;
     }
 
     ::placeholder {
-        color: var(--mk-wysiwyg-preview-fg-subtle);
+        color: var(--mk-wysiwyg-preview-text-color-soft);
         opacity: 1;
     }
 
@@ -588,16 +514,16 @@ const props = defineProps<Props>();
     table th,
     table td {
         padding: 6px 13px;
-        border: 1px solid var(--mk-wysiwyg-preview-border-default);
+        border: 1px solid var(--mk-wysiwyg-preview-border-color);
     }
 
     table tr {
-        background-color: var(--mk-wysiwyg-preview-canvas-default);
-        border-top: 1px solid var(--mk-wysiwyg-preview-border-muted);
+        background-color: var(--mk-wysiwyg-preview-background-color);
+        border-top: 1px solid var(--mk-wysiwyg-preview-border-color-soft);
     }
 
     table tr:nth-child(2n) {
-        background-color: var(--mk-wysiwyg-preview-canvas-subtle);
+        background-color: var(--mk-wysiwyg-preview-background-color-soft);
     }
 
     table img {
