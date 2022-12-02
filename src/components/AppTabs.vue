@@ -11,9 +11,11 @@
 import { computed, provide } from 'vue';
 import useTheme from '@src/composables/useTheme';
 import { tabsContextKey } from '@src/definition';
+import { isEqual } from 'lodash';
 
 type Props = {
   modelValue: unknown;
+  collapsible?: boolean;
 };
 
 type Emits = {
@@ -30,7 +32,13 @@ const index = computed({
     return props.modelValue;
   },
   set(newIndex) {
-    emit('update:modelValue', newIndex);
+    if (isEqual(newIndex, props.modelValue)) {
+      if (props.collapsible) {
+        emit('update:modelValue', undefined);
+      }
+    } else {
+      emit('update:modelValue', newIndex);
+    }
   },
 });
 

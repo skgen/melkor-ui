@@ -36,11 +36,7 @@ const active = computed(() => isEqual(index?.value, props.value));
 
 function handleClick() {
   if (index) {
-    if (index.value !== props.value) {
-      index.value = props.value;
-    } else {
-      index.value = undefined;
-    }
+    index.value = props.value;
   }
 }
 </script>
