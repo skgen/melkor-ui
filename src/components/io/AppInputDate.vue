@@ -28,7 +28,14 @@
           @blur="onBlur"
         >
         <span class="mk-AppInputDate-value">
-          {{ formatedValue }}
+          <slot
+            name="preview"
+            :datetime="props.datetime"
+            :value="state.value"
+          />
+          <template v-if="!$slots['preview']">
+            {{ previewValue }}
+          </template>
         </span>
         <AppIcon
           v-if="!$slots.icon"
@@ -93,7 +100,7 @@ const {
 
 const type = computed(() => (props.datetime ? 'datetime-local' : 'date'));
 
-const formatedValue = computed(() => {
+const previewValue = computed(() => {
   if (!isValue(state.value.value)) {
     return null;
   }
