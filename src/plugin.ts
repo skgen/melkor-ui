@@ -7,11 +7,13 @@ import registerComponents from '@src/registerComponents';
 import registerDirectives from '@src/registerDirectives';
 import { setLocales } from '@src/lib/modules/i18n';
 import { registerTooltipConfig } from '@src/plugins/tooltip';
+import { setThemes } from './lib/modules/theme';
 
-type PluginOptions = {
+export type PluginOptions = {
   router: Router;
   i18n: I18n;
   debug?: boolean;
+  themes?: string[];
 };
 
 let debugMode = false;
@@ -22,6 +24,7 @@ export function isDebugMode() {
 
 export default (options: PluginOptions) => {
   debugMode = options.debug ?? false;
+  const themes = options.themes ?? [];
 
   const plugin: Plugin = {
     install(app: App) {
@@ -35,6 +38,7 @@ export default (options: PluginOptions) => {
       registerTooltipConfig();
 
       setLocales(options.i18n.global.availableLocales);
+      setThemes(themes);
     },
   };
 

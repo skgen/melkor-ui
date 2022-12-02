@@ -6,7 +6,7 @@
     custom
   >
     <a
-      v-theme="{ scheme }"
+      v-theme="theme"
       :href="href"
       class="mk-AppLink"
       :data-wrapper="asWrapper ? 'true' : null"
@@ -21,7 +21,7 @@
 
   <a
     v-else-if="props.to && !isRelative"
-    v-theme="{ scheme }"
+    v-theme="theme"
     :href="props.to"
     class="mk-AppLink"
     :data-wrapper="asWrapper ? 'true' : null"
@@ -32,7 +32,7 @@
 
   <button
     v-else-if="props.asButton"
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppLink"
     :data-wrapper="asWrapper ? 'true' : null"
     v-bind="$attrs"
@@ -42,7 +42,7 @@
 
   <div
     v-else
-    v-theme="{ scheme }"
+    v-theme="theme"
     v-bind="$attrs"
     class="mk-AppLink"
   >
@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 import { computed } from 'vue';
 
 type Props = {
@@ -62,7 +62,7 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const isRelative = computed(() => (props.to ? !/^(http:\/\/|https:\/\/|file:\/\/|tel:|mailto:)/i.test(props.to) : false));
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppInputFile"
   >
     <label>
@@ -59,7 +59,7 @@ import useInput from '@src/composables/useInput';
 import { isValue } from '@src/lib/modules/definition';
 import { fileToFileModel } from '@src/lib/modules/file';
 import { useI18n } from 'vue-i18n';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
 type Value = FileModel[];
 
@@ -78,7 +78,7 @@ type Emits = {
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const { t } = useI18n();
 

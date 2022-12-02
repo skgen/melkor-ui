@@ -1,6 +1,6 @@
 <template>
   <table
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppTable"
   >
     <thead
@@ -74,7 +74,7 @@ import { isNumber, isString, isValue } from '@src/lib/modules/definition';
 import type {
   TableCellAsGeneric, TableHeader, TableItem, TableOptions,
 } from '@src/definition';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
 type Props = {
   headers?: TableHeader[];
@@ -87,7 +87,7 @@ const props = withDefaults(defineProps<Props>(), {
   options: () => defaultOptions,
 });
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const options = computed(() => ({ ...defaultOptions, ...props.options }));
 

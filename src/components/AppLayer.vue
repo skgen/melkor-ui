@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="active"
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppLayer"
   >
     <slot />
@@ -13,7 +13,7 @@ import {
   computed,
   inject,
 } from 'vue';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 import { layersContextKey } from '@src/definition';
 import isEqual from 'lodash/isEqual';
 
@@ -23,7 +23,7 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const index = inject(layersContextKey);
 

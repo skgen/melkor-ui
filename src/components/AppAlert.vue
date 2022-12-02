@@ -1,6 +1,6 @@
 <template>
   <div
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppAlert"
     :data-type="type"
   >
@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { isValue } from '@src/lib/modules/definition';
 import { computed, useSlots } from 'vue';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
 enum Type {
   basic = 'basic',
@@ -47,7 +47,7 @@ const props = defineProps<Props>();
 
 const slots = useSlots();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const type = computed(() => {
   if (props.success) {

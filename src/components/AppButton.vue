@@ -1,6 +1,6 @@
 <template>
   <button
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppButton"
     :data-type="type"
     :data-on-primary="onPrimary"
@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
 type Props = {
   outlined?: boolean;
@@ -23,7 +23,7 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const type = computed(() => {
   if (props.text) {

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppInputPassword"
     :data-focus="focus || undefined"
 
@@ -40,7 +40,7 @@ import AppIcon from '@src/components/AppIcon.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
 type Value = string | null;
 
@@ -60,7 +60,7 @@ type Emits = {
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const encrypted = ref(true);
 

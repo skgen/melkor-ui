@@ -9,7 +9,7 @@
   >
     <template #default="{ inputName, checked: isChecked, onChange }">
       <div
-        v-theme="{ scheme }"
+        v-theme="theme"
         class="mk-AppInputToggle"
         :data-checked="isChecked"
         :data-fill="props.fill || undefined"
@@ -87,7 +87,7 @@ import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import { computed } from 'vue';
 import { isEqual } from 'lodash';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 // import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 
 type Value = any;
@@ -113,7 +113,7 @@ type Emits = {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const checked = computed(() => isEqual(props.modelValue.value, props.checked));
 const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.uncheckedLabel));

@@ -1,28 +1,28 @@
 <template>
   <h1
     v-if="props.h1"
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-Heading"
   >
     <slot />
   </h1>
   <h2
     v-if="props.h2"
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-Heading"
   >
     <slot />
   </h2>
   <h3
     v-if="props.h3"
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-Heading"
   >
     <slot />
   </h3>
   <h4
     v-if="props.h4"
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-Heading"
   >
     <slot />
@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
   type Props = {
     h1?: boolean;
@@ -41,7 +41,7 @@ import useComponentTheme from '@src/composables/useComponentTheme';
 
 const props = defineProps<Props>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 if (!props.h1 && !props.h2 && !props.h3 && !props.h4) {
   throw new Error('AppHeading requires at least one heading level');

@@ -24,17 +24,6 @@ export const useLayerStore = defineStore({
       } else {
         document.body.removeAttribute('data-fs-modal');
       }
-
-      // console.log(this.fsModalCount);
-      // console.log(this.fsModalActive);
-      // this.theme = newTheme;
-      // if (newTheme !== Theme.auto) {
-      //   document.documentElement.setAttribute('data-theme', Theme[newTheme]);
-      //   persistTheme(newTheme);
-      // } else {
-      //   document.documentElement.removeAttribute('data-theme');
-      //   persistTheme(null);
-      // }
     },
   },
 });

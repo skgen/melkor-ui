@@ -1,6 +1,6 @@
 <template>
   <tr
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppTableRow"
     :data-active="props.active || undefined"
   >
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
 type Props = {
   active? : boolean;
@@ -22,6 +22,6 @@ const props = withDefaults(
   },
 );
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 </script>

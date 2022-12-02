@@ -4,24 +4,14 @@ import type { ComputedRef, InjectionKey, WritableComputedRef } from 'vue';
 // Theme
 
 export enum Theme {
-  light,
-  dark,
-  auto,
+  light = 'light',
+  dark = 'dark',
+  auto = 'auto',
 }
 
-export enum ThemeScheme {
-  light,
-  dark,
-}
-
-export enum ThemeMode {
-  manual,
-  auto,
-}
-
-export type ThemeData = {
-  scheme: ThemeScheme;
-  mode: ThemeMode;
+export type ThemeInstance = {
+  theme: string;
+  seed: number;
 };
 
 // InputComponent
@@ -223,6 +213,6 @@ export type TableProps = {
 
 // Provide / inject keys
 
-export const themeContextKey = Symbol('Inject key of theme context') as InjectionKey<ComputedRef<ThemeScheme>>;
+export const themeContextKey = Symbol('Inject key of theme context') as InjectionKey<ComputedRef<ThemeInstance>>;
 export const tabsContextKey = Symbol('Inject key of tabs/tab') as InjectionKey<WritableComputedRef<unknown>>;
 export const layersContextKey = Symbol('Inject key of layers/layer') as InjectionKey<WritableComputedRef<unknown>>;

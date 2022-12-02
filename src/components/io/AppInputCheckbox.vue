@@ -9,7 +9,7 @@
   >
     <template #default="{ inputName, checked: isChecked, onChange, error }">
       <label
-        v-theme="{ scheme }"
+        v-theme="theme"
         class="mk-AppInputCheckbox"
       >
         <input
@@ -30,7 +30,7 @@
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputCheckable from '@src/components/io/abstract/AppInputCheckable.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
 type Value = any;
 
@@ -49,6 +49,6 @@ type Emits = {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 </script>

@@ -7,3 +7,11 @@ export function getRandomFloat(min: number, max: number, decimals = 2) {
 
   return parseFloat(str);
 }
+
+export function norm(value: number, min: number, max: number) {
+  return (value - min) / (max - min);
+}
+
+export function lerp(normalized: number, min: number, max: number) {
+  return (max - min) * normalized + min;
+}

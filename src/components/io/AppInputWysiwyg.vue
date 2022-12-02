@@ -1,6 +1,6 @@
 <template>
   <div
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppInputWysiwyg"
     :data-focus="focus || undefined"
     :data-fill="props.fill || undefined"
@@ -76,7 +76,7 @@ import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 import {
   useEditor, EditorContent,
 } from '@tiptap/vue-3';
@@ -108,7 +108,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const emits = defineEmits<Emits>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const {
   onChange, onFocus, onBlur, state, focus,

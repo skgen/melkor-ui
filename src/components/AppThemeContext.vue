@@ -2,7 +2,7 @@
   <slot v-if="!props.withNode" />
   <div
     v-else
-    v-theme="{ scheme: appThemeScheme }"
+    v-theme="theme"
     class="mk-AppThemeContext"
   >
     <slot />
@@ -11,18 +11,21 @@
 
 <script lang="ts" setup>
 import { computed, provide } from 'vue';
-import { themeContextKey, type ThemeScheme } from '@src/definition';
+import { themeContextKey, type ThemeInstance } from '@src/definition';
 import { useThemeStore } from '@src/stores/theme';
 
 type Props = {
   withNode?: boolean;
-  theme?: ThemeScheme;
+  theme?: string;
 };
 
 const props = defineProps<Props>();
 
 const themeStore = useThemeStore();
-const appThemeScheme = computed(() => props.theme ?? themeStore.theme.scheme);
+const theme = computed<ThemeInstance>(() => ({
+  theme: props.theme ?? themeStore.theme,
+  seed: themeStore.seed,
+}));
 
-provide(themeContextKey, appThemeScheme);
+provide(themeContextKey, theme);
 </script>

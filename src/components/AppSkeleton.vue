@@ -1,6 +1,6 @@
 <template>
   <div
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppSkeleton"
     :data-shape="shape"
   />
@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
 enum Shape {
   circle = 'circle',
@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<Props>(), {
   size: defaultSize,
 });
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const shape = computed(() => {
   if (props.circle) {

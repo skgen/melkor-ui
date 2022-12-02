@@ -1,6 +1,6 @@
 <template>
   <div
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppFilePreview"
   >
     <div class="mk-AppFilePreview-wrapper">
@@ -49,7 +49,7 @@ import fileSize from 'filesize';
 import type { FileModel } from '@src/definition';
 import { isFileModel, fileToFileModel, FileType } from '@src/lib/modules/file';
 import AppIcon from '@src/components/AppIcon.vue';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
 type Props = {
   file: FileModel | File;
@@ -62,7 +62,7 @@ type Emits = {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const { locale } = useI18n();
 

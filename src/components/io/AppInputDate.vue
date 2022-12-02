@@ -1,6 +1,6 @@
 <template>
   <div
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppInputDate"
     :data-focus="focus || undefined"
     :data-fill="props.fill || undefined"
@@ -56,7 +56,7 @@ import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import useInput from '@src/composables/useInput';
 import AppIcon from '@src/components/AppIcon.vue';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 import { classicDate, classicTime, formatDate } from '@src/lib/modules/date';
 import { isValue } from '@src/lib/modules/definition';
 
@@ -82,7 +82,7 @@ const emits = defineEmits<Emits>();
 
 const datePicker = ref<HTMLInputElement | null>(null);
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const {
   onChange, onFocus, onBlur, state, focus,

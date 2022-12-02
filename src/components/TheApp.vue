@@ -1,6 +1,6 @@
 <template>
   <div
-    v-theme="{ scheme: themeStore.theme.scheme }"
+    v-theme="theme"
     class="mk-TheApp"
   >
     <AppThemeContext>
@@ -19,9 +19,15 @@
 import TheFullScreenLayer from '@src/components/layout/TheFullScreenLayer.vue';
 import TheFloatingLayer from '@src/components/floating/TheFloatingLayer.vue';
 import AppThemeContext from '@src/components/AppThemeContext.vue';
+import { computed } from 'vue';
 import { useThemeStore } from '@src/stores/theme';
+import type { ThemeInstance } from '@src/definition';
 
 const themeStore = useThemeStore();
+const theme = computed<ThemeInstance>(() => ({
+  theme: themeStore.theme,
+  seed: themeStore.seed,
+}));
 </script>
 
 <style lang="scss">

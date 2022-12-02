@@ -1,6 +1,6 @@
 <template>
   <Menu
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppMenu"
     v-bind="spreadProps"
     :shown="props.modelValue"
@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { Menu } from 'floating-vue';
 import { computed } from 'vue';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
 type Props = {
   modelValue: boolean;
@@ -36,7 +36,7 @@ type Emits = {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const spreadProps = computed(() => {
   const { fill, modelValue, ...p } = props;

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppLayers"
   >
     <slot />
@@ -9,7 +9,7 @@
 
 <script lang="ts" setup>
 import { computed, provide } from 'vue';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 import { layersContextKey } from '@src/definition';
 
 type Props = {
@@ -23,7 +23,7 @@ type Emits = {
 const emit = defineEmits<Emits>();
 const props = defineProps<Props>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const index = computed({
   get() {

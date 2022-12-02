@@ -1,53 +1,44 @@
 import { defineStore } from 'pinia';
 import {
   getPreferedTheme,
-  getThemeSchemeFromTheme,
-  getAutoPreferedTheme,
+  getThemes,
   persistTheme,
+  setDocumentTheme,
   watchSystemThemeChange,
-
 } from '@src/lib/modules/theme';
-import { Theme, ThemeMode, ThemeScheme } from '@src/definition';
-import { isNumber } from '@src/lib/modules/definition';
+import { Theme } from '..';
 
 const defaultTheme = getPreferedTheme();
-const schemeKey = ThemeScheme[defaultTheme.scheme];
-document.documentElement.setAttribute('data-theme', schemeKey);
+setDocumentTheme(defaultTheme);
 watchSystemThemeChange('light');
 watchSystemThemeChange('dark');
 
+export type ThemeStoreState = {
+  theme: string;
+  seed: number;
+};
+
 export const useThemeStore = defineStore({
   id: 'theme',
-  state: () => ({
+  state: (): ThemeStoreState => ({
     theme: defaultTheme,
+    seed: Math.random(),
   }),
   getters: {
-    themes: () => Object.values(Theme).filter((element) => isNumber(element)) as Theme[],
+    themes: () => getThemes(),
   },
   actions: {
-    updateTheme(newTheme: Theme) {
+    updateTheme(newTheme: string) {
+      this.theme = newTheme;
       if (newTheme === Theme.auto) {
-        persistTheme(null);
-        this.theme = getAutoPreferedTheme();
-      } else {
-        const newScheme = getThemeSchemeFromTheme(newTheme);
-        this.theme = {
-          scheme: newScheme,
-          mode: ThemeMode.manual,
-        };
-        persistTheme(this.theme.scheme);
+        let newSeed: number;
+        do {
+          newSeed = Math.random();
+        } while (newSeed === this.seed);
+        this.seed = newSeed;
       }
-      document.documentElement.setAttribute('data-theme', Theme[this.theme.scheme]);
-    },
-    isCurrentTheme(themeCandidate: Theme) {
-      const scheme = getThemeSchemeFromTheme(themeCandidate);
-      if (this.theme.mode === ThemeMode.auto) {
-        return themeCandidate === Theme.auto;
-      }
-      if (themeCandidate === Theme.auto) {
-        return false;
-      }
-      return scheme === this.theme.scheme;
+      persistTheme(newTheme);
+      setDocumentTheme(newTheme);
     },
   },
 });

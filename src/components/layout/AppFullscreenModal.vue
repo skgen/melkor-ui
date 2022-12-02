@@ -6,7 +6,7 @@
   >
     <template #transition="{ active }">
       <div
-        v-theme="{ scheme }"
+        v-theme="theme"
         class="mk-AppFullscreenModal"
       >
         <div
@@ -32,7 +32,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import AppFullscreenView from '@src/components/layout/AppFullscreenView.vue';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
 type Props = {
   modelValue: boolean;
@@ -48,7 +48,7 @@ type Emits = {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const centerAttr = computed(() => {
   if (props.center || (props.centerX && props.centerY)) {

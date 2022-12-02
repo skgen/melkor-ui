@@ -1,23 +1,23 @@
 <template>
   <div
     v-if="!props.html"
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppWysiwygPreview"
   >
     <slot />
   </div>
   <div
     v-else
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppWysiwygPreview"
     v-html="props.html"
   />
 </template>
 
 <script lang="ts" setup>
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 type Props = {
   html?: string;

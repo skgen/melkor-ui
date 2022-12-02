@@ -10,6 +10,7 @@ export * from '@src/composables/useForm';
 export { default as useForm } from '@src/composables/useForm';
 export * from '@src/composables/useInput';
 export { default as useInput } from '@src/composables/useInput';
+export { default as useTheme } from '@src/composables/useTheme';
 
 export * from '@src/lib/modules/clipboard';
 export * from '@src/lib/modules/date';
@@ -20,3 +21,4 @@ export * from '@src/lib/modules/math';
 export * from '@src/lib/modules/theme';
 
 export { default as createMelkorUi } from '@src/plugin';
+export type { PluginOptions } from '@src/plugin';

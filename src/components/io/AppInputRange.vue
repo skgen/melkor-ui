@@ -1,6 +1,6 @@
 <template>
   <div
-    v-theme="{ scheme }"
+    v-theme="theme"
     class="mk-AppInputRange"
     :data-focus="focus || undefined"
     :data-fill="props.fill || undefined"
@@ -42,13 +42,16 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import {
+  computed, onMounted, ref,
+} from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import useInput from '@src/composables/useInput';
-import useComponentTheme from '@src/composables/useComponentTheme';
+import useTheme from '@src/composables/useTheme';
+import { norm } from '@src/lib/modules/math';
 
 type Value = number;
 
@@ -81,7 +84,7 @@ const emits = defineEmits<Emits>();
 
 const thumb = ref<HTMLDivElement | null>(null);
 
-const { scheme } = useComponentTheme();
+const { theme } = useTheme();
 
 const {
   onChange, onFocus, onBlur, state, focus,
@@ -91,8 +94,7 @@ const {
 });
 
 const thumbSize = ref(0);
-const difference = computed(() => props.max - props.min);
-const delta = computed(() => state.value.value / difference.value);
+const normalized = computed(() => norm(state.value.value, props.min, props.max));
 
 function handleChange(evt: Event) {
   if (!evt.target) {
@@ -100,7 +102,9 @@ function handleChange(evt: Event) {
   }
   const { value } = evt.target as HTMLInputElement;
 
-  onChange(parseFloat(value));
+  const newValue = parseFloat(value);
+
+  onChange(newValue);
 }
 
 onMounted(() => {
@@ -162,7 +166,10 @@ onMounted(() => {
                 position: absolute;
                 top: 0;
                 left: 0;
-                width: calc((v-bind(delta) * 100%) - (var(--mk-input-range-thumb-size) * v-bind(delta)) + (var(--mk-input-range-thumb-size) / 2));
+                width:
+                    calc(
+                        (v-bind(normalized) * 100%) - (var(--mk-input-range-thumb-size) * v-bind(normalized)) + (var(--mk-input-range-thumb-size) / 2)
+                    );
                 height: 100%;
                 background-color: var(--mk-input-range-color-active);
             }
@@ -171,7 +178,7 @@ onMounted(() => {
         &-thumb {
             position: absolute;
             top: 50%;
-            left: calc((v-bind(delta) * 100%) - (var(--mk-input-range-thumb-size) * v-bind(delta)));
+            left: calc((v-bind(normalized) * 100%) - (var(--mk-input-range-thumb-size) * v-bind(normalized)));
             width: var(--mk-input-range-thumb-size);
             height: var(--mk-input-range-thumb-size);
             background-color: var(--app-background-color-on-primary);

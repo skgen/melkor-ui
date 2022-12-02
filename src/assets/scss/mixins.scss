@@ -103,14 +103,20 @@
     }
 }
 
+@mixin theme($theme) {
+    &[data-theme="#{$theme}"] {
+        @content;
+    }
+}
+
 @mixin dark() {
-    &[data-theme="dark"] {
+    @include theme("dark") {
         @content;
     }
 }
 
 @mixin light() {
-    &[data-theme="light"] {
+    @include theme("light") {
         @content;
     }
 }
