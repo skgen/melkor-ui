@@ -84,6 +84,10 @@ const props = defineProps<Props>();
         background-color: transparent;
     }
 
+    .mk-AppLink {
+        --mk-link-text-color: var(--mk-wysiwyg-preview-text-color-accent);
+    }
+
     a:active,
     a:hover {
         outline-width: 0;
