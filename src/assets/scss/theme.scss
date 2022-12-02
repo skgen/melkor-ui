@@ -110,6 +110,7 @@
     --app-input-background-color-focus: var(--c-grey-98);
     --app-input-border-color: var(--app-border-color);
     --app-input-icon-color: var(--app-text-color);
+    --app-input-placeholder-color: var(--c-grey-80);
 }
 
 @mixin app-dark-theme() {
@@ -166,4 +167,5 @@
     --app-input-background-color-focus: var(--c-grey-3);
     --app-input-border-color: var(--app-border-color);
     --app-input-icon-color: var(--app-text-color);
+    --app-input-placeholder-color: var(--c-grey-40);
 }

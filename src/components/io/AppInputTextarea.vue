@@ -14,6 +14,7 @@
           :name="props.name"
           :value="state.value?? undefined"
           :rows="props.rows"
+          :placeholder="props.placeholder"
           @input="handleChange"
           @focus="onFocus"
           @blur="onBlur"
@@ -43,6 +44,7 @@ type Props = {
   label?: string;
   hint?: string;
   fill?: boolean;
+  placeholder?: string;
   rows?: number;
 };
 
@@ -51,11 +53,12 @@ type Emits = {
 };
 
 const props = withDefaults(defineProps<Props>(), {
-  rows: 2,
   name: undefined,
   validate: undefined,
   hint: undefined,
   label: undefined,
+  placeholder: undefined,
+  rows: 2,
 });
 const emits = defineEmits<Emits>();
 
@@ -90,6 +93,7 @@ function handleChange(evt: Event) {
     --mk-input-textarea-border-radius: var(--app-border-radius);
     --mk-input-textarea-background-color: var(--app-input-background-color);
     --mk-input-textarea-border-color: var(--app-input-border-color);
+    --mk-input-textarea-placeholder-color: var(--app-input-placeholder-color);
 
     display: inline-block;
 
@@ -101,6 +105,10 @@ function handleChange(evt: Event) {
         border-radius: var(--mk-input-textarea-border-radius);
         outline: none;
         transition: border-color var(--app-transition-duration-border);
+
+        &::placeholder {
+            color: var(--mk-input-textarea-placeholder-color);
+        }
     }
 
     &[data-focus="true"] {

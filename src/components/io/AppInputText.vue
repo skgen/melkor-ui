@@ -14,6 +14,7 @@
           :name="props.name"
           type="text"
           :value="state.value"
+          :placeholder="props.placeholder"
           @input="handleChange"
           @focus="onFocus"
           @blur="onBlur"
@@ -47,6 +48,7 @@ type Props = {
   label?: string;
   hint?: string;
   fill?: boolean;
+  placeholder?: string;
 };
 
 type Emits = {
@@ -88,6 +90,7 @@ function handleChange(evt: Event) {
     --mk-input-text-border-color: var(--app-input-border-color);
     --mk-input-text-icon-color: var(--app-input-icon-color);
     --mk-input-text-icon-size: 20px;
+    --mk-input-text-placeholder-color: var(--app-input-placeholder-color);
 
     display: inline-block;
 
@@ -97,6 +100,10 @@ function handleChange(evt: Event) {
         background-color: transparent;
         border: none;
         outline: none;
+
+        &::placeholder {
+            color: var(--mk-input-text-placeholder-color);
+        }
     }
 
     &-input {

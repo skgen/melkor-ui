@@ -23,9 +23,14 @@
           @blur="onBlur"
         >
         <span class="mk-AppInputColor-value">
-          #<input
+          <span
+            class="mk-AppInputColor-hashtag"
+            :data-placeholder="!isValue(absoluteValue)"
+          >#</span>
+          <input
             type="text"
-            :value="absoluteValue ?? ''"
+            :value="absoluteValue ?? undefined"
+            :placeholder="placeholder ?? undefined"
             @input="handleTextChange"
             @focus="onFocus"
             @blur="onBlur"
@@ -53,6 +58,7 @@ import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppIcon from '@src/components/AppIcon.vue';
 import useTheme from '@src/composables/useTheme';
+import { isValue } from '@src/lib/modules/definition';
 
 type Value = string | null;
 
@@ -63,6 +69,7 @@ type Props = {
   label?: string;
   hint?: string;
   fill?: boolean;
+  placeholder?: string;
 };
 
 type Emits = {
@@ -81,7 +88,8 @@ const {
   emits,
 });
 
-const absoluteValue = computed(() => (state.value.value ? state.value.value.replace('#', '') : null));
+const placeholder = computed(() => (props.placeholder ? props.placeholder.replaceAll(/[^0-9a-f]+/gi, '') : null));
+const absoluteValue = computed(() => (state.value.value ? state.value.value.replaceAll('#', '') : null));
 
 function handleChange(evt: Event) {
   if (!evt.target) {
@@ -98,10 +106,12 @@ function handleTextChange(evt: Event) {
   }
   const { value } = evt.target as HTMLInputElement;
 
-  if (value === '') {
+  const filteredValue = value.replaceAll(/[^0-9a-f]+/gi, '').slice(0, 8);
+
+  if (filteredValue === '') {
     onChange(null);
   } else {
-    onChange(`#${value}`);
+    onChange(`#${filteredValue}`);
   }
 }
 </script>
@@ -118,6 +128,7 @@ function handleTextChange(evt: Event) {
     --mk-input-color-border-color: var(--app-input-border-color);
     --mk-input-color-icon-color: var(--app-input-icon-color);
     --mk-input-color-icon-size: 20px;
+    --mk-input-color-placeholder-color: var(--app-input-placeholder-color);
 
     display: inline-block;
 
@@ -125,11 +136,21 @@ function handleTextChange(evt: Event) {
         @include a11y-hidden;
     }
 
+    &-hashtag {
+        &[data-placeholder="true"] {
+            color: var(--mk-input-color-placeholder-color);
+        }
+    }
+
     input[type="text"] {
         padding: 0;
         background-color: transparent;
         border: none;
         outline: none;
+
+        &::placeholder {
+            color: var(--mk-input-color-placeholder-color);
+        }
     }
 
     &-input {

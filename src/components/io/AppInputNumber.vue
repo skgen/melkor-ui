@@ -17,6 +17,7 @@
           :value="state.value"
           :min="props.min"
           :max="props.max"
+          :placeholder="props.placeholder"
           @input="handleChange"
           @focus="onFocus"
           @blur="onBlur"
@@ -47,6 +48,7 @@ type Props = {
   label?: string;
   hint?: string;
   fill?: boolean;
+  placeholder?: string;
   min?: number;
   max?: number;
 };
@@ -90,6 +92,7 @@ function handleChange(evt: Event) {
     --mk-input-number-border-color: var(--app-input-border-color);
     --mk-input-number-icon-color: var(--app-input-icon-color);
     --mk-input-number-icon-size: 20px;
+    --mk-input-number-placeholder-color: var(--app-input-placeholder-color);
 
     display: inline-block;
 
@@ -99,6 +102,10 @@ function handleChange(evt: Event) {
         background-color: transparent;
         border: none;
         outline: none;
+
+        &::placeholder {
+            color: var(--mk-input-number-placeholder-color);
+        }
     }
 
     &-input {

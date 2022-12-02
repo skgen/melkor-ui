@@ -49,6 +49,7 @@ export type TextInputModel = InputModel<TextInputValue, TextInputOptions>;
 
 export type TextInputOptions = InputOptions<TextInputValue> & {
   fill?: boolean;
+  placeholder?: string;
 };
 
 // Textarea
@@ -58,6 +59,7 @@ export type TextareaInputModel = InputModel<TextareaInputValue, TextareaInputOpt
 
 export type TextareaInputOptions = InputOptions<TextareaInputValue> & {
   fill?: boolean;
+  placeholder?: string;
   rows?: number;
 };
 
@@ -70,13 +72,14 @@ export type PasswordInputOptions = InputOptions<PasswordInputValue> & {
   fill?: boolean;
 };
 
-// Num
+// Number
 export type NumberInputValue = number | null;
 
 export type NumberInputModel = InputModel<NumberInputValue, NumberInputOptions>;
 
 export type NumberInputOptions = InputOptions<NumberInputValue> & {
   fill?: boolean;
+  placeholder?: string;
   min?: number;
   max?: number;
 };
@@ -97,6 +100,7 @@ export type ColorInputModel = InputModel<ColorInputValue, ColorInputOptions>;
 
 export type ColorInputOptions = InputOptions<ColorInputValue> & {
   fill?: boolean;
+  placeholder?: string;
 };
 
 // Date
