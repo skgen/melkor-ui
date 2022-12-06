@@ -19,7 +19,7 @@
           <AppInputLabel v-if="props.label">
             {{ props.label }}
           </AppInputLabel>
-          <span v-if="stateLabel">{{ stateLabel }}</span>
+          <span v-if="stateLabel(isChecked)">{{ stateLabel(isChecked) }}</span>
           <div class="mk-AppInputToggle-input">
             <input
               :name="inputName"
@@ -87,7 +87,6 @@ import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import { computed } from 'vue';
-import { isEqual } from 'lodash';
 import useTheme from '@src/composables/useTheme';
 
 type Value = any;
@@ -115,9 +114,10 @@ const emit = defineEmits<Emits>();
 
 const { theme } = useTheme();
 
-const checked = computed(() => isEqual(props.modelValue.value, props.checked));
 const uncheckedLabel = computed(() => props.uncheckedLabel ?? props.checkedLabel);
-const stateLabel = computed(() => (checked.value ? props.checkedLabel : uncheckedLabel.value));
+function stateLabel(checked: boolean) {
+  return checked ? props.checkedLabel : uncheckedLabel.value;
+}
 
 </script>
 

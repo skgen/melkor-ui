@@ -10,7 +10,7 @@
       <label
         v-for="(option, index) in props.options"
         :key="index"
-        class="mk-AppInputRadio-option"
+        class="mk-AppInputRadio-input"
         :data-checked="isSelectedOption(option.value)"
       >
         <input
@@ -20,7 +20,7 @@
           :checked="isSelectedOption(option.value)"
           @click="handleChange"
         >
-        <div class="mk-AppInputRadio-input" />
+        <div class="mk-AppInputRadio-target" />
         <span class="mk-AppInputRadio-option-label">
           {{ option.label }}
         </span>
@@ -39,9 +39,9 @@
 import { computed } from 'vue';
 import isEqual from 'lodash/isEqual';
 import type { InputState, ValidateInput } from '@src/definition';
-import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
+import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import useInput from '@src/composables/useInput';
 import useTheme from '@src/composables/useTheme';
 
@@ -112,8 +112,9 @@ function handleChange(evt: Event) {
 
     display: inline-block;
 
-    &-input {
+    &-target {
         display: block;
+        flex: 0 0 var(--mk-input-radio-size);
         width: var(--mk-input-radio-size);
         height: var(--mk-input-radio-size);
         user-select: none;
@@ -122,7 +123,7 @@ function handleChange(evt: Event) {
         transition: border-width var(--app-transition-duration-border);
     }
 
-    &-option {
+    &-input {
         display: flex;
         gap: var(--mk-input-radio-spacing);
         align-items: center;
@@ -135,7 +136,7 @@ function handleChange(evt: Event) {
 
         &[data-checked="true"] {
             .mk-AppInputRadio {
-                &-input {
+                &-target {
                     border-color: var(--mk-input-radio-color-active);
                     border-width: var(--mk-input-radio-border-width-active);
                 }
@@ -153,6 +154,11 @@ function handleChange(evt: Event) {
     }
 
     .mk-AppInputHint {
+        display: block;
+        margin-top: var(--app-m-1);
+    }
+
+    .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
     }

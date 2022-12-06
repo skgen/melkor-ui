@@ -87,7 +87,6 @@ const isImage = computed(() => preview.value.type === FileType.image);
 @import "@style/mixins";
 
 .mk-AppFilePreview {
-    --mk-file-preview-border-color: var(--app-border-color-highlight);
     --mk-file-preview-border-radius: var(--app-border-radius);
     --mk-file-preview-icon-border-radius: calc(var(--app-border-radius) * 2);
     --mk-file-preview-icon-w: 54px;
@@ -99,6 +98,14 @@ const isImage = computed(() => preview.value.type === FileType.image);
     --mk-file-preview-delete-background-color-hover: var(--app-background-color-highlight-hover);
     --mk-file-preview-delete-w: 38px;
     --mk-file-preview-delete-h: 38px;
+
+    @include light {
+        --mk-file-preview-border-color: var(--app-border-color);
+    }
+
+    @include dark {
+        --mk-file-preview-border-color: var(--app-border-color-highlight);
+    }
 
     padding: var(--app-m-1) var(--app-m-2) var(--app-m-1) var(--app-m-1);
     border: 1px solid var(--mk-file-preview-border-color);

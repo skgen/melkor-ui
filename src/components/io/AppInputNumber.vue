@@ -28,6 +28,9 @@
     <AppInputHint v-if="props.hint">
       {{ props.hint }}
     </AppInputHint>
+    <AppInputError v-if="state.error">
+      {{ state.error }}
+    </AppInputError>
   </div>
 </template>
 
@@ -36,6 +39,7 @@ import { computed } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
+import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import useInput from '@src/composables/useInput';
 import useTheme from '@src/composables/useTheme';
 
@@ -143,6 +147,11 @@ function handleChange(evt: Event) {
     }
 
     .mk-AppInputHint {
+        display: block;
+        margin-top: var(--app-m-1);
+    }
+
+    .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
     }

@@ -47,6 +47,9 @@
     <AppInputHint v-if="props.hint">
       {{ props.hint }}
     </AppInputHint>
+    <AppInputError v-if="state.error">
+      {{ state.error }}
+    </AppInputError>
   </div>
 </template>
 
@@ -56,6 +59,7 @@ import type { InputState, ValidateInput } from '@src/definition';
 import useInput from '@src/composables/useInput';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
+import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import AppIcon from '@src/components/AppIcon.vue';
 import useTheme from '@src/composables/useTheme';
 import { isValue } from '@src/lib/modules/definition';
@@ -201,6 +205,11 @@ function handleTextChange(evt: Event) {
     }
 
     .mk-AppInputHint {
+        display: block;
+        margin-top: var(--app-m-1);
+    }
+
+    .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
     }

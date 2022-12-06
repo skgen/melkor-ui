@@ -118,7 +118,7 @@ onMounted(() => {
 
 <style lang="scss">
 .mk-AppInputRange {
-    --mk-input-range-track-background-color: var(--app-border-color-highlight);
+    --mk-input-range-track-background-color: var(--app-border-color);
     --mk-input-range-track-height: 4px;
     --mk-input-range-thumb-size: 16px;
     --mk-input-range-thumb-border-width: 4px;
@@ -204,6 +204,11 @@ onMounted(() => {
     .mk-AppInputHint {
         display: block;
         margin-top: var(--app-m-2);
+    }
+
+    .mk-AppInputError {
+        display: block;
+        margin-top: var(--app-m-1);
     }
 }
 </style>

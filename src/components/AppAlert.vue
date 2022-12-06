@@ -87,7 +87,7 @@ const icon = computed(() => {
 
 <style lang="scss">
 .mk-AppAlert {
-    --mk-alert-color: var(--app-border-color-highlight);
+    --mk-alert-color: var(--app-border-color);
     --mk-alert-background-color: var(--app-background-color);
     --mk-alert-padding-x: var(--app-m-3);
     --mk-alert-padding-y: var(--app-m-2);

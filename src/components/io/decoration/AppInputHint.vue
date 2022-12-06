@@ -17,7 +17,7 @@ const { theme } = useTheme();
 .mk-AppInputHint {
     --input-hint-color: var(--app-text-color-soft);
 
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--input-hint-color);
 }
 </style>

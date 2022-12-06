@@ -9,7 +9,6 @@
       <span class="mk-AppInputDate-label">
         <AppInputLabel v-if="props.label">
           {{ props.label }}
-
         </AppInputLabel>
         <span
           v-if="props.showTimezone && isValue(state.value)"
@@ -29,6 +28,7 @@
         >
         <span class="mk-AppInputDate-value">
           <slot
+
             name="preview"
             :datetime="props.datetime"
             :value="state.value"
@@ -58,9 +58,9 @@ import {
   computed, ref,
 } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
-import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
+import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import useInput from '@src/composables/useInput';
 import AppIcon from '@src/components/AppIcon.vue';
 import useTheme from '@src/composables/useTheme';
@@ -197,6 +197,11 @@ function handleChange(evt: Event) {
     }
 
     .mk-AppInputHint {
+        display: block;
+        margin-top: var(--app-m-1);
+    }
+
+    .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
     }

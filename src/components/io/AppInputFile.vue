@@ -28,6 +28,9 @@
     <AppInputHint v-if="props.hint">
       {{ props.hint }}
     </AppInputHint>
+    <AppInputError v-if="state.error">
+      {{ state.error }}
+    </AppInputError>
     <div
       v-if="state.value.length > 0"
       class="mk-AppInputFile-previews"
@@ -40,9 +43,6 @@
         @delete="() => handleDelete(index)"
       />
     </div>
-    <AppInputError v-if="state.error">
-      {{ state.error }}
-    </AppInputError>
   </div>
 </template>
 
@@ -116,7 +116,7 @@ function handleChange(evt: Event) {
 @import "@style/mixins";
 
 .mk-AppInputFile {
-    --mk-input-file-border-color: var(--app-border-color-highlight);
+    --mk-input-file-border-color: var(--app-border-color);
     --mk-input-file-dropzone-background-color: var(--app-background-color-soft);
     --mk-input-file-dropzone-border-width: 1px;
     --mk-input-file-dropzone-border-radius: var(--app-border-radius);
@@ -156,6 +156,11 @@ function handleChange(evt: Event) {
     }
 
     .mk-AppInputHint {
+        display: block;
+        margin-top: var(--app-m-1);
+    }
+
+    .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
     }
