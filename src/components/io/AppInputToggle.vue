@@ -5,7 +5,7 @@
     :validate="props.validate"
     :checked="props.checked"
     :unchecked="props.unchecked"
-    @update:model-value="(state: Value) => emit('update:modelValue', state)"
+    @update:model-value="(state: InputState<Value>) => emit('update:modelValue', state)"
   >
     <template #default="{ inputName, checked: isChecked, onChange, state }">
       <div
@@ -89,7 +89,7 @@ import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import { computed } from 'vue';
 import useTheme from '@src/composables/useTheme';
 
-type Value = any;
+type Value = unknown;
 
 type Props = {
   modelValue: InputState<Value>;

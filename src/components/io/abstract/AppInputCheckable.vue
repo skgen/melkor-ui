@@ -49,12 +49,11 @@ function handleChange(evt: Event) {
   if (!evt.target) {
     return;
   }
-  const { checked } = evt.target as HTMLInputElement;
 
-  if (checked) {
-    onChange(props.checked);
-  } else {
+  if (renderChecked.value) {
     onChange(props.unchecked);
+  } else {
+    onChange(props.checked);
   }
 }
 </script>
