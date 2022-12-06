@@ -149,11 +149,16 @@ export type CheckboxInputOptions<TChecked, TUnchecked> = CheckableInputOptions<T
 };
 
 // Checkbox Tree
-
-export type CheckboxInputTreeModel<TChecked, TUnchecked> = {
-  label?: string;
-  children: CheckboxInputModel<TChecked, TUnchecked>[];
+export type CheckboxTreeLevel<TChecked, TUnchecked> = {
+  input: CheckboxInputModel<TChecked, TUnchecked>;
+  children?: CheckboxTreeLevel<TChecked, TUnchecked>[];
 };
+
+export type CheckboxTreeInputValue<TChecked, TUnchecked> = CheckboxTreeLevel<TChecked, TUnchecked>;
+
+export type CheckboxTreeInputModel<TChecked, TUnchecked> = InputModel<TChecked | TUnchecked, CheckboxTreeInputOptions<TChecked, TUnchecked>>;
+
+export type CheckboxTreeInputOptions<TChecked, TUnchecked> = InputOptions<TChecked | TUnchecked>;
 
 // Range
 export type RangeInputValue = number;
@@ -202,7 +207,8 @@ export type FileInputOptions = InputOptions<FileInputValue>;
 
 // Misc
 
-export type NonArray<T, D> = T extends D[] ? never : T;
+// export type NonArray<T, D> = T extends D[] ? never : T;
+export type NonArray<T> = T extends (infer U)[] ? U : T;
 
 export type FileModel = {
   name: string | null;

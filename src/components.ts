@@ -22,6 +22,8 @@ export { default as AppTooltip } from '@src/components/floating/AppTooltip.vue';
 export { default as AppMenu } from '@src/components/floating/AppMenu.vue';
 
 export { default as AppInputCheckbox } from '@src/components/io/AppInputCheckbox.vue';
+export { default as AppInputCheckboxTree } from '@src/components/io/AppInputCheckboxTree.vue';
+export * from '@src/components/io/partials/AppInputCheckboxTreeLevel.vue';
 export { default as AppInputColor } from '@src/components/io/AppInputColor.vue';
 export { default as AppInputFile } from '@src/components/io/AppInputFile.vue';
 export { default as AppInputNumber } from '@src/components/io/AppInputNumber.vue';
