@@ -19,5 +19,6 @@ const { theme } = useTheme();
 
     font-size: 0.75rem;
     color: var(--input-hint-color);
+    white-space: pre-line;
 }
 </style>
