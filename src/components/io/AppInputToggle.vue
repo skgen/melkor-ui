@@ -7,7 +7,7 @@
     :unchecked="props.unchecked"
     @update:model-value="(state: Value) => emit('update:modelValue', state)"
   >
-    <template #default="{ inputName, checked: isChecked, onChange }">
+    <template #default="{ inputName, checked: isChecked, onChange, state }">
       <div
         v-theme="theme"
         class="mk-AppInputToggle"
@@ -72,9 +72,9 @@
         <AppInputHint v-if="props.hint">
           {{ props.hint }}
         </AppInputHint>
-        <!-- <AppInputError v-if="state.error">
+        <AppInputError v-if="state.error">
           {{ state.error }}
-        </AppInputError> -->
+        </AppInputError>
       </div>
     </template>
   </AppInputCheckable>
@@ -85,10 +85,10 @@ import type { InputState, ValidateInput } from '@src/definition';
 import AppInputCheckable from '@src/components/io/abstract/AppInputCheckable.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
+import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 import { computed } from 'vue';
 import { isEqual } from 'lodash';
 import useTheme from '@src/composables/useTheme';
-// import AppInputError from '@src/components/io/decoration/AppInputError.vue';
 
 type Value = any;
 
@@ -116,7 +116,8 @@ const emit = defineEmits<Emits>();
 const { theme } = useTheme();
 
 const checked = computed(() => isEqual(props.modelValue.value, props.checked));
-const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.uncheckedLabel));
+const uncheckedLabel = computed(() => props.uncheckedLabel ?? props.checkedLabel);
+const stateLabel = computed(() => (checked.value ? props.checkedLabel : uncheckedLabel.value));
 
 </script>
 
@@ -148,11 +149,10 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
         display: block;
         width: calc(var(--mk-input-toggle-size) * 2 + var(--mk-input-toggle-padding) * 2);
         padding: var(--mk-input-toggle-padding);
-        font-size: var(--input-togle-icon-size);
         color: var(--mk-input-toggle-target-color);
         background-color: var(--mk-input-toggle-background-color);
         border-radius: var(--mk-input-toggle-size);
-        transition: background-color var(--app-transition-duration-background), color var(--app-transition-duration-color);
+        transition: background-color var(--app-transition-duration-background);
     }
 
     &-target {
@@ -162,7 +162,9 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
         user-select: none;
         background-color: var(--mk-input-toggle-color-on-background);
         border-radius: 50%;
-        transition: transform var(--app-transition-duration-1);
+        transition:
+            background-color var(--app-transition-duration-background),
+            transform var(--app-transition-duration-transform);
 
         .mk-AppIcon {
             position: absolute;
@@ -241,15 +243,19 @@ const stateLabel = computed(() => (checked.value ? props.checkedLabel : props.un
         display: block;
     }
 
-    .mk-AppInputHint {
-        display: block;
-        margin-top: var(--app-m-1);
-        text-align: right;
-    }
-
     .mk-AppInputLabel {
         flex: 1;
         padding: 0 var(--app-m-2) 0 0;
+    }
+
+    .mk-AppInputHint {
+        display: block;
+        margin-top: var(--app-m-1);
+    }
+
+    .mk-AppInputError {
+        display: block;
+        margin-top: var(--app-m-1);
     }
 }
 </style>

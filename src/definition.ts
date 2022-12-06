@@ -116,27 +116,43 @@ export type DateInputOptions = InputOptions<DateInputValue> & {
 
 // Checkable
 export type CheckableInputModel
-<TChecked = true, TUnchecked = TChecked extends true ? false : true> =
+<TChecked, TUnchecked> =
 InputModel<TChecked | TUnchecked, CheckableInputOptions<TChecked, TUnchecked>>;
 
-export type CheckableInputOptions<TChecked = true, TUnchecked = false>
+export type CheckableInputOptions<TChecked, TUnchecked>
 = InputOptions<TChecked | TUnchecked> & {
-  checked?: TChecked;
-  unchecked?: TUnchecked;
+  checked: TChecked;
+  unchecked: TUnchecked;
 };
 
 // Toggle
 
 export type ToggleInputModel
-<TChecked = true, TUnchecked = TChecked extends true ? false : true> =
+<TChecked, TUnchecked> =
 InputModel<TChecked | TUnchecked, ToggleInputOptions<TChecked, TUnchecked>>;
 
-export type ToggleInputOptions<TChecked = true, TUnchecked = false> = CheckableInputOptions<TChecked, TUnchecked> & {
+export type ToggleInputOptions<TChecked, TUnchecked> = CheckableInputOptions<TChecked, TUnchecked> & {
   checkedLabel?: string;
   uncheckedLabel?: string;
-  checkedIcon?: string;
-  uncheckedIcon?: string;
   iconInBackground?: boolean;
+};
+
+// Checkbox
+
+export type CheckboxInputModel
+<TChecked, TUnchecked> =
+Required<InputModel<TChecked | TUnchecked, CheckboxInputOptions<TChecked, TUnchecked>>>;
+
+export type CheckboxInputOptions<TChecked, TUnchecked> = CheckableInputOptions<TChecked, TUnchecked> & {
+  checkedLabel?: string;
+  uncheckedLabel?: string;
+};
+
+// Checkbox Tree
+
+export type CheckboxInputTreeModel<TChecked, TUnchecked> = {
+  label?: string;
+  children: CheckboxInputModel<TChecked, TUnchecked>[];
 };
 
 // Range

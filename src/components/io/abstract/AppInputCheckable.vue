@@ -3,7 +3,7 @@
     :checked="renderChecked"
     :input-name="props.name"
     :on-change="handleChange"
-    :error="state.error"
+    :state="state"
   />
 </template>
 
