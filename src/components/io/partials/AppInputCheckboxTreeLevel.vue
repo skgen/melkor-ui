@@ -99,7 +99,7 @@ function toggleAllCheckboxTreeLevels<T>(children: CheckboxTreeLevel<T, T>[], che
     child.input.state.value = checked ? child.input.options.checked : child.input.options.unchecked;
     child.input.state = validateInputState(child.input.state, child.input.options.validate);
     if (child.children) {
-      child.children = toggleAllCheckboxTreeLevelChildren(child.children, checked);
+      child.children = toggleAllCheckboxTreeLevels(child.children, checked);
     }
   }
   return newChildren;
