@@ -12,10 +12,16 @@
         fill
       />
       <div class="mk-AppAlert-main">
-        <span class="mk-AppAlert-title">
+        <span
+          v-if="$slots['default']"
+          class="mk-AppAlert-title"
+        >
           <slot />
         </span>
-        <span class="mk-AppAlert-content">
+        <span
+          v-if="$slots['content']"
+          class="mk-AppAlert-content"
+        >
           <slot name="content" />
         </span>
       </div>

@@ -79,17 +79,17 @@ function handleChange(newLevel: NonArray<Value>, index: number) {
         padding: 0 0 0 var(--app-m-2);
     }
 
-    .mk-AppInputLabel {
+    > .mk-AppInputLabel {
         display: block;
         margin-bottom: var(--app-m-1);
     }
 
-    .mk-AppInputHint {
+    > .mk-AppInputHint {
         display: block;
         margin-top: var(--app-m-1);
     }
 
-    .mk-AppInputError {
+    > .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
     }

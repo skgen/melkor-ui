@@ -12,6 +12,7 @@
         v-theme="theme"
         class="mk-AppInputCheckbox"
         :data-checked="isChecked"
+        :data-has-icon="isChecked || !!$slots['checked-icon']"
         v-bind="$attrs"
       >
         <label>
@@ -26,22 +27,17 @@
               @input="onChange"
             >
             <div class="mk-AppInputCheckbox-target">
-              <template v-if="isChecked">
-                <template v-if="!$slots['checked-icon']">
-                  <transition name="mk-AppIcon">
-                    <mk-icon
-                      v-if="!$slots['checked-icon']"
-                      icon="check"
-                    />
-                  </transition>
-                </template>
-                <template v-else>
-                  <transition name="mk-AppIcon">
-                    <slot name="checked-icon" />
+              <transition-group
+                v-if="isChecked || !!$slots['checked-icon']"
+                name="mk-AppIcon"
+              >
+                <mk-icon
+                  v-if="!$slots['checked-icon']"
+                  icon="check"
+                />
+                <slot name="checked-icon" />
 
-                  </transition>
-                </template>
-              </template>
+              </transition-group>
             </div>
             <span v-if="stateLabel(isChecked)">{{ stateLabel(isChecked) }}</span>
           </div>
@@ -159,7 +155,7 @@ function stateLabel(checked: boolean) {
         @include a11y-hidden;
     }
 
-    &[data-checked="true"] {
+    &[data-has-icon="true"] {
         .mk-AppInputCheckbox {
             &-target {
                 background-color: var(--mk-input-checkbox-color-active);

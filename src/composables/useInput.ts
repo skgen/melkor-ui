@@ -25,7 +25,7 @@ type HookParams<TValue> = {
   emits: (event: 'update:modelValue', value : InputState<TValue>) => void;
 };
 
-export function validateStateProperties<TValue>(state: InputState<TValue>, validate?: ValidateInput<TValue>): InputState<TValue> {
+export function validateInputState<TValue>(state: InputState<TValue>, validate?: ValidateInput<TValue>): InputState<TValue> {
   const newState = { ...state };
 
   if (isValue(validate)) {
@@ -52,7 +52,7 @@ export default function useInput<TValue>(params: HookParams<TValue>) {
   }
 
   function onChange(value: TValue) {
-    const newState: InputState<TValue> = validateStateProperties({
+    const newState: InputState<TValue> = validateInputState({
       value,
       valid: state.value.valid,
       touched: true,
