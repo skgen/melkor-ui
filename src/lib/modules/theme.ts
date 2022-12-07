@@ -64,3 +64,6 @@ export function watchSystemThemeChange(systemKey: string) {
     themeStore.updateTheme(Theme.auto);
   });
 }
+
+watchSystemThemeChange('light');
+watchSystemThemeChange('dark');

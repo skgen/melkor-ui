@@ -4,14 +4,8 @@ import {
   getThemes,
   persistTheme,
   setDocumentTheme,
-  watchSystemThemeChange,
 } from '@src/lib/modules/theme';
-import { Theme } from '..';
-
-const defaultTheme = getPreferedTheme();
-setDocumentTheme(defaultTheme);
-watchSystemThemeChange('light');
-watchSystemThemeChange('dark');
+import { Theme } from '@src/definition';
 
 export type ThemeStoreState = {
   theme: string;
@@ -21,7 +15,7 @@ export type ThemeStoreState = {
 export const useThemeStore = defineStore({
   id: 'theme',
   state: (): ThemeStoreState => ({
-    theme: defaultTheme,
+    theme: getPreferedTheme(),
     seed: Math.random(),
   }),
   getters: {

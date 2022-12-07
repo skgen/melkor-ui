@@ -1,5 +1,5 @@
-import type { FileType } from '@src/lib/modules/file';
 import type { ComputedRef, InjectionKey, WritableComputedRef } from 'vue';
+import type { FileType } from '@src/lib/modules/file';
 
 // Theme
 

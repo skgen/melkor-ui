@@ -7,7 +7,7 @@ import registerComponents from '@src/registerComponents';
 import registerDirectives from '@src/registerDirectives';
 import { setLocales } from '@src/lib/modules/i18n';
 import { registerTooltipConfig } from '@src/plugins/tooltip';
-import { setThemes } from './lib/modules/theme';
+import { getPreferedTheme, setDocumentTheme, setThemes } from '@src/lib/modules/theme';
 
 export type PluginOptions = {
   router: Router;
@@ -29,6 +29,11 @@ export default (options: PluginOptions) => {
   const plugin: Plugin = {
     install(app: App) {
       app.use(options.i18n);
+
+      setLocales(options.i18n.global.availableLocales);
+      setThemes(themes);
+      setDocumentTheme(getPreferedTheme());
+
       app.use(options.router);
 
       app.use(createPinia());
@@ -36,9 +41,6 @@ export default (options: PluginOptions) => {
       registerComponents(app);
       registerDirectives(app);
       registerTooltipConfig();
-
-      setLocales(options.i18n.global.availableLocales);
-      setThemes(themes);
     },
   };
 
