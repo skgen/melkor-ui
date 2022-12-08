@@ -24,7 +24,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { CheckboxInputModel, InputState, CheckboxTreeLevel } from '@src/definition';
+import type {
+  CheckboxInputModel, InputState, CheckboxTreeLevel, NonArray,
+} from '@src/definition';
 import AppInputCheckbox from '@src/components/io/AppInputCheckbox.vue';
 import AppIcon from '@src/components/AppIcon.vue';
 import isEqual from 'lodash/isEqual';
@@ -196,9 +198,10 @@ export function exportCheckboxTreeLevelErrors<TChecked, TUnchecked>(
 // Exporting errors as array (a simpler way to generate another error)
 export function exportCheckboxTreeLevelErrorsAsArray<TChecked, TUnchecked>(
   children: CheckboxTreeLevel<TChecked, TUnchecked>[],
-): InputState<TChecked | TUnchecked>['error'][] {
-  const errors = exportCheckboxTreeLevelErrors(children);
-  return Object.values(errors).filter((v) => isValue(v));
+): NonNullable<InputState<TChecked | TUnchecked>['error']>[] {
+  const errors = Object.values(exportCheckboxTreeLevelErrors(children));
+  type FilteredErrorType = NonNullable<NonArray<typeof errors>>;
+  return errors.filter<FilteredErrorType>(isValue);
 }
 
 export function findCheckboxTreeLevel<TChecked, TUnchecked>(
