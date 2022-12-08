@@ -7,14 +7,16 @@ type HookParams<TState> = {
 };
 
 // @todo fix this any;
-export default function useForm
-<TState extends { [key: string]: InputModel<any> }>(params: HookParams<TState>) {
+export default function useForm<
+  TValue,
+  TState extends { [key: string]: InputModel<TValue> },
+>(params: HookParams<TState>) {
   const { state, validate } = params;
 
   const valid = computed(() => validate(state));
 
   const data = computed(() => {
-    const res: { [key: string]: any } = {};
+    const res: { [key: string]: TValue } = {};
     Object.keys(state).forEach((key) => {
       res[key] = state[key].state.value;
     });

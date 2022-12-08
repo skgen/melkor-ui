@@ -56,10 +56,13 @@ function handleInputChange(newInputState: InputState<Value>) {
     },
   };
 
+  const checkedValue = getCheckedOptionValue(newLevel.input.options.checked);
+  const uncheckedValue = getUncheckedOptionValue(newLevel.input.options.unchecked);
+
   if (newLevel.children) {
-    if (isEqual(newLevel.input.state.value, newLevel.input.options.checked)) {
+    if (isEqual(newLevel.input.state.value, checkedValue)) {
       newLevel.children = checkAllCheckboxTreeLevels(newLevel.children);
-    } else if (isEqual(newLevel.input.state.value, newLevel.input.options.unchecked)) {
+    } else if (isEqual(newLevel.input.state.value, uncheckedValue)) {
       newLevel.children = uncheckAllCheckboxTreeLevels(newLevel.children);
     }
   }
@@ -79,10 +82,13 @@ function handleChildLevelChange(newChildLevel: CheckboxTreeLevel<Value, Value>, 
   };
 
   const allChecked = isAllCheckboxTreeLevelsChecked(newLevel.children);
+  const checkedValue = getCheckedOptionValue(newLevel.input.options.checked);
+  const uncheckedValue = getUncheckedOptionValue(newLevel.input.options.unchecked);
+
   if (allChecked) {
-    newLevel.input.state.value = newLevel.input.options.checked;
+    newLevel.input.state.value = checkedValue;
   } else {
-    newLevel.input.state.value = newLevel.input.options.unchecked;
+    newLevel.input.state.value = uncheckedValue;
   }
   newLevel.input.state = validateInputState(newLevel.input.state, newLevel.input.options.validate);
 
@@ -93,13 +99,29 @@ function handleChildLevelChange(newChildLevel: CheckboxTreeLevel<Value, Value>, 
 <script lang="ts">
 type Value = unknown;
 
+function getCheckedOptionValue<T>(checked?: T): T {
+  if (isDef(checked)) {
+    return checked;
+  }
+  return true as unknown as T;
+}
+
+function getUncheckedOptionValue<T>(unchecked?: T): T {
+  if (isDef(unchecked)) {
+    return unchecked;
+  }
+  return false as unknown as T;
+}
+
 function toggleAllCheckboxTreeLevels<TChecked, TUnchecked>(
   children: CheckboxTreeLevel<TChecked, TUnchecked>[],
   checked: boolean,
 ): CheckboxTreeLevel<TChecked, TUnchecked>[] {
   const newChildren = [...children];
   for (const child of children) {
-    child.input.state.value = checked ? child.input.options.checked : child.input.options.unchecked;
+    const checkedValue = getCheckedOptionValue(child.input.options.checked);
+    const uncheckedValue = getUncheckedOptionValue(child.input.options.unchecked);
+    child.input.state.value = checked ? checkedValue : uncheckedValue;
     child.input.state = validateInputState(child.input.state, child.input.options.validate);
     if (child.children) {
       child.children = toggleAllCheckboxTreeLevels(child.children, checked);
@@ -204,7 +226,9 @@ function countToggledCheckboxTreeLevels<TChecked, TUnchecked>(children: Checkbox
     if (!isDef(checked)) {
       count += 1;
     } else {
-      const reference = checked ? child.input.options.checked : child.input.options.unchecked;
+      const checkedValue = getCheckedOptionValue(child.input.options.checked);
+      const uncheckedValue = getUncheckedOptionValue(child.input.options.unchecked);
+      const reference = checked ? checkedValue : uncheckedValue;
       if (isEqual(child.input.state.value, reference)) {
         count += 1;
       }

@@ -121,8 +121,8 @@ InputModel<TChecked | TUnchecked, CheckableInputOptions<TChecked, TUnchecked>>;
 
 export type CheckableInputOptions<TChecked, TUnchecked>
 = InputOptions<TChecked | TUnchecked> & {
-  checked: TChecked;
-  unchecked: TUnchecked;
+  checked?: TChecked;
+  unchecked?: TUnchecked;
 };
 
 // Toggle

@@ -50,7 +50,7 @@ import AppIcon from '@src/components/AppIcon.vue';
 import useInput from '@src/composables/useInput';
 import useTheme from '@src/composables/useTheme';
 
-type Value = any;
+type Value = unknown;
 
 type Props = {
   modelValue: InputState<Value>;

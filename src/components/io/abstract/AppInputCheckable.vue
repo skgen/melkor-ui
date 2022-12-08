@@ -13,7 +13,7 @@ import isEqual from 'lodash/isEqual';
 import type { InputState, ValidateInput } from '@src/definition';
 import useInput from '@src/composables/useInput';
 
-type Value = any;
+type Value = unknown;
 
 type Props = {
   modelValue: InputState<Value>;
@@ -32,8 +32,8 @@ const props = withDefaults(
   {
     name: undefined,
     validate: undefined,
-    checked: true,
-    unchecked: false,
+    checked: (() => true) as () => unknown,
+    unchecked: (() => false) as () => unknown,
   },
 );
 const emits = defineEmits<Emits>();
