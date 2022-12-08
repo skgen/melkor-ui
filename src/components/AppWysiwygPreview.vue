@@ -64,6 +64,28 @@ const props = defineProps<Props>();
         margin-bottom: 0 !important;
     }
 
+    > div {
+        margin-top: 0;
+        margin-bottom: var(--app-m-2);
+    }
+
+    section {
+        margin: var(--app-m-6) 0;
+
+        > *:first-child {
+            margin-top: 0 !important;
+        }
+
+        > *:last-child {
+            margin-bottom: 0 !important;
+        }
+
+        > div {
+            margin-top: 0;
+            margin-bottom: var(--app-m-2);
+        }
+    }
+
     details,
     figcaption,
     figure {
@@ -273,8 +295,8 @@ const props = defineProps<Props>();
     h4,
     h5,
     h6 {
-        margin-top: 24px;
-        margin-bottom: 16px;
+        margin-top: var(--app-m-3);
+        margin-bottom: var(--app-m-2);
         font-weight: 600;
         line-height: 1.25;
     }
@@ -315,11 +337,6 @@ const props = defineProps<Props>();
         color: var(--mk-wysiwyg-preview-text-color-soft);
     }
 
-    p {
-        margin-top: 0;
-        margin-bottom: 10px;
-    }
-
     blockquote {
         padding: 0 1em;
         margin: 0;
@@ -336,7 +353,7 @@ const props = defineProps<Props>();
     pre,
     details {
         margin-top: 0;
-        margin-bottom: 16px;
+        margin-bottom: var(--app-m-2);
     }
 
     ul,
@@ -381,7 +398,7 @@ const props = defineProps<Props>();
     }
 
     pre {
-        padding: 16px;
+        padding: var(--app-m-2);
         margin-top: 0;
         margin-bottom: 0;
         overflow: auto;
@@ -487,7 +504,7 @@ const props = defineProps<Props>();
     }
 
     li > p {
-        margin-top: 16px;
+        margin-top: var(--app-m-2);
     }
 
     li + li {
@@ -500,7 +517,7 @@ const props = defineProps<Props>();
 
     dl dt {
         padding: 0;
-        margin-top: 16px;
+        margin-top: var(--app-m-2);
         font-size: 1em;
         font-style: italic;
         font-weight: 600;
