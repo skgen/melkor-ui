@@ -93,7 +93,10 @@ function handleChildLevelChange(newChildLevel: CheckboxTreeLevel<Value, Value>, 
 <script lang="ts">
 type Value = unknown;
 
-function toggleAllCheckboxTreeLevels<TChecked, TUnchecked>(children: CheckboxTreeLevel<TChecked, TUnchecked>[], checked: boolean): CheckboxTreeLevel<TChecked, TUnchecked>[] {
+function toggleAllCheckboxTreeLevels<TChecked, TUnchecked>(
+  children: CheckboxTreeLevel<TChecked, TUnchecked>[],
+  checked: boolean,
+): CheckboxTreeLevel<TChecked, TUnchecked>[] {
   const newChildren = [...children];
   for (const child of children) {
     child.input.state.value = checked ? child.input.options.checked : child.input.options.unchecked;
