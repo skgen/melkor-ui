@@ -93,7 +93,7 @@ function handleChildLevelChange(newChildLevel: CheckboxTreeLevel<Value, Value>, 
 <script lang="ts">
 type Value = unknown;
 
-function toggleAllCheckboxTreeLevels<T>(children: CheckboxTreeLevel<T, T>[], checked: boolean): CheckboxTreeLevel<T, T>[] {
+function toggleAllCheckboxTreeLevels<TChecked, TUnchecked>(children: CheckboxTreeLevel<TChecked, TUnchecked>[], checked: boolean): CheckboxTreeLevel<TChecked, TUnchecked>[] {
   const newChildren = [...children];
   for (const child of children) {
     child.input.state.value = checked ? child.input.options.checked : child.input.options.unchecked;
@@ -105,17 +105,21 @@ function toggleAllCheckboxTreeLevels<T>(children: CheckboxTreeLevel<T, T>[], che
   return newChildren;
 }
 
-export function checkAllCheckboxTreeLevels<T>(children: CheckboxTreeLevel<T, T>[]): CheckboxTreeLevel<T, T>[] {
+export function checkAllCheckboxTreeLevels<TChecked, TUnchecked>(
+  children: CheckboxTreeLevel<TChecked, TUnchecked>[],
+): CheckboxTreeLevel<TChecked, TUnchecked>[] {
   return toggleAllCheckboxTreeLevels(children, true);
 }
 
-export function uncheckAllCheckboxTreeLevels<T>(children: CheckboxTreeLevel<T, T>[]): CheckboxTreeLevel<T, T>[] {
+export function uncheckAllCheckboxTreeLevels<TChecked, TUnchecked>(
+  children: CheckboxTreeLevel<TChecked, TUnchecked>[],
+): CheckboxTreeLevel<TChecked, TUnchecked>[] {
   return toggleAllCheckboxTreeLevels(children, false);
 }
 
-export function exportCheckboxTreeLevelData<T, R>(
-  children: CheckboxTreeLevel<T, T>[],
-  mappingFunction: (state: InputState<T>) => R,
+export function exportCheckboxTreeLevelData<TChecked, TUnchecked, R>(
+  children: CheckboxTreeLevel<TChecked, TUnchecked>[],
+  mappingFunction: (state: InputState<TChecked | TUnchecked>) => R,
 ): Record<string, R> {
   let value: Record<string, R> = {};
   for (const child of children) {
@@ -144,27 +148,38 @@ function mapStateToError<T>(state: InputState<T>): InputState<T>['error'] {
   return state.error;
 }
 // Exporting states
-export function exportCheckboxTreeLevelStates<T>(children: CheckboxTreeLevel<T, T>[]): Record<string, InputState<T>> {
+export function exportCheckboxTreeLevelStates<TChecked, TUnchecked>(
+  children: CheckboxTreeLevel<TChecked, TUnchecked>[],
+): Record<string, InputState<TChecked | TUnchecked>> {
   return exportCheckboxTreeLevelData(children, mapStateToState);
 }
 
 // Exporting values
-export function exportCheckboxTreeLevelValues<T>(children: CheckboxTreeLevel<T, T>[]): Record<string, T> {
+export function exportCheckboxTreeLevelValues<TChecked, TUnchecked>(
+  children: CheckboxTreeLevel<TChecked, TUnchecked>[],
+): Record<string, TChecked | TUnchecked> {
   return exportCheckboxTreeLevelData(children, mapStateToValue);
 }
 
 // Exporting errors
-export function exportCheckboxTreeLevelErrors<T>(children: CheckboxTreeLevel<T, T>[]) : Record<string, InputState<T>['error']> {
+export function exportCheckboxTreeLevelErrors<TChecked, TUnchecked>(
+  children: CheckboxTreeLevel<TChecked, TUnchecked>[],
+) : Record<string, InputState<TChecked | TUnchecked>['error']> {
   return exportCheckboxTreeLevelData(children, mapStateToError);
 }
 
 // Exporting errors as array (a simpler way to generate another error)
-export function exportCheckboxTreeLevelErrorsAsArray<T>(children: CheckboxTreeLevel<T, T>[]): InputState<T>['error'][] {
+export function exportCheckboxTreeLevelErrorsAsArray<TChecked, TUnchecked>(
+  children: CheckboxTreeLevel<TChecked, TUnchecked>[],
+): InputState<TChecked | TUnchecked>['error'][] {
   const errors = exportCheckboxTreeLevelErrors(children);
   return Object.values(errors).filter((v) => isValue(v));
 }
 
-export function findCheckboxTreeLevel<T>(children: CheckboxTreeLevel<T, T>[], name: string) : CheckboxTreeLevel<T, T> | null {
+export function findCheckboxTreeLevel<TChecked, TUnchecked>(
+  children: CheckboxTreeLevel<TChecked, TUnchecked>[],
+  name: string,
+) : CheckboxTreeLevel<TChecked, TUnchecked> | null {
   for (const child of children) {
     if (isEqual(child.input.options.name, name)) {
       return child;
@@ -180,7 +195,7 @@ export function findCheckboxTreeLevel<T>(children: CheckboxTreeLevel<T, T>[], na
 }
 
 // Counting checked / unchecked children
-function countToggledCheckboxTreeLevels<T>(children: CheckboxTreeLevel<T, T>[], checked?: boolean): number {
+function countToggledCheckboxTreeLevels<TChecked, TUnchecked>(children: CheckboxTreeLevel<TChecked, TUnchecked>[], checked?: boolean): number {
   let count = 0;
   for (const child of children) {
     if (!isDef(checked)) {
@@ -198,19 +213,19 @@ function countToggledCheckboxTreeLevels<T>(children: CheckboxTreeLevel<T, T>[], 
   return count;
 }
 
-export function countCheckedCheckboxTreeLevels<T>(children: CheckboxTreeLevel<T, T>[]): number {
+export function countCheckedCheckboxTreeLevels<TChecked, TUnchecked>(children: CheckboxTreeLevel<TChecked, TUnchecked>[]): number {
   return countToggledCheckboxTreeLevels(children, true);
 }
 
-export function countUncheckedCheckboxTreeLevels<T>(children: CheckboxTreeLevel<T, T>[]): number {
+export function countUncheckedCheckboxTreeLevels<TChecked, TUnchecked>(children: CheckboxTreeLevel<TChecked, TUnchecked>[]): number {
   return countToggledCheckboxTreeLevels(children, false);
 }
 
-export function countCheckboxTreeLevels<T>(children: CheckboxTreeLevel<T, T>[]): number {
+export function countCheckboxTreeLevels<TChecked, TUnchecked>(children: CheckboxTreeLevel<TChecked, TUnchecked>[]): number {
   return countToggledCheckboxTreeLevels(children);
 }
 
-function isAllCheckboxTreeLevelsCheckedToggled<T>(children: CheckboxTreeLevel<T, T>[], checked: boolean): boolean {
+function isAllCheckboxTreeLevelsCheckedToggled<TChecked, TUnchecked>(children: CheckboxTreeLevel<TChecked, TUnchecked>[], checked: boolean): boolean {
   if (!children) {
     return false;
   }
@@ -219,15 +234,15 @@ function isAllCheckboxTreeLevelsCheckedToggled<T>(children: CheckboxTreeLevel<T,
   return totalCount === count;
 }
 
-export function isAllCheckboxTreeLevelsChecked<T>(children: CheckboxTreeLevel<T, T>[]): boolean {
+export function isAllCheckboxTreeLevelsChecked<TChecked, TUnchecked>(children: CheckboxTreeLevel<TChecked, TUnchecked>[]): boolean {
   return isAllCheckboxTreeLevelsCheckedToggled(children, true);
 }
 
-export function isAllCheckboxTreeLevelsUnchecked<T>(children: CheckboxTreeLevel<T, T>[]): boolean {
+export function isAllCheckboxTreeLevelsUnchecked<TChecked, TUnchecked>(children: CheckboxTreeLevel<TChecked, TUnchecked>[]): boolean {
   return isAllCheckboxTreeLevelsCheckedToggled(children, false);
 }
 
-function isSomeCheckboxTreeLevelsToggled<T>(children: CheckboxTreeLevel<T, T>[], checked: boolean): boolean {
+function isSomeCheckboxTreeLevelsToggled<TChecked, TUnchecked>(children: CheckboxTreeLevel<TChecked, TUnchecked>[], checked: boolean): boolean {
   if (!children) {
     return false;
   }
@@ -235,11 +250,11 @@ function isSomeCheckboxTreeLevelsToggled<T>(children: CheckboxTreeLevel<T, T>[],
   return count > 0;
 }
 
-export function isSomeCheckboxTreeLevelsChecked<T>(children: CheckboxTreeLevel<T, T>[]): boolean {
+export function isSomeCheckboxTreeLevelsChecked<TChecked, TUnchecked>(children: CheckboxTreeLevel<TChecked, TUnchecked>[]): boolean {
   return isSomeCheckboxTreeLevelsToggled(children, true);
 }
 
-export function isSomeCheckboxTreeLevelsUnchecked<T>(children: CheckboxTreeLevel<T, T>[]): boolean {
+export function isSomeCheckboxTreeLevelsUnchecked<TChecked, TUnchecked>(children: CheckboxTreeLevel<TChecked, TUnchecked>[]): boolean {
   return isSomeCheckboxTreeLevelsToggled(children, false);
 }
 </script>
