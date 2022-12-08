@@ -154,7 +154,7 @@ export type CheckboxTreeLevel<TChecked, TUnchecked> = {
   children?: CheckboxTreeLevel<TChecked, TUnchecked>[];
 };
 
-export type CheckboxTreeInputValue<TChecked, TUnchecked> = CheckboxTreeLevel<TChecked, TUnchecked>;
+export type CheckboxTreeInputValue<TChecked, TUnchecked> = CheckboxTreeLevel<TChecked, TUnchecked>[];
 
 export type CheckboxTreeInputModel<TChecked, TUnchecked> = InputModel<TChecked | TUnchecked, CheckboxTreeInputOptions<TChecked, TUnchecked>>;
 
