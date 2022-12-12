@@ -9,9 +9,11 @@
       <AppInputLabel v-if="props.label">
         {{ props.label }}
       </AppInputLabel>
-      <div class="mk-AppInputFile-input">
+      <div
+        ref="dropZoneRef"
+        class="mk-AppInputFile-input"
+      >
         <input
-          ref="inputRef"
           :name="props.name"
           type="file"
           multiple
@@ -64,6 +66,7 @@ import { isValue } from '@src/lib/modules/definition';
 import { fileToFileModel } from '@src/lib/modules/file';
 import { useI18n } from 'vue-i18n';
 import useTheme from '@src/composables/useTheme';
+import { useDropZone } from '@vueuse/core';
 
 type Value = FileModel[];
 
@@ -84,6 +87,8 @@ type Emits = {
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
+const dropZoneRef = ref<HTMLDivElement>();
+
 const { theme } = useTheme();
 
 const { t } = useI18n();
@@ -93,7 +98,21 @@ const { onChange, state } = useInput<Value>({
   emits,
 });
 
-const inputRef = ref<HTMLInputElement | null>(null);
+function processFiles(files: File[] | null) {
+  if (!isValue(files)) {
+    onChange([]);
+  } else {
+    const newFiles = [...state.value.value];
+    for (let i = 0; i < files.length; i += 1) {
+      newFiles.push(fileToFileModel(files[i]));
+    }
+    onChange(newFiles);
+  }
+}
+
+function handleDrop(files: File[] | null) {
+  processFiles(isValue(files) ? [...files] : null);
+}
 
 function handleDelete(indexToRemove: number) {
   if (props.disabled) {
@@ -109,16 +128,10 @@ function handleChange(evt: Event) {
   }
   const { files } = evt.target as HTMLInputElement;
 
-  if (!isValue(files)) {
-    onChange([]);
-  } else {
-    const newFiles = [...state.value.value];
-    for (let i = 0; i < files.length; i += 1) {
-      newFiles.push(fileToFileModel(files[i]));
-    }
-    onChange(newFiles);
-  }
+  processFiles(isValue(files) ? [...files] : null);
 }
+
+useDropZone(dropZoneRef, handleDrop);
 </script>
 
 <style lang="scss">
