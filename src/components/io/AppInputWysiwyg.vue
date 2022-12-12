@@ -93,6 +93,7 @@ type Props = {
   validate?: ValidateInput<Value>;
   label?: string;
   hint?: string;
+  disabled?: boolean;
   fill?: boolean;
 };
 
@@ -191,7 +192,7 @@ watch(state, (newState) => {
         border: 1px solid var(--mk-input-wysiwyg-border-color);
         border-radius: var(--mk-input-wysiwyg-border-radius);
         outline: none;
-        transition: border-color var(--app-transition-duration-border);
+        transition: border-color var(--app-transition-duration-color);
     }
 
     &[data-focus="true"] {

@@ -3,8 +3,8 @@
     v-theme="theme"
     class="mk-AppInputNumber"
     :data-focus="focus || undefined"
-
     :data-fill="props.fill || undefined"
+    :data-disabled="props.disabled || undefined"
   >
     <label>
       <AppInputLabel v-if="props.label">
@@ -18,6 +18,7 @@
           :min="props.min"
           :max="props.max"
           :placeholder="props.placeholder"
+          :disabled="props.disabled"
           @input="handleChange"
           @focus="onFocus"
           @blur="onBlur"
@@ -51,6 +52,7 @@ type Props = {
   validate?: ValidateInput<Value>;
   label?: string;
   hint?: string;
+  disabled?: boolean;
   fill?: boolean;
   placeholder?: string;
   min?: number;
@@ -98,11 +100,14 @@ function handleChange(evt: Event) {
     --mk-input-number-icon-size: 20px;
     --mk-input-number-placeholder-color: var(--app-input-placeholder-color);
 
+    $this: &;
+
     display: inline-block;
 
     input {
         width: 100%;
         padding: var(--mk-input-number-padding-y) 0;
+        color: currentcolor;
         background-color: transparent;
         border: none;
         outline: none;
@@ -121,7 +126,9 @@ function handleChange(evt: Event) {
         background-color: var(--mk-input-number-background-color);
         border: 1px solid var(--mk-input-number-border-color);
         border-radius: var(--mk-input-number-border-radius);
-        transition: border-color var(--app-transition-duration-border);
+        transition:
+            border-color var(--app-transition-duration-color),
+            opacity var(--app-transition-duration-opacity);
 
         .mk-AppIcon {
             --mk-icon-size: var(--mk-input-number-icon-size);
@@ -130,7 +137,7 @@ function handleChange(evt: Event) {
     }
 
     &[data-focus="true"] {
-        .mk-AppInputNumber {
+        #{$this} {
             &-input {
                 border-color: var(--app-primary-color);
             }
@@ -139,6 +146,14 @@ function handleChange(evt: Event) {
 
     &[data-fill="true"] {
         display: block;
+    }
+
+    &[data-disabled="true"] {
+        #{$this} {
+            &-input {
+                opacity: var(--app-input-opacity-disabled);
+            }
+        }
     }
 
     .mk-AppInputLabel {

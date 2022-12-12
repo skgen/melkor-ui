@@ -33,6 +33,7 @@ export type InputOptions<TValue> = {
   name?: string;
   label?: string;
   hint?: string;
+  disabled?: boolean;
 };
 
 export type ValidateInput<TValue> = (value: TValue) => InputState<TValue>['error'];
@@ -203,7 +204,9 @@ export type FileInputValue = FileModel[];
 
 export type FileInputModel = InputModel<FileInputValue, FileInputOptions>;
 
-export type FileInputOptions = InputOptions<FileInputValue>;
+export type FileInputOptions = InputOptions<FileInputValue> & {
+  fill?: boolean;
+};
 
 // Misc
 

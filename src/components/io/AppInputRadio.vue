@@ -2,6 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputRadio"
+    :data-disabled="props.disabled || undefined"
   >
     <AppInputLabel v-if="props.label">
       {{ props.label }}
@@ -18,6 +19,7 @@
           type="radio"
           :value="index"
           :checked="isSelectedOption(option.value)"
+          :disabled="props.disabled"
           @click="handleChange"
         >
         <div class="mk-AppInputRadio-target" />
@@ -53,7 +55,7 @@ type Props = {
   validate?: ValidateInput<Value>;
   label?: string;
   hint?: string;
-  fill?: boolean;
+  disabled?: boolean;
   options: {
     label: string;
     value: Value;
@@ -110,7 +112,13 @@ function handleChange(evt: Event) {
     --mk-input-radio-border-width: 1px;
     --mk-input-radio-border-width-active: 4px;
 
+    $this: &;
+
     display: inline-block;
+
+    input {
+        @include a11y-hidden;
+    }
 
     &-target {
         display: block;
@@ -120,7 +128,9 @@ function handleChange(evt: Event) {
         user-select: none;
         border: var(--mk-input-radio-border-width) solid var(--mk-input-radio-border-color);
         border-radius: 50%;
-        transition: border-width var(--app-transition-duration-border);
+        transition:
+            border-width var(--app-transition-duration-color),
+            border-color var(--app-transition-duration-color);
     }
 
     &-input {
@@ -129,13 +139,14 @@ function handleChange(evt: Event) {
         align-items: center;
         padding: var(--app-m-1) 0;
         cursor: pointer;
+        transition: opacity var(--app-transition-duration-opacity);
 
         &-label {
             font-size: 0.9375rem;
         }
 
         &[data-checked="true"] {
-            .mk-AppInputRadio {
+            #{$this} {
                 &-target {
                     border-color: var(--mk-input-radio-color-active);
                     border-width: var(--mk-input-radio-border-width-active);
@@ -144,8 +155,16 @@ function handleChange(evt: Event) {
         }
     }
 
-    input {
-        @include a11y-hidden;
+    &[data-disabled="true"] {
+        #{$this} {
+            &-input {
+                opacity: var(--app-input-opacity-disabled);
+            }
+
+            &-target {
+                border-color: var(--app-input-color-disabled);
+            }
+        }
     }
 
     .mk-AppInputLabel {

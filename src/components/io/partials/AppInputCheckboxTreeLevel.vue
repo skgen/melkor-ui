@@ -3,6 +3,7 @@
     <AppInputCheckbox
       :model-value="props.input.state"
       v-bind="props.input.options"
+      :disabled="props.disabled ?? props.input.options.disabled"
       @update:model-value="handleInputChange"
     >
       <template
@@ -17,6 +18,7 @@
         v-for="(level, index) in props.children"
         :key="index"
         v-bind="level"
+        :disabled="props.disabled"
         @update:level="(newLevel) => handleChildLevelChange(newLevel, index)"
       />
     </template>
@@ -37,6 +39,7 @@ import { isDef, isValue } from '@src/lib/modules/definition';
 type Props = {
   input: CheckboxInputModel<Value, Value>;
   children?: CheckboxTreeLevel<Value, Value>[];
+  disabled?: boolean;
 };
 
 type Emits = {

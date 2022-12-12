@@ -14,6 +14,7 @@
         :data-checked="isChecked"
         :data-has-icon="isChecked || !!$slots['checked-icon']"
         v-bind="$attrs"
+        :data-disabled="props.disabled || undefined"
       >
         <label>
           <AppInputLabel v-if="props.label">
@@ -24,6 +25,7 @@
               :name="inputName"
               type="checkbox"
               :checked="isChecked"
+              :disabled="props.disabled"
               @input="onChange"
             >
             <div class="mk-AppInputCheckbox-target">
@@ -70,6 +72,7 @@ type Props = {
   validate?: ValidateInput<Value>;
   label?: string;
   hint?: string;
+  disabled?: boolean;
   checked?: Value;
   unchecked?: Value;
   checkedLabel?: string;
@@ -105,6 +108,8 @@ function stateLabel(checked: boolean) {
     --mk-input-checkbox-border-color: var(--app-border-color-highlight);
     --mk-input-checkbox-border-width: 1px;
 
+    $this: &;
+
     display: inline-block;
 
     &-input {
@@ -114,6 +119,7 @@ function stateLabel(checked: boolean) {
         align-items: center;
         padding: var(--app-m-1) 0;
         cursor: pointer;
+        transition: opacity var(--app-transition-duration-opacity);
     }
 
     &-target {
@@ -126,7 +132,7 @@ function stateLabel(checked: boolean) {
         border-radius: var(--app-border-radius);
         transition:
             background-color var(--app-transition-duration-background),
-            border-color var(--app-transition-duration-border);
+            border-color var(--app-transition-duration-color);
 
         .mk-AppIcon {
             position: absolute;
@@ -156,10 +162,30 @@ function stateLabel(checked: boolean) {
     }
 
     &[data-has-icon="true"] {
-        .mk-AppInputCheckbox {
+        #{$this} {
             &-target {
                 background-color: var(--mk-input-checkbox-color-active);
                 border-color: var(--mk-input-checkbox-color-active);
+            }
+        }
+    }
+
+    &[data-disabled="true"] {
+        &[data-has-icon="true"] {
+            #{$this} {
+                &-target {
+                    background-color: var(--app-input-color-disabled);
+                }
+            }
+        }
+        #{$this} {
+            &-target {
+                border-color: var(--app-input-color-disabled);
+            }
+
+            &-input {
+                cursor: default;
+                opacity: var(--app-input-opacity-disabled);
             }
         }
     }

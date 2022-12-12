@@ -4,6 +4,7 @@
     class="mk-AppInputSelect"
     :data-focus="focus || undefined"
     :data-fill="props.fill || undefined"
+    :data-disabled="props.disabled || undefined"
   >
     <label>
       <AppInputLabel v-if="props.label">
@@ -12,6 +13,7 @@
       <div class="mk-AppInputSelect-input">
         <select
           :name="props.name"
+          :disabled="props.disabled"
           @input="handleChange"
           @focus="onFocus"
           @blur="onBlur"
@@ -58,6 +60,7 @@ type Props = {
   validate?: ValidateInput<Value>;
   label?: string;
   hint?: string;
+  disabled?: boolean;
   fill?: boolean;
   options: {
     label: string;
@@ -106,6 +109,8 @@ function handleChange(evt: Event) {
     --mk-input-select-background-color: var(--app-input-background-color);
     --mk-input-select-border-color: var(--app-input-border-color);
 
+    $this: &;
+
     display: inline-block;
 
     select {
@@ -115,16 +120,24 @@ function handleChange(evt: Event) {
             var(--mk-input-select-padding-x-right)
             var(--mk-input-select-padding-y)
             var(--mk-input-select-padding-x-left);
+        color: currentcolor;
         background-color: var(--mk-input-select-background-color);
         border: 1px solid var(--mk-input-select-border-color);
         border-radius: var(--mk-input-select-border-radius);
         outline: none;
-        transition: border-color var(--app-transition-duration-border);
+        transition: border-color var(--app-transition-duration-color);
         appearance: none;
+
+        &[disabled] {
+            opacity: 1;
+        }
     }
 
     &-input {
         position: relative;
+        transition:
+            border-color var(--app-transition-duration-color),
+            opacity var(--app-transition-duration-opacity);
 
         .mk-AppIcon {
             --mk-icon-size: 24px;
@@ -139,13 +152,23 @@ function handleChange(evt: Event) {
     }
 
     &[data-focus="true"] {
-        select {
-            border-color: var(--app-primary-color);
+        #{$this} {
+            select {
+                border-color: var(--app-primary-color);
+            }
         }
     }
 
     &[data-fill="true"] {
         display: block;
+    }
+
+    &[data-disabled="true"] {
+        #{$this} {
+            &-input {
+                opacity: var(--app-input-opacity-disabled);
+            }
+        }
     }
 
     .mk-AppInputLabel {

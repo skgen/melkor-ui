@@ -3,8 +3,8 @@
     v-theme="theme"
     class="mk-AppInputPassword"
     :data-focus="focus || undefined"
-
     :data-fill="props.fill || undefined"
+    :data-disabled="props.disabled || undefined"
   >
     <label>
       <AppInputLabel v-if="props.label">
@@ -15,12 +15,14 @@
           :name="props.name"
           :type="type"
           :value="state.value"
+          :disabled="props.disabled"
           @input="handleChange"
           @focus="onFocus"
           @blur="onBlur"
         >
         <button
           class="mk-AppInputPassword-toggle"
+          :disabled="props.disabled"
           @click="handleToggle"
         >
           <AppIcon :icon="icon" />
@@ -53,6 +55,7 @@ type Props = {
   name?: string;
   validate?: ValidateInput<Value>;
   hint?: string;
+  disabled?: boolean;
   label?: string;
   fill?: boolean;
 };
@@ -107,12 +110,15 @@ function handleChange(evt: Event) {
     --mk-input-password-background-color: var(--app-input-background-color);
     --mk-input-password-border-color: var(--app-input-border-color);
 
+    $this: &;
+
     display: inline-block;
 
     input {
         flex: 1;
         width: 100%;
         padding: var(--mk-input-password-padding-y) 0 var(--mk-input-password-padding-y) var(--mk-input-password-padding-x);
+        color: currentcolor;
         background-color: transparent;
         border: none;
         outline: none;
@@ -127,11 +133,13 @@ function handleChange(evt: Event) {
         background-color: var(--mk-input-password-background-color);
         border: 1px solid var(--mk-input-password-border-color);
         border-radius: var(--mk-input-password-border-radius);
-        transition: border-color var(--app-transition-duration-border);
+        transition:
+            border-color var(--app-transition-duration-color),
+            opacity var(--app-transition-duration-opacity);
     }
 
     &[data-focus="true"] {
-        .mk-AppInputPassword {
+        #{$this} {
             &-input {
                 border-color: var(--app-primary-color);
             }
@@ -142,10 +150,21 @@ function handleChange(evt: Event) {
         display: block;
     }
 
-    &-toggle {
-        @include expand-click-area;
+    &[data-disabled="true"] {
+        #{$this} {
+            &-input {
+                opacity: var(--app-input-opacity-disabled);
+            }
+        }
+    }
 
+    &-toggle {
         padding: 0;
+        color: currentcolor;
+
+        &:not(:disabled) {
+            @include expand-click-area;
+        }
 
         .mk-AppIcon {
             display: block;

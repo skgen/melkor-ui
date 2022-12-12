@@ -4,6 +4,7 @@
     class="mk-AppInputRange"
     :data-focus="focus || undefined"
     :data-fill="props.fill || undefined"
+    :data-disabled="props.disabled || undefined"
   >
     <label>
       <AppInputLabel v-if="props.label">
@@ -26,6 +27,7 @@
           :min="props.min"
           :max="props.max"
           :step="props.step"
+          :disabled="props.disabled"
           @input="handleChange"
           @focus="onFocus"
           @blur="onBlur"
@@ -61,6 +63,7 @@ type Props = {
   validate?: ValidateInput<Value>;
   label?: string;
   hint?: string;
+  disabled?: boolean;
   fill?: boolean;
   min?: number;
   max?: number;
@@ -124,12 +127,9 @@ onMounted(() => {
     --mk-input-range-thumb-border-width: 4px;
     --mk-input-range-color-active: var(--app-primary-color);
 
-    display: inline-block;
+    $this: &;
 
-    label {
-        display: inline-flex;
-        flex-direction: column;
-    }
+    display: inline-block;
 
     input {
         width: 100%;
@@ -140,6 +140,7 @@ onMounted(() => {
         position: relative;
         display: flex;
         height: var(--mk-input-range-thumb-size);
+        transition: opacity var(--app-transition-duration-opacity);
     }
 
     &-placeholder {
@@ -148,8 +149,10 @@ onMounted(() => {
         left: 0;
         width: 100%;
         height: 100%;
+        color: var(--mk-input-range-color-active);
         pointer-events: none;
         user-select: none;
+        transition: color var(--app-transition-duration-color);
 
         &-track {
             position: absolute;
@@ -171,7 +174,7 @@ onMounted(() => {
                         (v-bind(normalized) * 100%) - (var(--mk-input-range-thumb-size) * v-bind(normalized)) + (var(--mk-input-range-thumb-size) / 2)
                     );
                 height: 100%;
-                background-color: var(--mk-input-range-color-active);
+                background-color: currentcolor;
             }
         }
 
@@ -182,7 +185,7 @@ onMounted(() => {
             width: var(--mk-input-range-thumb-size);
             height: var(--mk-input-range-thumb-size);
             background-color: var(--app-background-color-on-primary);
-            border: var(--mk-input-range-thumb-border-width) solid var(--mk-input-range-color-active);
+            border: var(--mk-input-range-thumb-border-width) solid currentcolor;
             border-radius: 50%;
             transform: translate(0, -50%);
         }
@@ -190,9 +193,17 @@ onMounted(() => {
 
     &[data-fill="true"] {
         display: block;
+    }
 
-        label {
-            display: flex;
+    &[data-disabled="true"] {
+        #{$this} {
+            &-input {
+                opacity: var(--app-input-opacity-disabled);
+            }
+
+            &-placeholder {
+                color: var(--app-input-color-disabled);
+            }
         }
     }
 

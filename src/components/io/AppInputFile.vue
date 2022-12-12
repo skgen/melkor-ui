@@ -2,17 +2,20 @@
   <div
     v-theme="theme"
     class="mk-AppInputFile"
+    :data-fill="props.fill || undefined"
+    :data-disabled="props.disabled || undefined"
   >
     <label>
       <AppInputLabel v-if="props.label">
         {{ props.label }}
       </AppInputLabel>
-      <div class="mk-AppInputFile-dropzone">
+      <div class="mk-AppInputFile-input">
         <input
           ref="inputRef"
           :name="props.name"
           type="file"
           multiple
+          :disabled="props.disabled"
           @input="handleChange"
         >
         <i18n-t
@@ -40,6 +43,7 @@
         :key="index"
         class="mk-AppInputFile-previews-item"
         :file="file"
+        :disabled="props.disabled"
         @delete="() => handleDelete(index)"
       />
     </div>
@@ -51,7 +55,7 @@ import { computed, ref } from 'vue';
 import type {
   FileModel, InputState, ValidateInput,
 } from '@src/definition';
-import AppFilePreview from '@src/components/AppFilePreview.vue';
+import AppFilePreview from '@src/components/io/partials/AppInputFilePreview.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
@@ -69,6 +73,8 @@ type Props = {
   validate?: ValidateInput<Value>;
   label?: string;
   hint?: string;
+  disabled?: boolean;
+  fill?: boolean;
 };
 
 type Emits = {
@@ -90,6 +96,9 @@ const { onChange, state } = useInput<Value>({
 const inputRef = ref<HTMLInputElement | null>(null);
 
 function handleDelete(indexToRemove: number) {
+  if (props.disabled) {
+    return;
+  }
   const newValue = state.value.value.filter((v, index) => index !== indexToRemove);
   onChange(newValue);
 }
@@ -121,7 +130,11 @@ function handleChange(evt: Event) {
     --mk-input-file-dropzone-border-width: 1px;
     --mk-input-file-dropzone-border-radius: var(--app-border-radius);
 
-    &-dropzone {
+    $this: &;
+
+    display: inline-block;
+
+    &-input {
         padding: var(--app-m-3);
         font-size: 0.875rem;
         color: var(--app-text-color-soft);
@@ -130,12 +143,15 @@ function handleChange(evt: Event) {
         background-color: var(--mk-input-file-dropzone-background-color);
         border: var(--mk-input-file-dropzone-border-width) dashed var(--mk-input-file-border-color);
         border-radius: var(--mk-input-file-dropzone-border-radius);
+        transition: opacity var(--app-transition-duration-opacity);
 
         em {
             font-style: normal;
             color: var(--app-primary-color);
 
             @include underline;
+
+            transition: opacity var(--app-transition-duration-color);
         }
 
         input {
@@ -148,6 +164,23 @@ function handleChange(evt: Event) {
         flex-direction: column;
         gap: var(--app-m-2);
         margin: var(--app-m-2) 0 0 0;
+    }
+
+    &[data-fill="true"] {
+        display: block;
+    }
+
+    &[data-disabled="true"] {
+        #{$this} {
+            &-input {
+                cursor: default;
+                opacity: var(--app-input-opacity-disabled);
+
+                em {
+                    color: var(--app-input-color-disabled);
+                }
+            }
+        }
     }
 
     .mk-AppInputLabel {

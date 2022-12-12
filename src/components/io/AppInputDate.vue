@@ -4,6 +4,7 @@
     class="mk-AppInputDate"
     :data-focus="focus || undefined"
     :data-fill="props.fill || undefined"
+    :data-disabled="props.disabled || undefined"
   >
     <label>
       <span class="mk-AppInputDate-label">
@@ -22,6 +23,7 @@
           ref="datePicker"
           :name="props.name"
           :type="type"
+          :disabled="props.disabled"
           @input="handleChange"
           @focus="handleFocus"
           @blur="onBlur"
@@ -75,6 +77,7 @@ type Props = {
   validate?: ValidateInput<Value>;
   label?: string;
   hint?: string;
+  disabled?: boolean;
   fill?: boolean;
   datetime?: boolean;
   showTimezone?: boolean;
@@ -148,6 +151,8 @@ function handleChange(evt: Event) {
     --mk-input-date-icon-color: var(--app-input-icon-color);
     --mk-input-date-icon-size: 20px;
 
+    $this: &;
+
     display: inline-block;
 
     input {
@@ -165,7 +170,9 @@ function handleChange(evt: Event) {
         background-color: var(--mk-input-date-background-color);
         border: 1px solid var(--mk-input-date-border-color);
         border-radius: var(--mk-input-date-border-radius);
-        transition: border-color var(--app-transition-duration-border);
+        transition:
+            border-color var(--app-transition-duration-color),
+            opacity var(--app-transition-duration-opacity);
 
         .mk-AppIcon {
             --mk-icon-size: var(--mk-input-date-icon-size);
@@ -178,7 +185,7 @@ function handleChange(evt: Event) {
     }
 
     &[data-focus="true"] {
-        .mk-AppInputDate {
+        #{$this} {
             &-input {
                 border-color: var(--app-primary-color);
             }
@@ -187,6 +194,14 @@ function handleChange(evt: Event) {
 
     &[data-fill="true"] {
         display: block;
+    }
+
+    &[data-disabled="true"] {
+        #{$this} {
+            &-input {
+                opacity: var(--app-input-opacity-disabled);
+            }
+        }
     }
 
     &-label {

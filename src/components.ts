@@ -1,7 +1,6 @@
 export { default as TheApp } from '@src/components/TheApp.vue';
 
 export { default as AppButton } from '@src/components/AppButton.vue';
-export { default as AppFilePreview } from '@src/components/AppFilePreview.vue';
 export { default as AppHeading } from '@src/components/AppHeading.vue';
 export { default as AppLayer } from '@src/components/AppLayer.vue';
 export { default as AppLayers } from '@src/components/AppLayers.vue';

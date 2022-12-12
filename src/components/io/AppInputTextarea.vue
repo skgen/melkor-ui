@@ -4,6 +4,7 @@
     class="mk-AppInputTextarea"
     :data-focus="focus || undefined"
     :data-fill="props.fill || undefined"
+    :data-disabled="props.disabled || undefined"
   >
     <label>
       <AppInputLabel v-if="props.label">
@@ -15,6 +16,7 @@
           :value="state.value?? undefined"
           :rows="props.rows"
           :placeholder="props.placeholder"
+          :disabled="props.disabled"
           @input="handleChange"
           @focus="onFocus"
           @blur="onBlur"
@@ -47,6 +49,7 @@ type Props = {
   validate?: ValidateInput<Value>;
   label?: string;
   hint?: string;
+  disabled?: boolean;
   fill?: boolean;
   placeholder?: string;
   rows?: number;
@@ -99,20 +102,27 @@ function handleChange(evt: Event) {
     --mk-input-textarea-border-color: var(--app-input-border-color);
     --mk-input-textarea-placeholder-color: var(--app-input-placeholder-color);
 
+    $this: &;
+
     display: inline-block;
 
     textarea {
         width: 100%;
         padding: var(--mk-input-textarea-padding-y) var(--mk-input-textarea-padding-x);
+        color: currentcolor;
         background-color: var(--mk-input-textarea-background-color);
         border: 1px solid var(--mk-input-textarea-border-color);
         border-radius: var(--mk-input-textarea-border-radius);
         outline: none;
-        transition: border-color var(--app-transition-duration-border);
+        transition: border-color var(--app-transition-duration-color);
 
         &::placeholder {
             color: var(--mk-input-textarea-placeholder-color);
         }
+    }
+
+    &-input {
+        transition: opacity var(--app-transition-duration-opacity);
     }
 
     &[data-focus="true"] {
@@ -123,6 +133,14 @@ function handleChange(evt: Event) {
 
     &[data-fill="true"] {
         display: block;
+    }
+
+    &[data-disabled="true"] {
+        #{$this} {
+            &-input {
+                opacity: var(--app-input-opacity-disabled);
+            }
+        }
     }
 
     .mk-AppInputLabel {

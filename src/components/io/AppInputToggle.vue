@@ -13,31 +13,36 @@
         class="mk-AppInputToggle"
         :data-checked="isChecked"
         :data-fill="props.fill || undefined"
+        :data-disabled="props.disabled || undefined"
         v-bind="$attrs"
       >
         <label class="mk-AppInputToggle-label">
           <AppInputLabel v-if="props.label">
             {{ props.label }}
           </AppInputLabel>
-          <span v-if="stateLabel(isChecked)">{{ stateLabel(isChecked) }}</span>
+          <span
+            v-if="stateLabel(isChecked)"
+            class="mk-AppInputToggle-stateLabel"
+          >{{ stateLabel(isChecked) }}</span>
           <div class="mk-AppInputToggle-input">
             <input
               :name="inputName"
               type="checkbox"
               :checked="isChecked"
+              :disabled="props.disabled"
               @input="onChange"
             >
             <div class="mk-AppInputToggle-target">
               <template v-if="!props.iconInBackground">
                 <transition name="mk-AppIcon">
                   <slot
-                    v-if="checked"
+                    v-if="isChecked && $slots['checked-icon']"
                     name="checked-icon"
                   />
                 </transition>
                 <transition name="mk-AppIcon">
                   <slot
-                    v-if="!checked"
+                    v-if="!isChecked && $slots['unchecked-icon']"
                     name="unchecked-icon"
                   />
                 </transition>
@@ -49,7 +54,7 @@
             >
               <transition name="mk-AppIcon">
                 <div
-                  v-if="checked && $slots['checked-icon']"
+                  v-if="isChecked && $slots['checked-icon']"
                   class="mk-AppInputToggle-icon"
                   data-state="checked"
                 >
@@ -59,7 +64,7 @@
               </transition>
               <transition name="mk-AppIcon">
                 <div
-                  v-if="!checked && $slots['unchecked-icon']"
+                  v-if="!isChecked && $slots['unchecked-icon']"
                   class="mk-AppInputToggle-icon"
                   data-state="unchecked"
                 >
@@ -97,6 +102,7 @@ type Props = {
   validate?: ValidateInput<Value>;
   label?: string;
   hint?: string;
+  disabled?: boolean;
   fill?: boolean;
   checked?: Value;
   unchecked?: Value;
@@ -135,13 +141,23 @@ function stateLabel(checked: boolean) {
     --mk-input-toggle-target-padding: calc(var(--mk-input-toggle-padding) / 2);
     --mk-input-toggle-icon-size: calc(var(--mk-input-toggle-size) - calc(var(--mk-input-toggle-target-padding) * 2));
 
+    $this: &;
+
     display: inline-block;
 
     &-label {
         display: flex;
         gap: var(--mk-input-toggle-spacing);
         align-items: center;
+    }
+
+    &-stateLabel,
+    &-input {
         cursor: pointer;
+    }
+
+    &-stateLabel {
+        transition: opacity var(--app-transition-duration-opacity);
     }
 
     &-input {
@@ -152,7 +168,9 @@ function stateLabel(checked: boolean) {
         color: var(--mk-input-toggle-target-color);
         background-color: var(--mk-input-toggle-background-color);
         border-radius: var(--mk-input-toggle-size);
-        transition: background-color var(--app-transition-duration-background);
+        transition:
+            background-color var(--app-transition-duration-background),
+            opacity var(--app-transition-duration-opacity);
     }
 
     &-target {
@@ -197,24 +215,18 @@ function stateLabel(checked: boolean) {
         .mk-AppIcon {
             display: block;
             opacity: 0.6;
+
+            --mk-icon-color: var(--mk-input-toggle-color-on-background);
         }
 
         &[data-state="checked"] {
             left: calc((var(--mk-input-toggle-padding) + var(--mk-input-toggle-size) / 2));
             transform: translate(-50%, -50%);
-
-            .mk-AppIcon {
-                --mk-icon-color: var(--mk-input-toggle-color-on-active);
-            }
         }
 
         &[data-state="unchecked"] {
             right: calc((var(--mk-input-toggle-padding) + var(--mk-input-toggle-size) / 2));
             transform: translate(50%, -50%);
-
-            .mk-AppIcon {
-                --mk-icon-color: var(--mk-input-toggle-color-on-background);
-            }
         }
     }
 
@@ -223,7 +235,7 @@ function stateLabel(checked: boolean) {
     }
 
     &[data-checked="true"] {
-        .mk-AppInputToggle {
+        #{$this} {
             &-target {
                 background-color: var(--mk-input-toggle-color-on-active);
                 transform: translate(100%, 0);
@@ -241,6 +253,26 @@ function stateLabel(checked: boolean) {
 
     &[data-fill="true"] {
         display: block;
+    }
+
+    &[data-disabled="true"] {
+        #{$this} {
+            &-input,
+            &-stateLabel {
+                cursor: default;
+                opacity: var(--app-input-opacity-disabled);
+            }
+
+            &-target {
+                .mk-AppIcon {
+                    --mk-icon-color: var(--app-input-color-disabled);
+                }
+            }
+
+            &-input {
+                background-color: var(--app-input-color-disabled);
+            }
+        }
     }
 
     .mk-AppInputLabel {

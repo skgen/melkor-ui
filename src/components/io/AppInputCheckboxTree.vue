@@ -11,6 +11,7 @@
         v-for="(level, index) in props.modelValue.value"
         :key="index"
         v-bind="level"
+        :disabled="props.disabled"
         @update:level="(newLevel) => handleChange(newLevel, index)"
       />
     </div>
@@ -43,6 +44,7 @@ type Props = {
   validate?: ValidateInput<Value>;
   label?: string;
   hint?: string;
+  disabled?: boolean;
 };
 
 type Emits = {

@@ -9,7 +9,7 @@
     --c-grey-80: #ccc;
     --c-grey-70: #b3b3b3;
     --c-grey-60: #999;
-    --c-grey-48: #7a7a7a;
+    --c-grey-50: #808080;
     --c-grey-40: #666;
     --c-grey-30: #4d4d4d;
     --c-grey-20: #333;
@@ -48,7 +48,6 @@
     --app-transition-duration-2: 256ms;
     --app-transition-duration-3: 512ms;
     --app-transition-duration-background: var(--app-transition-duration-2);
-    --app-transition-duration-border: var(--app-transition-duration-1);
     --app-transition-duration-color: var(--app-transition-duration-2);
     --app-transition-duration-opacity: var(--app-transition-duration-2);
     --app-transition-duration-transform: var(--app-transition-duration-2);
@@ -56,6 +55,7 @@
     // Inputs
     --app-input-padding-x: var(--app-m-2);
     --app-input-padding-y: var(--app-m-1);
+    --app-input-opacity-disabled: 0.6;
 }
 
 @mixin app-light-theme() {
@@ -108,6 +108,7 @@
     --app-input-border-color: var(--app-border-color);
     --app-input-icon-color: var(--app-text-color);
     --app-input-placeholder-color: var(--c-grey-80);
+    --app-input-color-disabled: var(--c-grey-50);
 }
 
 @mixin app-dark-theme() {
@@ -165,4 +166,5 @@
     --app-input-border-color: var(--app-border-color);
     --app-input-icon-color: var(--app-text-color);
     --app-input-placeholder-color: var(--c-grey-40);
+    --app-input-color-disabled: var(--c-grey-50);
 }

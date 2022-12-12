@@ -2,6 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppFilePreview"
+    :data-disabled="props.disabled || undefined"
   >
     <div class="mk-AppFilePreview-wrapper">
       <div class="mk-AppFilePreview-icon">
@@ -34,6 +35,7 @@
       </div>
       <button
         class="mk-AppFilePreview-delete"
+        :disabled="props.disabled"
         @click="() => emit('delete')"
       >
         <AppIcon icon="close" />
@@ -53,6 +55,7 @@ import useTheme from '@src/composables/useTheme';
 
 type Props = {
   file: FileModel | File;
+  disabled?: boolean;
 };
 
 type Emits = {
@@ -87,29 +90,34 @@ const isImage = computed(() => preview.value.type === FileType.image);
 @import "@style/mixins";
 
 .mk-AppFilePreview {
-    --mk-file-preview-border-radius: var(--app-border-radius);
-    --mk-file-preview-icon-border-radius: calc(var(--app-border-radius) * 2);
-    --mk-file-preview-icon-w: 54px;
-    --mk-file-preview-icon-h: 54px;
-    --mk-file-preview-icon-border-color: var(--app-border-color);
-    --mk-file-preview-icon-color: var(--app-primary-color);
-    --mk-file-preview-size-color: var(--app-text-color-soft);
-    --mk-file-preview-delete-background-color: var(--app-background-color-highlight);
-    --mk-file-preview-delete-background-color-hover: var(--app-background-color-highlight-hover);
-    --mk-file-preview-delete-w: 38px;
-    --mk-file-preview-delete-h: 38px;
+    --mk-input-file-preview-border-radius: var(--app-border-radius);
+    --mk-input-file-preview-icon-border-radius: calc(var(--app-border-radius) * 2);
+    --mk-input-file-preview-icon-w: 54px;
+    --mk-input-file-preview-icon-h: 54px;
+    --mk-input-file-preview-icon-border-color: var(--app-border-color);
+    --mk-input-file-preview-icon-color: var(--app-primary-color);
+    --mk-input-file-preview-size-color: var(--app-text-color-soft);
+    --mk-input-file-preview-delete-background-color: var(--app-background-color-highlight);
+    --mk-input-file-preview-delete-background-color-hover: var(--app-background-color-highlight-hover);
+    --mk-input-file-preview-delete-w: 38px;
+    --mk-input-file-preview-delete-h: 38px;
 
     @include light {
-        --mk-file-preview-border-color: var(--app-border-color);
+        --mk-input-file-preview-border-color: var(--app-border-color);
     }
 
     @include dark {
-        --mk-file-preview-border-color: var(--app-border-color-highlight);
+        --mk-input-file-preview-border-color: var(--app-border-color-highlight);
     }
 
+    $this: &;
+
     padding: var(--app-m-1) var(--app-m-2) var(--app-m-1) var(--app-m-1);
-    border: 1px solid var(--mk-file-preview-border-color);
-    border-radius: var(--mk-file-preview-border-radius);
+    border: 1px solid var(--mk-input-file-preview-border-color);
+    border-radius: var(--mk-input-file-preview-border-radius);
+    transition:
+        border-color var(--app-transition-duration-color),
+        opacity  var(--app-transition-duration-opacity);
 
     &-wrapper {
         display: flex;
@@ -118,14 +126,15 @@ const isImage = computed(() => preview.value.type === FileType.image);
     }
 
     &-icon {
-        width: var(--mk-file-preview-icon-w);
-        height: var(--mk-file-preview-icon-h);
+        width: var(--mk-input-file-preview-icon-w);
+        height: var(--mk-input-file-preview-icon-h);
+        transition: filter var(--app-transition-duration-color);
 
         img {
             object-fit: contain;
             width: 100%;
             height: 100%;
-            border-radius: var(--mk-file-preview-icon-border-radius);
+            border-radius: var(--mk-input-file-preview-icon-border-radius);
         }
     }
 
@@ -141,9 +150,9 @@ const isImage = computed(() => preview.value.type === FileType.image);
         justify-content: center;
         width: 100%;
         height: 100%;
-        color: var(--mk-file-preview-icon-color);
-        border: 1px solid var(--mk-file-preview-icon-border-color);
-        border-radius: var(--mk-file-preview-icon-border-radius);
+        color: var(--mk-input-file-preview-icon-color);
+        border: 1px solid var(--mk-input-file-preview-icon-border-color);
+        border-radius: var(--mk-input-file-preview-icon-border-radius);
 
         .mk-AppIcon {
             --mk-icon-size: 40px;
@@ -158,28 +167,47 @@ const isImage = computed(() => preview.value.type === FileType.image);
     &-size {
         display: block;
         font-size: 0.75rem;
-        color: var(--mk-file-preview-size-color);
+        color: var(--mk-input-file-preview-size-color);
     }
 
     &-delete {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: var(--mk-file-preview-delete-w);
-        height: var(--mk-file-preview-delete-h);
+        width: var(--mk-input-file-preview-delete-w);
+        height: var(--mk-input-file-preview-delete-h);
         padding: 0;
         margin-left: auto;
-        cursor: pointer;
-        background-color: var(--mk-file-preview-delete-background-color);
+        color: currentcolor;
+        background-color: var(--mk-input-file-preview-delete-background-color);
         border-radius: 50%;
         transition: background-color var(--app-transition-duration-background);
 
         .mk-AppIcon {
             --mk-icon-size: 20px;
         }
+    }
 
-        &:hover {
-            background-color: var(--mk-file-preview-delete-background-color-hover);
+    &:not([data-disabled="true"]) {
+        #{$this} {
+            &-delete {
+                cursor: pointer;
+
+                &:hover {
+                    background-color: var(--mk-input-file-preview-delete-background-color-hover);
+                }
+            }
+        }
+    }
+
+    &[data-disabled="true"] {
+        border-color: var(--app-input-color-disabled);
+        opacity: var(--app-input-opacity-disabled);
+
+        #{$this} {
+            &-icon {
+                filter: grayscale(100%);
+            }
         }
     }
 }
