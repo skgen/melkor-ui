@@ -41,7 +41,10 @@ export function getDefaultAs
   return isValue(t) ? c(t) : d;
 }
 
-export function isEmpty<T extends Record<string, unknown> | unknown[] | string>(v: T): boolean {
+export function isEmpty<T extends Record<string, unknown> | unknown[] | string | undefined | null>(v: T): boolean {
+  if (!isValue(v)) {
+    return true;
+  }
   if (isObject(v)) {
     return Object.keys(v).length === 0;
   }
