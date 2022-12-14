@@ -7,6 +7,7 @@ export { default as AppLayers } from '@src/components/AppLayers.vue';
 export { default as AppLink } from '@src/components/AppLink.vue';
 export { default as AppLocaleSelector } from '@src/components/AppLocaleSelector.vue';
 export { default as AppThemeSelector } from '@src/components/AppThemeSelector.vue';
+export { default as AppThemeToggle } from '@src/components/AppThemeToggle.vue';
 export { default as AppTabs } from '@src/components/AppTabs.vue';
 export { default as AppTab } from '@src/components/AppTab.vue';
 export { default as AppTable } from '@src/components/AppTable.vue';
