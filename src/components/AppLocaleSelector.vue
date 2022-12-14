@@ -21,7 +21,7 @@ watch(locale, persistLocale);
 type SelectInputValue = string;
 
 const options = computed<SelectInputOption<SelectInputValue>[]>(() => availableLocales.map((availableLocale) => ({
-  label: t(`app.i18n.${availableLocale}`),
+  label: t(`melkor.i18n.${availableLocale}`),
   value: availableLocale,
 })));
 

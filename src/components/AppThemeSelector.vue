@@ -21,7 +21,7 @@ const { t } = useI18n();
 type SelectInputValue = string;
 
 const options = computed<SelectInputOption<SelectInputValue>[]>(() => themeStore.themes.map((theme) => ({
-  label: t(`app.theme.${theme}`),
+  label: t(`melkor.theme.${theme}`),
   value: theme,
 })));
 
