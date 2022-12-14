@@ -133,7 +133,7 @@ function stateLabel(checked: boolean) {
 .mk-AppInputToggle {
     --mk-input-toggle-color-active: var(--app-success-color);
     --mk-input-toggle-color-on-active: var(--c-white);
-    --mk-input-toggle-background-color: var(--c-grey-60);
+    --mk-input-toggle-background-color: var(--c-grey-50);
     --mk-input-toggle-color-on-background: var(--c-white);
     --mk-input-toggle-spacing: var(--app-m-1);
     --mk-input-toggle-size: 16px;
@@ -165,7 +165,6 @@ function stateLabel(checked: boolean) {
         display: block;
         width: calc(var(--mk-input-toggle-size) * 2 + var(--mk-input-toggle-padding) * 2);
         padding: var(--mk-input-toggle-padding);
-        color: var(--mk-input-toggle-target-color);
         background-color: var(--mk-input-toggle-background-color);
         border-radius: var(--mk-input-toggle-size);
         transition:
