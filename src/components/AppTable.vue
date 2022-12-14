@@ -4,12 +4,12 @@
     class="mk-AppTable"
   >
     <thead
-      v-if="isValue(headers) && headers?.length > 0"
+      v-if="isValue(computedHeaders) && computedHeaders.length > 0"
       class="mk-AppTable-head"
     >
       <AppTableRow>
         <AppTableCell
-          v-for="(header, index) in headers"
+          v-for="(header, index) in computedHeaders"
           :key="header.value"
           header
           :data-filtered="isMatchingFilteredCol(index)"
@@ -28,11 +28,11 @@
       </AppTableRow>
     </thead>
     <tbody
-      v-if="items.length > 0"
+      v-if="computedItems.length > 0"
       class="mk-AppTable-body"
     >
       <AppTableRow
-        v-for="(item, rowIndex) in items"
+        v-for="(item, rowIndex) in computedItems"
         :key="rowIndex"
       >
         <AppTableCell
@@ -91,7 +91,10 @@ const { theme } = useTheme();
 
 const options = computed(() => ({ ...defaultOptions, ...props.options }));
 
-const headers = computed(() => {
+const computedHeaders = computed(() => {
+  if (!props.headers) {
+    return null;
+  }
   if (!options.value.indexColumns) {
     return props.headers;
   }
@@ -121,8 +124,8 @@ const activeHeader = ref<{ header: TableHeader; order: HeaderSort } | null>(null
 const activeHeaderColIndex = ref<number | null>(null);
 const hoveredCell = ref<TableCellAsGeneric | null>(null);
 const keys = computed(() => {
-  if (isValue(headers.value)) {
-    return headers.value?.map((header) => header.value);
+  if (isValue(computedHeaders.value)) {
+    return computedHeaders.value?.map((header) => header.value);
   }
   const rawKeys: string[] = [];
   rawItems.value.forEach((item) => rawKeys.push(...Object.keys(item)));
@@ -136,7 +139,7 @@ const headerIcon = computed(() => {
   return activeHeader.value.order === HeaderSort.ASC ? 'arrow_upward' : 'arrow_downward';
 });
 
-const items = computed(() => {
+const computedItems = computed(() => {
   if (!activeHeader.value) {
     return rawItems.value;
   }
