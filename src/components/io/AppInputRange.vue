@@ -98,6 +98,7 @@ const {
 
 const thumbSize = ref(0);
 const normalized = computed(() => norm(state.value.value, props.min, props.max));
+const normAttr = computed(() => `${normalized.value}`);
 
 function handleChange(evt: Event) {
   if (!evt.target) {
@@ -171,7 +172,7 @@ onMounted(() => {
                 left: 0;
                 width:
                     calc(
-                        (v-bind(normalized) * 100%) - (var(--mk-input-range-thumb-size) * v-bind(normalized)) + (var(--mk-input-range-thumb-size) / 2)
+                        (v-bind(normAttr) * 100%) - (var(--mk-input-range-thumb-size) * v-bind(normAttr)) + (var(--mk-input-range-thumb-size) / 2)
                     );
                 height: 100%;
                 background-color: currentcolor;
@@ -181,7 +182,7 @@ onMounted(() => {
         &-thumb {
             position: absolute;
             top: 50%;
-            left: calc((v-bind(normalized) * 100%) - (var(--mk-input-range-thumb-size) * v-bind(normalized)));
+            left: calc((v-bind(normAttr) * 100%) - (var(--mk-input-range-thumb-size) * v-bind(normAttr)));
             width: var(--mk-input-range-thumb-size);
             height: var(--mk-input-range-thumb-size);
             background-color: var(--app-background-color-on-primary);

@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppImage"
-    :data-ratio="!!ratio || undefined"
+    :data-ratio="ratio !== 'initial' || undefined"
     :data-fit="fit ?? undefined"
   >
     <img
@@ -39,7 +39,7 @@ const ratio = computed(() => {
   if (props.ratio && props.ratio[0] && props.ratio[1]) {
     return `${(props.ratio[1] / props.ratio[0]) * 100}%`;
   }
-  return null;
+  return 'initial';
 });
 
 const fit = computed(() => {
