@@ -1,6 +1,15 @@
 import type { ComputedRef, InjectionKey, WritableComputedRef } from 'vue';
 import type { FileType } from '@src/lib/modules/file';
 
+export type MelkorConfig = {
+  i18n: {
+    active: boolean;
+  };
+  router: {
+    active: boolean;
+  };
+};
+
 // Theme
 
 export enum Theme {
@@ -242,6 +251,7 @@ export type TableProps = {
 
 // Provide / inject keys
 
+export const configContextKey = Symbol('Inject key of melkor config') as InjectionKey<MelkorConfig>;
 export const themeContextKey = Symbol('Inject key of theme context') as InjectionKey<ComputedRef<ThemeInstance>>;
 export const tabsContextKey = Symbol('Inject key of tabs/tab') as InjectionKey<WritableComputedRef<unknown>>;
 export const layersContextKey = Symbol('Inject key of layers/layer') as InjectionKey<WritableComputedRef<unknown>>;

@@ -25,6 +25,7 @@
     "src/**/*.ts", 
     "src/**/*.d.ts", 
     "src/**/*.vue",
+    "src/**/*.json"
   ],
   "exclude": [
     "src/**/__tests__/*",

@@ -18,7 +18,6 @@
       <slot />
     </a>
   </router-link>
-
   <a
     v-else-if="props.to && !isRelative"
     v-theme="theme"
@@ -52,7 +51,8 @@
 
 <script lang="ts" setup>
 import useTheme from '@src/composables/useTheme';
-import { computed } from 'vue';
+import { configContextKey } from '@src/definition';
+import { computed, inject } from 'vue';
 
 type Props = {
   to?: string;
@@ -64,7 +64,14 @@ const props = defineProps<Props>();
 
 const { theme } = useTheme();
 
-const isRelative = computed(() => (props.to ? !/^(http:\/\/|https:\/\/|file:\/\/|tel:|mailto:)/i.test(props.to) : false));
+const config = inject(configContextKey);
+
+const isRelative = computed(() => {
+  if (!config?.router.active) {
+    return false;
+  }
+  return (props.to ? !/^(http:\/\/|https:\/\/|file:\/\/|tel:|mailto:)/i.test(props.to) : false);
+});
 </script>
 
 <style lang="scss">

@@ -1,0 +1,18 @@
+{
+    "melkor": {
+        "component": {
+            "inputFile": {
+                "dragdrop": "Drag & drop or {search}",
+                "search": "browse"
+            }
+        },
+        "theme": {
+            "auto": "Sys-Theme",
+            "light": "Light Theme",
+            "dark": "Dark Theme"
+        },
+        "i18n": {
+            "en": "English"
+        }
+    }
+}
