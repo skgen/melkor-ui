@@ -2,6 +2,10 @@
 .v-popper {
     $this: &;
 
+    &__popper {
+        z-index: initial;
+    }
+
     &--theme-menu {
         &#{$this}__popper--shown {
             transition: opacity 500ms;

@@ -21,6 +21,7 @@ const { theme } = useTheme();
     right: 0;
     bottom: 0;
     left: 0;
+    z-index: var(--app-fullscreen-layer-order);
 
     &::before {
         @include pseudo;
@@ -29,7 +30,7 @@ const { theme } = useTheme();
         right: 0;
         bottom: 0;
         left: 0;
-        z-index: 1;
+        z-index: calc(var(--app-fullscreen-layer-order) + 1);
         background-color: var(--app-background-color);
         opacity: 0.8;
         transition: opacity 200ms;

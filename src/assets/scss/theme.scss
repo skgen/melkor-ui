@@ -57,6 +57,10 @@
     --app-input-padding-x: var(--app-m-2);
     --app-input-padding-y: var(--app-m-1);
     --app-input-opacity-disabled: 0.6;
+
+    // Layers
+    --app-fullscreen-layer-order: 1000;
+    --app-floating-layer-order: 900;
 }
 
 @mixin app-light-theme() {
@@ -115,13 +119,8 @@
 @mixin app-dark-theme() {
     color-scheme: dark;
 
-    --app-primary-color: #0c78f6;
-
-    // --app-primary-color-15: #daf0ff;
-    // --app-primary-color-10: #e6f5ff;
-    // --app-primary-color-5: #f2faff;
-    // --app-primary-color-20-highlight: #cfdde6;
-    // --app-primary-color-15-highlight: #d9e8f2;
+    --app-primary-tone-color: 12 120 246;
+    --app-primary-color: rgb(var(--app-primary-tone-color));
 
     // Theme
     --app-theme-color: var(--c-black);

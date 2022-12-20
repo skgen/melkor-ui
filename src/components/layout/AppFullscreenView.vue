@@ -103,10 +103,9 @@ onMounted(() => {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 0;
 
     &:last-child {
-        z-index: 2;
+        z-index: calc(var(--app-fullscreen-layer-order) + 2);
     }
 
     &-content {
