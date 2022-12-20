@@ -29,3 +29,10 @@ const theme = computed<ThemeInstance>(() => ({
 
 provide(themeContextKey, theme);
 </script>
+
+<style lang="scss">
+.mk-AppThemeContext {
+    color: var(--app-text-color);
+    background-color: var(--app-background-color);
+}
+</style>

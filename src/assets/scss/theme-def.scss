@@ -8,13 +8,9 @@
 * {
     @include light {
         @include app-light-theme;
-
-        color: var(--app-text-color);
     }
 
     @include dark {
         @include app-dark-theme;
-
-        color: var(--app-text-color);
     }
 }
