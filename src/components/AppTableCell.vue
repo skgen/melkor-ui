@@ -34,21 +34,39 @@ const { theme } = useTheme();
 @import "@style/mixins";
 
 .mk-AppTableCell {
+    @include light {
+        // Cell
+        --mk-table-cell-border-color-highlighted: rgb(var(--app-primary-tone-color) / 0.2);
+        --mk-table-cell-border-color-active: rgb(var(--app-primary-tone-color) / 0.4);
+        --mk-table-cell-background-color-highlighted: rgb(var(--app-primary-tone-color) / 0.05);
+        --mk-table-cell-background-color-active: rgb(var(--app-primary-tone-color) / 0.1);
+
+        // Header
+        --mk-table-cell-header-border-color: var(--c-grey-70);
+        --mk-table-cell-header-background-color-highlighted: rgb(var(--app-primary-tone-color) / 0.15);
+    }
+
+    @include dark {
+        // Cell
+        --mk-table-cell-border-color-highlighted: rgb(var(--app-primary-tone-color) / 0.4);
+        --mk-table-cell-border-color-active: rgb(var(--app-primary-tone-color) / 0.5);
+        --mk-table-cell-background-color-highlighted: rgb(var(--app-primary-tone-color) / 0.2);
+        --mk-table-cell-background-color-active: rgb(var(--app-primary-tone-color) / 0.35);
+
+        // Header
+        --mk-table-cell-header-border-color: var(--c-grey-50);
+        --mk-table-cell-header-background-color-highlighted: rgb(var(--app-primary-tone-color) / 0.3);
+    }
+
     // Cell
     --mk-table-cell-border-color: var(--app-border-color);
-    --mk-table-cell-border-color-highlighted: rgb(var(--app-primary-tone-color) / 0.1);
     --mk-table-cell-background-color: var(--app-background-color);
-    --mk-table-cell-background-color-highlighted: rgb(var(--app-primary-tone-color) / 0.05);
-    --mk-table-cell-background-color-active: rgb(var(--app-primary-tone-color) / 0.15);
+    --mk-table-cell-row-odd-background-color: var(--app-background-color-soft);
 
     // Header
-    --mk-table-cell-header-border-color: var(--c-grey-90);
-    --mk-table-cell-header-border-color-highlighted: rgb(var(--app-primary-tone-color) / 0.2);
-    --mk-table-header-background-color: var(--c-grey-95);
-    --mk-table-header-background-color-highlighted: rgb(var(--app-primary-tone-color) / 0.15);
+    --mk-table-cell-header-background-color: var(--app-background-color-highlight);
 
-    // Row
-    --mk-table-row-even-background-color: var(--app-background-color-soft);
+    $this: &;
 
     position: relative;
     padding: var(--app-m-1) var(--app-m-2);
@@ -60,12 +78,12 @@ const { theme } = useTheme();
     }
 
     &[data-header="true"] {
-        --mk-table-cell-background-color: var(--mk-table-header-background-color);
-        --mk-table-cell-border-color: var(--mk-table-cell-header-border-color);
+        background-color: var(--mk-table-cell-header-background-color);
+        border-color: var(--mk-table-cell-header-border-color);
 
         &[data-filtered="true"] {
-            --mk-table-cell-background-color: var(--mk-table-header-background-color-highlighted);
-            --mk-table-cell-border-color: var(--mk-table-cell-header-border-color-highlighted);
+            background-color: var(--mk-table-cell-header-background-color-highlighted);
+            border-bottom-color: var(--mk-table-cell-border-color);
         }
 
         &:hover {
@@ -73,25 +91,57 @@ const { theme } = useTheme();
         }
     }
 
-    &[data-row-even="true"] {
-        --mk-table-cell-background-color: var(--mk-table-row-even-background-color);
+    &[data-is-odd="true"] {
+        background-color: var(--mk-table-cell-row-odd-background-color);
     }
 
-    &[data-current-row="true"] {
-        border-bottom-color: var(--mk-table-cell-border-color-highlighted);
+    &[data-is-current-y="true"] {
+        // background-color: yellow;
+        background-color: var(--mk-table-cell-background-color-highlighted);
+        border-color: var(--mk-table-cell-border-color-highlighted);
     }
 
-    &[data-current-row="true"],
-    &[data-filtered="true"] {
-        --mk-table-cell-background-color: var(--mk-table-cell-background-color-highlighted);
+    // &[data-is-current-x="true"] {
+    // }
+
+    // &[data-is-current="true"] {
+    // }
+
+    &[data-is-filtered-x="true"] {
+        background-color: var(--mk-table-cell-background-color-highlighted);
     }
 
-    &[data-current-row="true"][data-filtered="true"] {
-        --mk-table-cell-background-color: var(--mk-table-cell-background-color-active);
+    // &[data-has-target="true"] {
+    // }
+
+    &[data-is-target="true"] {
+        background-color: var(--mk-table-cell-background-color-active);
+        border-color: var(--mk-table-cell-border-color);
+
+        &::before {
+            @include pseudo;
+
+            top: -1px;
+            right: -1px;
+            bottom: -1px;
+            left: -1px;
+            border: 1px solid var(--mk-table-cell-border-color-active);
+        }
     }
 
-    &[data-target="true"] {
-        // custom style for target
+    &[data-is-top-target="true"] {
+        // background-color: lime;
+        border-bottom-color: var(--mk-table-cell-border-color);
     }
+
+    &[data-is-right-target="true"] {
+        border-left-color: var(--mk-table-cell-border-color);
+    }
+
+    // &[data-is-bottom-target="true"] {
+    // }
+
+    // &[data-is-left-target="true"] {
+    // }
 }
 </style>
