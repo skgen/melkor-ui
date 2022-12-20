@@ -40,7 +40,7 @@ const props = defineProps<Props>();
     --mk-wysiwyg-preview-border-color-soft: var(--app-border-color-highlight);
 
     @include light {
-        --mk-wysiwyg-preview-background-color-attention: var(--app-primary-color-15);
+        --mk-wysiwyg-preview-background-color-attention: rgb(var(--app-primary-tone-color) / 0.15);
     }
 
     @include dark {
