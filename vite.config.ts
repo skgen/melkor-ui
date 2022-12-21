@@ -12,10 +12,12 @@ export default ({ mode }: { mode: string }) => {
 
   const copyScssFiles = ['mixins', 'theme', 'variables'];
 
+  const isDevelopment = mode === 'development';
+
   return defineConfig({
     build: {
       outDir: 'dist',
-      sourcemap: mode === 'development' ? 'inline' : false,
+      sourcemap: isDevelopment ? 'inline' : false,
       lib: {
         formats: ['es'],
         entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
@@ -28,6 +30,8 @@ export default ({ mode }: { mode: string }) => {
       commonjsOptions: {
         esmExternals: true 
       },
+      // Prevent DTS error on cleaning files while running a new generation
+      emptyOutDir: false,
     },
     publicDir: false,
     plugins: [
@@ -36,6 +40,8 @@ export default ({ mode }: { mode: string }) => {
       dts({
         staticImport: true,
         insertTypesEntry: true,
+        // https://github.com/qmhc/vite-plugin-dts/issues/153 (.json file imports here) 
+        skipDiagnostics: true,
         outputDir: fileURLToPath(new URL('./dist/@types', import.meta.url)),
         include: [fileURLToPath(new URL('./src', import.meta.url))],
         tsConfigFilePath: fileURLToPath(new URL('./tsconfig.app.json', import.meta.url)),
