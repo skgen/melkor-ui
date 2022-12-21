@@ -253,20 +253,6 @@ const props = defineProps<Props>();
         content: "";
     }
 
-    table {
-        display: block;
-        width: max-content;
-        max-width: 100%;
-        overflow: auto;
-        border-spacing: 0;
-        border-collapse: collapse;
-    }
-
-    td,
-    th {
-        padding: 0;
-    }
-
     details summary {
         cursor: pointer;
     }
@@ -349,7 +335,6 @@ const props = defineProps<Props>();
     ul,
     ol,
     dl,
-    table,
     pre,
     details {
         margin-top: 0;
@@ -421,24 +406,6 @@ const props = defineProps<Props>();
         appearance: none;
     }
 
-    [data-catalyst] {
-        display: block;
-    }
-
-    g-emoji {
-        font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-        font-size: 1em;
-        font-style: normal !important;
-        font-weight: 400;
-        line-height: 1;
-        vertical-align: -0.075em;
-    }
-
-    g-emoji img {
-        width: 1em;
-        height: 1em;
-    }
-
     &::before {
         display: table;
         content: "";
@@ -470,22 +437,6 @@ const props = defineProps<Props>();
     sup > a::after {
         content: "]";
     }
-
-    // h1 tt,
-    // h1 code,
-    // h2 tt,
-    // h2 code,
-    // h3 tt,
-    // h3 code,
-    // h4 tt,
-    // h4 code,
-    // h5 tt,
-    // h5 code,
-    // h6 tt,
-    // h6 code {
-    //     padding: 0 0.2em;
-    //     font-size: inherit;
-    // }
 
     ol[type="1"] {
         list-style-type: decimal;
@@ -524,31 +475,44 @@ const props = defineProps<Props>();
     }
 
     dl dd {
-        padding: 0 16px;
-        margin-bottom: 16px;
+        padding: 0 var(--app-m-2);
+        margin-bottom: var(--app-m-2);
     }
 
-    table th {
-        font-weight: 600;
-    }
+    table {
+        &:not(.mk-AppTable) {
+            display: block;
+            width: max-content;
+            max-width: 100%;
+            margin-top: 0;
+            margin-bottom: var(--app-m-2);
+            overflow: auto;
+            border-spacing: 0;
+            border-collapse: collapse;
 
-    table th,
-    table td {
-        padding: 6px 13px;
-        border: 1px solid var(--mk-wysiwyg-preview-border-color);
-    }
+            th {
+                font-weight: 600;
+            }
 
-    table tr {
-        background-color: var(--mk-wysiwyg-preview-background-color);
-        border-top: 1px solid var(--mk-wysiwyg-preview-border-color-soft);
-    }
+            th,
+            td {
+                padding: 6px 13px;
+                border: 1px solid var(--mk-wysiwyg-preview-border-color);
+            }
 
-    table tr:nth-child(2n) {
-        background-color: var(--mk-wysiwyg-preview-background-color-soft);
-    }
+            tr {
+                background-color: var(--mk-wysiwyg-preview-background-color);
+                border-top: 1px solid var(--mk-wysiwyg-preview-border-color-soft);
 
-    table img {
-        background-color: transparent;
+                &:nth-child(2n) {
+                    background-color: var(--mk-wysiwyg-preview-background-color-soft);
+                }
+            }
+
+            img {
+                background-color: transparent;
+            }
+        }
     }
 
     img[align="right"] {
