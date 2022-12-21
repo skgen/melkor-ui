@@ -5,6 +5,7 @@
     v-bind="spreadProps"
     :shown="props.modelValue"
     :data-fill="props.fill || undefined"
+    :auto-hide="props.autoHide"
     @hide="handleHide"
   >
     <slot />
@@ -44,6 +45,9 @@ const spreadProps = computed(() => {
 });
 
 function handleHide() {
+  if (!props.modelValue) {
+    return;
+  }
   if (props.autoHide) {
     emit('update:modelValue', false);
     emit('hide');
