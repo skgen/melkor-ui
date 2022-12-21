@@ -23,8 +23,6 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'no-restricted-syntax': 'off',
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error"],
     "@typescript-eslint/member-delimiter-style": ["error", {
       "multiline": {
         "delimiter": "semi",
