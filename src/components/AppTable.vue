@@ -76,7 +76,7 @@
 
 <script lang="ts" setup>
 import {
-  ref, computed, useSlots, watch,
+  ref, computed, useSlots,
 } from 'vue';
 import AppTableRow from '@src/components/AppTableRow.vue';
 import AppTableCell from '@src/components/AppTableCell.vue';
