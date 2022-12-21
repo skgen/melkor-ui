@@ -62,7 +62,7 @@
             v-if="slots[key]"
             :name="key"
             :data="item[key]"
-            :pos="[x, y, key]"
+            :pos="{ x, y, key}"
             :entry="item"
           />
           <template v-else>
