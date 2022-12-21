@@ -1,11 +1,11 @@
 <template>
-  <tr
+  <div
     v-theme="theme"
     class="mk-AppTableRow"
     :data-active="props.active || undefined"
   >
     <slot />
-  </tr>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -25,3 +25,9 @@ const props = withDefaults(
 const { theme } = useTheme();
 
 </script>
+
+<style lang="scss">
+.mk-AppTableRow {
+    display: contents;
+}
+</style>

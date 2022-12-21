@@ -1,9 +1,9 @@
 <template>
-  <table
+  <div
     v-theme="theme"
     class="mk-AppTable"
   >
-    <thead
+    <div
       v-if="isValue(renderHeaders) && renderHeaders.length > 0"
       class="mk-AppTable-head"
     >
@@ -29,8 +29,8 @@
           </span>
         </AppTableCell>
       </AppTableRow>
-    </thead>
-    <tbody
+    </div>
+    <div
       v-if="renderItems.length > 0"
       class="mk-AppTable-body"
     >
@@ -41,20 +41,20 @@
         <AppTableCell
           v-for="(key, x) in keys"
           :key="x"
-          :data-key="key"
-          :data-x="x"
-          :data-y="y"
-          :data-is-current="getCellState([x, y, key]).isCurrent"
-          :data-is-current-x="getCellState([x, y, key]).isCurrentX"
-          :data-is-current-y="getCellState([x, y, key]).isCurrentY"
-          :data-is-filtered-x="getCellState([x, y, key]).isFilteredX"
-          :data-is-target="getCellState([x, y, key]).isTarget"
-          :data-has-target="getCellState([x, y, key]).hasTarget"
-          :data-is-top-target="getCellState([x, y, key]).isTopTarget"
-          :data-is-right-target="getCellState([x, y, key]).isRightTarget"
-          :data-is-bottom-target="getCellState([x, y, key]).isBottomTarget"
-          :data-is-left-target="getCellState([x, y, key]).isLeftTarget"
-          :data-is-odd="getCellState([x, y, key]).isOdd"
+          :x-key="key"
+          :x="x"
+          :y="y"
+          :is-current="getCellState([x, y, key]).isCurrent"
+          :is-current-x="getCellState([x, y, key]).isCurrentX"
+          :is-current-y="getCellState([x, y, key]).isCurrentY"
+          :is-filtered-x="getCellState([x, y, key]).isFilteredX"
+          :is-target="getCellState([x, y, key]).isTarget"
+          :has-target="getCellState([x, y, key]).hasTarget"
+          :is-top-target="getCellState([x, y, key]).isTopTarget"
+          :is-right-target="getCellState([x, y, key]).isRightTarget"
+          :is-bottom-target="getCellState([x, y, key]).isBottomTarget"
+          :is-left-target="getCellState([x, y, key]).isLeftTarget"
+          :is-odd="getCellState([x, y, key]).isOdd"
           @mouseover="() => handleMouseOverCell([x, y, key])"
           @mouseleave="() => handleMouseLeaveCell([x, y, key])"
         >
@@ -70,8 +70,8 @@
           </template>
         </AppTableCell>
       </AppTableRow>
-    </tbody>
-  </table>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -152,6 +152,8 @@ const keys = computed<TableKey<Value>[]>(() => {
     ...trailingInternalKeys,
   ];
 });
+
+const templateColumns = computed(() => Array(keys.value.length).fill('auto').join(' '));
 
 const renderHeaders = computed(() => {
   const { headers } = props;
@@ -376,9 +378,16 @@ function getCellState(pos: CellPos) {
 
 <style lang="scss">
 .mk-AppTable {
+    display: grid;
+    grid-template-columns: v-bind(templateColumns);
     width: 100%;
-    font-size: 0.875rem;
+    min-width: 100%;
     border-collapse: collapse;
+
+    &-head,
+    &-body {
+        display: contents;
+    }
 
     &-head {
         &-text {

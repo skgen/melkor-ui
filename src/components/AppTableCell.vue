@@ -1,11 +1,25 @@
 <template>
-  <td
+  <div
     v-theme="theme"
     class="mk-AppTableCell"
     :data-header="props.header || undefined"
+    :data-key="props.xKey || undefined"
+    :data-x="props.x || undefined"
+    :data-y="props.y || undefined"
+    :data-is-current="props.isCurrent || undefined"
+    :data-is-current-x="props.isCurrentX || undefined"
+    :data-is-current-y="props.isCurrentY || undefined"
+    :data-is-filtered-x="props.isFilteredX || undefined"
+    :data-is-target="props.isTarget || undefined"
+    :data-has-target="props.hasTarget || undefined"
+    :data-is-top-target="props.isTopTarget || undefined"
+    :data-is-right-target="props.isRightTarget || undefined"
+    :data-is-bottom-target="props.isBottomTarget || undefined"
+    :data-is-left-target="props.isLeftTarget || undefined"
+    :data-is-odd="props.isOdd|| undefined"
   >
     <slot />
-  </td>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -13,16 +27,29 @@ import useTheme from '@src/composables/useTheme';
 
 type Props = {
   header?: boolean;
-  highlighted? : boolean;
-  active? : boolean;
+  xKey?: string | number;
+  x?: number;
+  y?: number;
+  isCurrent?: boolean;
+  isCurrentX?: boolean;
+  isCurrentY?: boolean;
+  isFilteredX?: boolean;
+  isTarget?: boolean;
+  hasTarget?: boolean;
+  isTopTarget?: boolean;
+  isRightTarget?: boolean;
+  isLeftTarget?: boolean;
+  isBottomTarget?: boolean;
+  isOdd?: boolean;
 };
 
 const props = withDefaults(
   defineProps<Props>(),
   {
     header: false,
-    highlighted: false,
-    active: false,
+    xKey: undefined,
+    x: undefined,
+    y: undefined,
   },
 );
 
@@ -69,6 +96,8 @@ const { theme } = useTheme();
     $this: &;
 
     position: relative;
+    display: flex;
+    align-items: center;
     padding: var(--app-m-1) var(--app-m-2);
     background-color: var(--mk-table-cell-background-color);
     border-bottom: 1px solid var(--mk-table-cell-border-color);
