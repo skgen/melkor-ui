@@ -1,9 +1,9 @@
 <template>
-  <div
+  <table
     v-theme="theme"
     class="mk-AppTable"
   >
-    <div
+    <thead
       v-if="isValue(renderHeaders) && renderHeaders.length > 0"
       class="mk-AppTable-head"
     >
@@ -29,8 +29,8 @@
           </span>
         </AppTableCell>
       </AppTableRow>
-    </div>
-    <div
+    </thead>
+    <tbody
       v-if="renderItems.length > 0"
       class="mk-AppTable-body"
     >
@@ -70,8 +70,8 @@
           </template>
         </AppTableCell>
       </AppTableRow>
-    </div>
-  </div>
+    </tbody>
+  </table>
 </template>
 
 <script lang="ts" setup>

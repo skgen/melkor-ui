@@ -1,11 +1,11 @@
 <template>
-  <div
+  <tr
     v-theme="theme"
     class="mk-AppTableRow"
     :data-active="props.active || undefined"
   >
     <slot />
-  </div>
+  </tr>
 </template>
 
 <script lang="ts" setup>

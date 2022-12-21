@@ -1,5 +1,5 @@
 <template>
-  <div
+  <td
     v-theme="theme"
     class="mk-AppTableCell"
     :data-header="props.header || undefined"
@@ -19,7 +19,7 @@
     :data-is-odd="props.isOdd|| undefined"
   >
     <slot />
-  </div>
+  </td>
 </template>
 
 <script lang="ts" setup>
