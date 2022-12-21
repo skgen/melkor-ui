@@ -76,7 +76,7 @@
 
 <script lang="ts" setup>
 import {
-  ref, computed, useSlots,
+  ref, computed, useSlots, watch,
 } from 'vue';
 import AppTableRow from '@src/components/AppTableRow.vue';
 import AppTableCell from '@src/components/AppTableCell.vue';
@@ -84,9 +84,13 @@ import {
   isDef, isNumber, isString, isValue,
 } from '@src/lib/modules/definition';
 import type {
-  TableHeader, TableItem, TableKey, TableItemLeadingKeys, TableOptions, TableItemTrailingKeys,
+  TableHeader, TableKey, TableItemLeadingKeys, TableItemTrailingKeys,
 } from '@src/definition';
 import useTheme from '@src/composables/useTheme';
+
+type Value = {
+  [key: string]: unknown;
+};
 
 // x, y, key
 type CellPos = [number, number, keyof Value];
@@ -109,27 +113,32 @@ type StateMatrix = { [key: string]: CellState };
 
 type Props = {
   headers?: TableHeader<Value>[];
-  items: TableItem<Value>[];
-  options?: TableOptions<Value>;
+  items: Value[];
+  indexColumns?: boolean;
+  sortableKeys?: TableKey<Value>[];
 };
 
 const props = withDefaults(defineProps<Props>(), {
   headers: undefined,
-  options: () => defaultOptions,
+  sortableKeys: () => [],
 });
 
 const { theme } = useTheme();
 
-const options = computed(() => ({ ...defaultOptions, ...props.options }));
-
-const leadingInternalKeys: (keyof TableItemLeadingKeys)[] = ['__index'];
+const leadingInternalKeys = computed(() => {
+  const keys: (keyof TableItemLeadingKeys)[] = [];
+  if (props.indexColumns) {
+    keys.push('__index');
+  }
+  return keys;
+});
 const trailingInternalKeys: (keyof TableItemTrailingKeys)[] = [];
 
 const keys = computed<TableKey<Value>[]>(() => {
   if (isValue(props.headers)) {
     const headerKeys = props.headers.map((header) => header.value);
     return [
-      ...leadingInternalKeys,
+      ...leadingInternalKeys.value,
       ...headerKeys,
       ...trailingInternalKeys,
     ];
@@ -138,7 +147,7 @@ const keys = computed<TableKey<Value>[]>(() => {
   props.items.forEach((item) => rawKeys.push(...Object.keys(item)));
   const itemKeys = new Set(rawKeys);
   return [
-    ...leadingInternalKeys,
+    ...leadingInternalKeys.value,
     ...itemKeys,
     ...trailingInternalKeys,
   ];
@@ -151,7 +160,7 @@ const renderHeaders = computed(() => {
   }
 
   return keys.value.map((key) => {
-    const header = headers.find((header) => header.value === key);
+    const header = headers.find((h) => h.value === key);
     return { value: key, text: header?.text ?? '' };
   });
 });
@@ -174,18 +183,19 @@ const activeHeader = computed(() => {
 
 const currentCell = ref<CellPos | null>(null);
 
-type EnhancedItem = TableItemLeadingKeys & TableItemTrailingKeys & TableItem<Value>;
+type EnhancedItem = TableItemLeadingKeys & TableItemTrailingKeys & Value;
 
 const enhancedItems = computed(() => props.items.map<EnhancedItem>((item, index) => {
-  const leading: TableItemLeadingKeys = {
-    __index: index,
-  };
+  let leading: TableItemLeadingKeys = {};
+  if (props.indexColumns) {
+    leading = { ...leading, __index: index };
+  }
   const trailing: TableItemTrailingKeys = {};
-  const itemFilled: TableItem<Value> = { ...item };
+  const itemFilled: Value = { ...item };
   for (const key of keys.value) {
     if (
       !isDef(itemFilled[key])
-      && !leadingInternalKeys.includes(key as keyof TableItemLeadingKeys)
+      && !leadingInternalKeys.value.includes(key as keyof TableItemLeadingKeys)
       && !trailingInternalKeys.includes(key as keyof TableItemTrailingKeys)
     ) {
       itemFilled[key] = undefined;
@@ -224,40 +234,6 @@ const renderItems = computed(() => {
   });
 });
 
-const stateMatrix = computed<StateMatrix>(() => {
-  const matrix: StateMatrix = {};
-  const target = getTarget();
-  for (let y = 0; y < renderItems.value.length; y += 1) {
-    const row = renderItems.value[y];
-    const keys = Object.keys(row);
-    for (let x = 0; x < keys.length; x += 1) {
-      const key = keys[x];
-      const pos: CellPos = [x, y, key];
-      const isCX = isCurrentX(x);
-      const isCY = isCurrentY(y);
-      const isFX = isFilteredKey(key);
-      matrix[stateMatrixKey(pos)] = {
-        isCurrent: isCX && isCY,
-        isCurrentX: isCX,
-        isCurrentY: isCY,
-        isFilteredX: isFX,
-        isTarget: isFX && isCY,
-        hasTarget: !!target,
-        isTopTarget: isTopTarget(pos, target),
-        isRightTarget: isRightTarget(pos, target),
-        isBottomTarget: isBottomTarget(pos, target),
-        isLeftTarget: isLeftTarget(pos, target),
-        isOdd: y % 2 !== 0,
-      };
-    }
-  }
-  return matrix;
-});
-
-function getCellState(pos: CellPos) {
-  return stateMatrix.value[stateMatrixKey(pos)];
-}
-
 function isCell(refPos: CellPos, targetPos: CellPos) {
   const [xRef, yRef] = refPos;
   const [xTarget, yTarget] = targetPos;
@@ -265,15 +241,14 @@ function isCell(refPos: CellPos, targetPos: CellPos) {
 }
 
 function isSortable(header: TableHeader<Value>) {
-  const { sortableKeys } = options.value;
-  return sortableKeys.includes(header.value);
+  return props.sortableKeys.includes(header.value);
 }
 
 function getTarget(): CellPos | null {
   if (!isValue(activeHeaderKey.value) || !isValue(currentCell.value)) {
     return null;
   }
-  const [currentX, currentY] = currentCell.value;
+  const currentY = currentCell.value[1];
   const headerX = keys.value.indexOf(activeHeaderKey.value);
   return [headerX, currentY, activeHeaderKey.value];
 }
@@ -318,7 +293,7 @@ function isCurrentY(y: number) {
   if (!isValue(currentCell.value)) {
     return false;
   }
-  const [currentX, currentY] = currentCell.value;
+  const currentY = currentCell.value[1];
   return currentY === y;
 }
 
@@ -363,18 +338,40 @@ function stateMatrixKey(pos: CellPos) {
   return `${x}-${y}-${key}`;
 }
 
-</script>
+const stateMatrix = computed<StateMatrix>(() => {
+  const matrix: StateMatrix = {};
+  const target = getTarget();
+  for (let y = 0; y < renderItems.value.length; y += 1) {
+    const row = renderItems.value[y];
+    const itemKeys = Object.keys(row);
+    for (let x = 0; x < itemKeys.length; x += 1) {
+      const key = itemKeys[x];
+      const pos: CellPos = [x, y, key];
+      const isCX = isCurrentX(x);
+      const isCY = isCurrentY(y);
+      const isFX = isFilteredKey(key);
+      matrix[stateMatrixKey(pos)] = {
+        isCurrent: isCX && isCY,
+        isCurrentX: isCX,
+        isCurrentY: isCY,
+        isFilteredX: isFX,
+        isTarget: isFX && isCY,
+        hasTarget: !!target,
+        isTopTarget: isTopTarget(pos, target),
+        isRightTarget: isRightTarget(pos, target),
+        isBottomTarget: isBottomTarget(pos, target),
+        isLeftTarget: isLeftTarget(pos, target),
+        isOdd: y % 2 !== 0,
+      };
+    }
+  }
+  return matrix;
+});
 
-<script lang="ts">
-type Value = {
-  [key: string]: unknown;
-};
+function getCellState(pos: CellPos) {
+  return stateMatrix.value[stateMatrixKey(pos)];
+}
 
-// eslint-disable-next-line import/prefer-default-export
-export const defaultOptions: Required<TableOptions<Value>> = {
-  indexColumns: true,
-  sortableKeys: [],
-};
 </script>
 
 <style lang="scss">

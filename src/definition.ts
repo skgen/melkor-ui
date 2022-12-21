@@ -233,7 +233,7 @@ export type FileModel = {
 // Table
 
 export type TableItemLeadingKeys = {
-  __index: number;
+  __index?: number;
 };
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type TableItemTrailingKeys = {};
@@ -241,22 +241,15 @@ export type TableItemTrailingKeys = {};
 export type TableKey<TValue extends Record<string, unknown>> = (keyof (TValue & TableItemLeadingKeys & TableItemTrailingKeys));
 
 export type TableHeader<TValue extends Record<string, unknown>> = { text: string; value: keyof TValue };
-export type TableItem<TValue extends Record<string, unknown>> = {
-  [key: string]: TValue | undefined;
-};
-
-export type TableOptions<TValue extends Record<string, unknown>> = Partial<{
-  indexColumns: boolean;
-  sortableKeys: TableKey<TValue>[];
-}>;
 
 /* Props duplication for export => https://github.com/vuejs/core/issues/4294 */
 // Need to be kept sync manually
 
 export type TableProps<TValue extends Record<string, unknown>> = {
   headers?: TableHeader<TValue>[];
-  items: TableItem<TValue>[];
-  options?: TableOptions<TValue>;
+  items: TValue[];
+  indexColumns?: boolean;
+  sortableKeys?: TableKey<TValue>[];
 };
 
 // Provide / inject keys
