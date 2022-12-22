@@ -1,6 +1,6 @@
 <template>
   <Menu
-    v-theme="theme"
+    ref="root"
     class="mk-AppMenu"
     v-bind="spreadProps"
     :shown="props.modelValue"
@@ -19,9 +19,9 @@
 </template>
 
 <script lang="ts" setup>
+import useFloatingModal from '@src/composables/useFloatingModal';
 import { Menu } from 'floating-vue';
-import { computed } from 'vue';
-import useTheme from '@src/composables/useTheme';
+import { computed, ref } from 'vue';
 
 type Props = {
   modelValue: boolean;
@@ -37,7 +37,11 @@ type Emits = {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const { theme } = useTheme();
+const root = ref<typeof Menu | null>(null);
+
+const { handleHide: handleFloatingHide } = useFloatingModal({
+  floatingEl: root,
+});
 
 const spreadProps = computed(() => {
   const { fill, modelValue, ...p } = props;
@@ -52,15 +56,54 @@ function handleHide() {
     emit('update:modelValue', false);
     emit('hide');
   }
+
+  handleFloatingHide();
 }
 </script>
 
 <style lang="scss">
+@import "@style/mixins";
+
 .mk-AppMenu {
     display: inline-block;
 
     &[data-fill="true"] {
-        display: block;
+        @include mk-fill;
+    }
+}
+
+.v-popper {
+    $this: &;
+
+    &--theme-menu {
+        z-index: initial;
+        visibility: visible !important;
+
+        --mk-menu-text-color: var(--app-text-color-on-surface);
+        --mk-menu-background-color: var(--app-background-color);
+
+        &#{$this}__popper {
+            &--shown,
+            &--hidden {
+                // Dont forget to change FloatingVue.options.disposeTimeout in tooltip.ts
+                transition: opacity var(--app-transition-duration-opacity) !important;
+            }
+        }
+
+        #{$this} {
+            &__inner {
+                color: var(--mk-menu-text-color);
+                background-color: var(--mk-menu-background-color);
+                border: 1px solid var(--app-border-color);
+                box-shadow: none;
+            }
+
+            &__arrow {
+                &-container {
+                    display: none;
+                }
+            }
+        }
     }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <Tooltip
-    v-bind="props"
     ref="root"
+    v-bind="props"
     class="mk-AppTooltip"
     :data-fill="props.fill || undefined"
     @hide="handleHide"
@@ -80,16 +80,8 @@ const { handleHide } = useFloatingModal({
             &__inner {
                 padding: var(--app-m-1) var(--app-m-2);
                 color: var(--mk-tooltip-text-color);
-
-                // color: inherit;
-                // color: var(--app-text-color-on-surface);
                 background-color: transparent;
                 border-radius: 50px;
-
-                // background: transparent;
-                // border: 1px solid var(--app-border-color);
-
-                // border: 0;
                 box-shadow: none;
 
                 &::before {
@@ -112,15 +104,6 @@ const { handleHide } = useFloatingModal({
                 &-outer {
                     border-color: var(--mk-tooltip-background-color);
                 }
-
-                // color: inherit;
-                // background-color: var(--app-background-color);
-
-                // // background: transparent;
-                // border: 1px solid var(--app-border-color);
-
-                // // border: 0;
-                // box-shadow: none;
             }
         }
     }

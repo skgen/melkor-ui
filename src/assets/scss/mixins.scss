@@ -103,6 +103,10 @@
     }
 }
 
+@mixin mk-fill() {
+    width: 100%;
+}
+
 @mixin theme($theme) {
     &[data-theme="#{$theme}"] {
         @content;
