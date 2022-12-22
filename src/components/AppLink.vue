@@ -9,9 +9,10 @@
       v-theme="theme"
       :href="href"
       class="mk-AppLink"
-      :data-wrapper="asWrapper ? 'true' : null"
       :data-active="isActive ? true : null"
       :data-exact-active="isExactActive ? true : null"
+      :data-wrapper="props.asWrapper || undefined"
+      :data-underline="props.underline || undefined"
       v-bind="$attrs"
       @click="navigate"
     >
@@ -23,7 +24,8 @@
     v-theme="theme"
     :href="props.to"
     class="mk-AppLink"
-    :data-wrapper="asWrapper ? 'true' : null"
+    :data-wrapper="props.asWrapper || undefined"
+    :data-underline="props.underline || undefined"
     v-bind="$attrs"
   >
     <slot />
@@ -33,7 +35,8 @@
     v-else-if="props.asButton"
     v-theme="theme"
     class="mk-AppLink"
-    :data-wrapper="asWrapper ? 'true' : null"
+    :data-wrapper="props.asWrapper || undefined"
+    :data-underline="props.underline || undefined"
     v-bind="$attrs"
   >
     <slot />
@@ -42,8 +45,10 @@
   <div
     v-else
     v-theme="theme"
-    v-bind="$attrs"
     class="mk-AppLink"
+    :data-wrapper="props.asWrapper || undefined"
+    :data-underline="props.underline || undefined"
+    v-bind="$attrs"
   >
     <slot />
   </div>
@@ -58,6 +63,7 @@ type Props = {
   to?: string;
   asButton?: boolean;
   asWrapper?: boolean;
+  underline?: boolean;
 };
 
 const props = defineProps<Props>();
@@ -75,10 +81,23 @@ const isRelative = computed(() => {
 </script>
 
 <style lang="scss">
+@import "@style/mixins";
+
 .mk-AppLink {
-    --mk-link-text-color: var(--app-text-color);
-    --mk-link-text-active-color: var(--app-primary-color);
+    --mk-link-text-color-active: var(--app-primary-color);
     --mk-link-gap: var(--app-m-1);
+
+    @include light {
+        --mk-link-text-color: var(--c-grey-30);
+    }
+
+    @include dark {
+        --mk-link-text-color: var(--c-grey-80);
+    }
+
+    &:is(button) {
+        padding: 0;
+    }
 
     &:not([data-wrapper="true"]) {
         display: inline-flex;
@@ -86,16 +105,30 @@ const isRelative = computed(() => {
         align-items: center;
         padding: 0;
         font-size: 1rem;
+        line-height: inherit;
         color: var(--mk-link-text-color);
         text-decoration: none;
+        cursor: pointer;
+        transition: color var(--app-transition-duration-color);
 
         &[data-active="true"] {
-            color: var(--mk-link-text-active-color);
+            color: var(--mk-link-text-color-active);
             cursor: default;
         }
 
-        &:not(span) {
-            cursor: pointer;
+        &:is(div) {
+            color: inherit;
+            cursor: default;
+        }
+
+        &:not(div) {
+            &[data-underline="true"] {
+                @include underline($speed: var(--app-transition-duration-color));
+            }
+
+            &:hover {
+                color: var(--mk-link-text-color-active);
+            }
         }
     }
 }
