@@ -140,7 +140,7 @@ const props = defineProps<Props>();
                 content: "[";
             }
 
-            ::after {
+            &::after {
                 content: "]";
             }
         }
