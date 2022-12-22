@@ -6,6 +6,7 @@
     <div
       v-theme="theme"
       class="mk-AppFullscreenView"
+      v-bind="$attrs"
     >
       <div
         class="mk-AppFullscreenView-content"
