@@ -59,13 +59,12 @@
           @mouseleave="() => handleMouseLeaveCell([x, y, key])"
         >
           <slot
-            v-if="slots[key]"
             :name="key"
             :data="item[key]"
             :pos="{ x, y, key}"
             :entry="item"
           />
-          <template v-else>
+          <template v-if="!$slots[key]">
             {{ item[key] }}
           </template>
         </AppTableCell>
@@ -76,7 +75,7 @@
 
 <script lang="ts" setup>
 import {
-  ref, computed, useSlots,
+  ref, computed,
 } from 'vue';
 import AppTableRow from '@src/components/AppTableRow.vue';
 import AppTableCell from '@src/components/AppTableCell.vue';
@@ -166,8 +165,6 @@ const renderHeaders = computed(() => {
     return { value: key, text: header?.text ?? '' };
   });
 });
-
-const slots = useSlots();
 
 enum HeaderSort {
   DESC,
