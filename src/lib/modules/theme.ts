@@ -1,5 +1,6 @@
 import { Theme } from '@src/definition';
 import { isValue } from '@src/lib/modules/definition';
+import { isDebugMode } from '@src/plugin';
 import { useThemeStore } from '@src/stores/theme';
 
 const defaultThemes: string[] = [Theme.light, Theme.dark, Theme.auto];
@@ -53,6 +54,16 @@ export function getThemeValue(theme: string): string {
 
 export function setDocumentTheme(theme: string) {
   document.documentElement.setAttribute('data-theme', getThemeValue(theme));
+}
+
+export function setElementTheme(el: HTMLElement, theme: string, hijack = false) {
+  if (getThemes().includes(theme) || hijack) {
+    el.setAttribute('data-theme', getThemeValue(theme));
+    return;
+  }
+  if (isDebugMode()) {
+    throw new Error(`Theme "${theme}" is not registered`);
+  }
 }
 
 export function watchSystemThemeChange(systemKey: string) {
