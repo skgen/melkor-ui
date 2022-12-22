@@ -14,7 +14,7 @@
         <input
           :name="props.name"
           type="number"
-          :value="state.value"
+          :value="textValue"
           :min="props.min"
           :max="props.max"
           :placeholder="props.placeholder"
@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
@@ -75,16 +75,29 @@ const {
   emits,
 });
 
+const textValue = ref(props.modelValue.value?.toString() || '');
+
+watch(() => state.value.value, (newValue) => {
+  const numbered = parseFloat(textValue.value);
+  if (numbered !== newValue) {
+    textValue.value = newValue?.toString() ?? '';
+  }
+});
+
 function handleChange(evt: Event) {
   if (!evt.target) {
     return;
   }
   const { value } = evt.target as HTMLInputElement;
 
-  if (value === '') {
+  textValue.value = value;
+
+  const numbered = parseFloat(value);
+
+  if (Number.isNaN(numbered)) {
     onChange(null);
   } else {
-    onChange(parseFloat(value));
+    onChange(numbered);
   }
 }
 </script>
