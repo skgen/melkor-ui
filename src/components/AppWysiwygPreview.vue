@@ -100,19 +100,50 @@ const props = defineProps<Props>();
         display: none !important;
     }
 
-    a {
+    a:not(.mk-AppLink) {
         color: var(--mk-wysiwyg-preview-text-color-accent);
         text-decoration: none;
         background-color: transparent;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &:hover,
+        &:active {
+            outline-width: 0;
+        }
+
+        :not([href]) {
+            color: inherit;
+            text-decoration: none;
+        }
     }
 
-    .mk-AppLink {
-        --mk-link-text-color: var(--mk-wysiwyg-preview-text-color-accent);
+    sub,
+    sup {
+        position: relative;
+        font-size: 75%;
+        line-height: 0;
+        vertical-align: baseline;
     }
 
-    a:active,
-    a:hover {
-        outline-width: 0;
+    sub {
+        bottom: -0.25em;
+    }
+
+    sup {
+        top: -0.5em;
+        /* stylelint-disable-next-line no-descending-specificity */
+        > a:not(.mk-AppLink) {
+            &::before {
+                content: "[";
+            }
+
+            ::after {
+                content: "]";
+            }
+        }
     }
 
     abbr[title] {
@@ -136,22 +167,6 @@ const props = defineProps<Props>();
 
     small {
         font-size: 90%;
-    }
-
-    sub,
-    sup {
-        position: relative;
-        font-size: 75%;
-        line-height: 0;
-        vertical-align: baseline;
-    }
-
-    sub {
-        bottom: -0.25em;
-    }
-
-    sup {
-        top: -0.5em;
     }
 
     img {
@@ -236,10 +251,6 @@ const props = defineProps<Props>();
     ::-webkit-file-upload-button {
         appearance: button;
         font: inherit;
-    }
-
-    a:hover {
-        text-decoration: underline;
     }
 
     hr::before {
@@ -417,25 +428,12 @@ const props = defineProps<Props>();
         content: "";
     }
 
-    a:not([href]) {
-        color: inherit;
-        text-decoration: none;
-    }
-
     blockquote > :first-child {
         margin-top: 0;
     }
 
     blockquote > :last-child {
         margin-bottom: 0;
-    }
-
-    sup > a::before {
-        content: "[";
-    }
-
-    sup > a::after {
-        content: "]";
     }
 
     ol[type="1"] {
