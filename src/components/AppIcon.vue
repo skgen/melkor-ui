@@ -32,7 +32,6 @@ const { theme } = useTheme();
     font-style: normal;
     font-weight: normal;
     font-feature-settings: "liga";
-    line-height: 1;
     color: var(--mk-icon-color);
     text-transform: none;
     letter-spacing: normal;
