@@ -251,7 +251,7 @@ function stateLabel(checked: boolean) {
     }
 
     &[data-fill="true"] {
-        display: block;
+        @include mk-fill;
     }
 
     &[data-disabled="true"] {

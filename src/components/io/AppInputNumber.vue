@@ -103,6 +103,8 @@ function handleChange(evt: Event) {
 </script>
 
 <style lang="scss">
+@import "@style/mixins";
+
 .mk-AppInputNumber {
     --mk-input-number-padding-x: var(--app-input-padding-x);
     --mk-input-number-padding-y: var(--app-input-padding-y);
@@ -158,7 +160,7 @@ function handleChange(evt: Event) {
     }
 
     &[data-fill="true"] {
-        display: block;
+        @include mk-fill;
     }
 
     &[data-disabled="true"] {

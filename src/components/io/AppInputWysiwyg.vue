@@ -165,6 +165,8 @@ watch(state, (newState) => {
 </script>
 
 <style lang="scss">
+@import "@style/mixins";
+
 .mk-AppInputWysiwyg {
     --mk-input-wysiwyg-padding-x: var(--app-m-3);
     --mk-input-wysiwyg-padding-y: var(--app-m-3);
@@ -200,7 +202,7 @@ watch(state, (newState) => {
     }
 
     &[data-fill="true"] {
-        display: block;
+        @include mk-fill;
     }
 
     .mk-AppInputLabel {

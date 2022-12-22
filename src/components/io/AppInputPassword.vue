@@ -147,7 +147,7 @@ function handleChange(evt: Event) {
     }
 
     &[data-fill="true"] {
-        display: block;
+        @include mk-fill;
     }
 
     &[data-disabled="true"] {

@@ -121,6 +121,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+@import "@style/mixins";
+
 .mk-AppInputRange {
     --mk-input-range-track-background-color: var(--app-border-color);
     --mk-input-range-track-height: 4px;
@@ -193,7 +195,7 @@ onMounted(() => {
     }
 
     &[data-fill="true"] {
-        display: block;
+        @include mk-fill;
     }
 
     &[data-disabled="true"] {

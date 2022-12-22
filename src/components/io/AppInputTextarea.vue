@@ -94,6 +94,8 @@ function handleChange(evt: Event) {
 </script>
 
 <style lang="scss">
+@import "@style/mixins";
+
 .mk-AppInputTextarea {
     --mk-input-textarea-padding-x: var(--app-input-padding-x);
     --mk-input-textarea-padding-y: var(--app-input-padding-y);
@@ -132,7 +134,7 @@ function handleChange(evt: Event) {
     }
 
     &[data-fill="true"] {
-        display: block;
+        @include mk-fill;
     }
 
     &[data-disabled="true"] {

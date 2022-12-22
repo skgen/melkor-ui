@@ -39,7 +39,7 @@ const { handleHide } = useFloatingModal({
     display: inline-block;
 
     &[data-fill="true"] {
-        display: block;
+        @include mk-fill;
     }
 }
 
