@@ -36,7 +36,7 @@
     line-height: math.div($height, $font-size);
 }
 
-@mixin underline($size: 1px, $speed: 0.3s, $reverse: false) {
+@mixin underline($size: 1px, $speed: var(--app-transition-duration-3), $reverse: false) {
     text-decoration: none;
     background-image: linear-gradient(currentcolor, currentcolor);
     background-repeat: no-repeat;
@@ -45,7 +45,7 @@
 
     &:hover,
     &:focus {
-        animation: underline-#{$size} 400ms ease-in-out;
+        animation: underline-#{$size} $speed ease-in-out;
     }
 
     @if $reverse {
