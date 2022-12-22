@@ -2,14 +2,18 @@
 .v-popper {
     $this: &;
 
-    &__popper {
-        z-index: initial;
-    }
+    // &__popper {
+    //     z-index: initial;
+
+    //     &--shown,
+    //     &--hidden {
+    //         // Dont forget to change FloatingVue.options.disposeTimeout in tooltip.ts
+    //         transition: opacity var(--app-transition-duration-opacity) !important;
+    //     }
+    // }
 
     &--theme-menu {
-        &#{$this}__popper--shown {
-            transition: opacity 500ms;
-        }
+        visibility: visible !important;
 
         #{$this} {
             &__inner {

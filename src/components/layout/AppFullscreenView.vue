@@ -27,7 +27,7 @@ import {
   computed,
   onMounted, ref, watch,
 } from 'vue';
-import { useLayerStore } from '@src/stores/layer';
+import { useFullscreenLayerStore } from '@src/stores/fullscreen-layer';
 import useTheme from '@src/composables/useTheme';
 
 type Props = {
@@ -63,18 +63,18 @@ const centerAttr = computed(() => {
   return undefined;
 });
 
-const layerStore = useLayerStore();
+const layerStore = useFullscreenLayerStore();
 
 function handleNotifyStore(active: boolean) {
-  layerStore.mutateFsLayer(active);
+  layerStore.mutateLayer(active);
 }
 
 watch([
   () => props.modelValue,
-  () => layerStore.fsLayerActive,
-], ([valueActive, fsLayerActive]) => {
+  () => layerStore.isActive,
+], ([valueActive, isActive]) => {
   requestAnimationFrame(() => {
-    renderActive.value = valueActive && fsLayerActive;
+    renderActive.value = valueActive && isActive;
   });
 });
 

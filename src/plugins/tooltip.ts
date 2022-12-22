@@ -2,9 +2,22 @@ import FloatingVue from 'floating-vue';
 
 // eslint-disable-next-line import/prefer-default-export
 export function registerTooltipConfig() {
-  FloatingVue.options.disposeTimeout = 500;
+  // Global
+  FloatingVue.options.disposeTimeout = 256;
+  FloatingVue.options.container = '#fl-layer';
 
+  // Tooltip
   FloatingVue.options.themes.tooltip.delay = 0;
+  FloatingVue.options.themes.tooltip.distance = 12;
+  FloatingVue.options.themes.tooltip.placement = 'top';
+
+  // Menu
+  FloatingVue.options.themes.menu.placement = 'right-start';
+  FloatingVue.options.themes.menu.delay = 0;
+  FloatingVue.options.themes.menu.triggers = [];
+  FloatingVue.options.themes.menu.popperTriggers = [];
+  FloatingVue.options.themes.menu.autoHide = false;
+
   //   menu: {
   //     $extend: 'dropdown',
   //     triggers: ['hover', 'focus'],
@@ -14,14 +27,8 @@ export function registerTooltipConfig() {
   //       hide: 400,
   //     },
   //   },
-  FloatingVue.options.themes.menu.placement = 'right-start';
-  FloatingVue.options.themes.menu.delay = 0;
-  FloatingVue.options.themes.menu.triggers = [];
-  FloatingVue.options.themes.menu.popperTriggers = [];
-  FloatingVue.options.themes.menu.autoHide = false;
-  FloatingVue.options.container = '#fl-layer';
 
-//   FloatingVue.options = {
+  //   FloatingVue.options = {
 //     // Disable popper components
 //     disabled: false,
 //     // Default position offset along main axis (px)
