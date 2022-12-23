@@ -252,6 +252,26 @@ export type TableProps<TValue extends Record<string, unknown>> = {
   sortableKeys?: TableKey<TValue>[];
 };
 
+// Floatings
+// Menu
+export enum FloatingPlacement {
+  auto = 'auto',
+  autoStart = 'auto-start',
+  autoEnd = 'auto-end',
+  top = 'top',
+  topStart = 'top-start',
+  topEnd = 'top-end',
+  right = 'right',
+  rightStart = 'right-start',
+  rightEnd = 'right-end',
+  bottom = 'bottom',
+  bottomStart = 'bottom-start',
+  bottomEnd = 'bottom-end',
+  left = 'left',
+  leftStart = 'left-start',
+  leftEnd = 'left-end',
+}
+
 // Provide / inject keys
 
 export const configContextKey = Symbol('Inject key of melkor config') as InjectionKey<MelkorConfig>;

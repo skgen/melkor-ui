@@ -1,3 +1,4 @@
+import { FloatingPlacement } from '@src/definition';
 import FloatingVue from 'floating-vue';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -9,10 +10,10 @@ export function registerTooltipConfig() {
   // Tooltip
   FloatingVue.options.themes.tooltip.delay = 0;
   FloatingVue.options.themes.tooltip.distance = 12;
-  FloatingVue.options.themes.tooltip.placement = 'top';
+  FloatingVue.options.themes.tooltip.placement = FloatingPlacement.top;
 
   // Menu
-  FloatingVue.options.themes.menu.placement = 'right-start';
+  FloatingVue.options.themes.menu.placement = FloatingPlacement.rightStart;
   FloatingVue.options.themes.menu.delay = 0;
   FloatingVue.options.themes.menu.triggers = [];
   FloatingVue.options.themes.menu.popperTriggers = [];

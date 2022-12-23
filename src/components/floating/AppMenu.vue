@@ -6,6 +6,7 @@
     :shown="props.modelValue"
     :data-fill="props.fill || undefined"
     :auto-hide="props.autoHide"
+    :placement="props.placement"
     @hide="handleHide"
   >
     <slot />
@@ -20,6 +21,7 @@
 
 <script lang="ts" setup>
 import useFloatingModal from '@src/composables/useFloatingModal';
+import type { FloatingPlacement } from '@src/definition';
 import { Menu } from 'floating-vue';
 import { computed, ref } from 'vue';
 
@@ -27,6 +29,7 @@ type Props = {
   modelValue: boolean;
   autoHide?: boolean;
   fill?: boolean;
+  placement?: FloatingPlacement;
 };
 
 type Emits = {
