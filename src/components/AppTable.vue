@@ -65,7 +65,12 @@
             :entry="item"
           />
           <template v-if="!$slots[key]">
-            {{ item[key] }}
+            <template v-if="key === '__index'">
+              {{ (item[key] as number) + 1 }}
+            </template>
+            <template v-else>
+              {{ item[key] }}
+            </template>
           </template>
         </AppTableCell>
       </AppTableRow>
