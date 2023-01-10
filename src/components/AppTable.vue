@@ -176,7 +176,7 @@ const renderHeaders = computed(() => {
 
   return keys.value.map((key) => {
     const header = headers.find((h) => h.value === key);
-    return { value: key, text: header?.text ?? '' };
+    return { ...header, value: key };
   });
 });
 
