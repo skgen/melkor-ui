@@ -248,8 +248,9 @@ export type TableHeader<TValue extends Record<string, unknown>> = { text: string
 export type TableProps<TValue extends Record<string, unknown>> = {
   headers?: TableHeader<TValue>[];
   items: TValue[];
-  indexColumns?: boolean;
+  indexRows?: boolean;
   sortableKeys?: TableKey<TValue>[];
+  hiddenKeys?: TableKey<TValue>[];
 };
 
 // Floatings

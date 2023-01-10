@@ -125,7 +125,7 @@ type StateMatrix = { [key: string]: CellState };
 type Props = {
   headers?: TableHeader<Value>[];
   items: Value[];
-  indexColumns?: boolean;
+  indexRows?: boolean;
   sortableKeys?: TableKey<Value>[];
   hiddenKeys?: TableKey<Value>[];
 };
@@ -140,7 +140,7 @@ const { theme } = useTheme();
 
 const leadingInternalKeys = computed(() => {
   const keys: (keyof TableItemLeadingKeys)[] = [];
-  if (props.indexColumns) {
+  if (props.indexRows) {
     keys.push('__index');
   }
   return keys;
@@ -204,7 +204,7 @@ type EnhancedItem = TableItemLeadingKeys & TableItemTrailingKeys & Value;
 
 const enhancedItems = computed(() => props.items.map<EnhancedItem>((item, index) => {
   let leading: TableItemLeadingKeys = {};
-  if (props.indexColumns) {
+  if (props.indexRows) {
     leading = { ...leading, __index: index };
   }
   const trailing: TableItemTrailingKeys = {};
