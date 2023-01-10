@@ -8,26 +8,30 @@
       class="mk-AppTable-head"
     >
       <AppTableRow>
-        <AppTableCell
+        <template
           v-for="(header) in renderHeaders"
           :key="header.value"
-          header
-          :data-filtered="isFilteredKey(header.value)"
-          @click="() => isSortable(header) ? handleHeaderClick(header) : void 0"
         >
-          <span class="mk-AppTable-head-entry">
-            <span
-              v-if="header.text"
-              class="mk-AppTable-head-text"
-            >
-              {{ header.text }}
+          <AppTableCell
+            v-if="!isHiddenKey(header.value)"
+            header
+            :data-filtered="isFilteredKey(header.value)"
+            @click="() => isSortable(header) ? handleHeaderClick(header) : void 0"
+          >
+            <span class="mk-AppTable-head-entry">
+              <span
+                v-if="header.text"
+                class="mk-AppTable-head-text"
+              >
+                {{ header.text }}
+              </span>
+              <mk-icon
+                v-if="header.value === activeHeaderKey && headerIcon"
+                :icon="headerIcon"
+              />
             </span>
-            <mk-icon
-              v-if="header.value === activeHeaderKey && headerIcon"
-              :icon="headerIcon"
-            />
-          </span>
-        </AppTableCell>
+          </AppTableCell>
+        </template>
       </AppTableRow>
     </thead>
     <tbody
@@ -38,50 +42,52 @@
         v-for="(item, y) in renderItems"
         :key="y"
       >
-        <AppTableCell
+        <template
           v-for="(key, x) in keys"
           :key="x"
-          :x-key="key"
-          :x="x"
-          :y="y"
-          :is-current="getCellState([x, y, key]).isCurrent"
-          :is-current-x="getCellState([x, y, key]).isCurrentX"
-          :is-current-y="getCellState([x, y, key]).isCurrentY"
-          :is-filtered-x="getCellState([x, y, key]).isFilteredX"
-          :is-target="getCellState([x, y, key]).isTarget"
-          :has-target="getCellState([x, y, key]).hasTarget"
-          :is-top-target="getCellState([x, y, key]).isTopTarget"
-          :is-right-target="getCellState([x, y, key]).isRightTarget"
-          :is-bottom-target="getCellState([x, y, key]).isBottomTarget"
-          :is-left-target="getCellState([x, y, key]).isLeftTarget"
-          :is-odd="getCellState([x, y, key]).isOdd"
-          @mouseover="() => handleMouseOverCell([x, y, key])"
-          @mouseleave="() => handleMouseLeaveCell([x, y, key])"
         >
-          <slot
-            :name="key"
-            :data="item[key]"
-            :pos="{ x, y, key}"
-            :entry="item"
-          />
-          <template v-if="!$slots[key]">
-            <template v-if="key === '__index'">
-              {{ (item[key] as number) + 1 }}
+          <AppTableCell
+            v-if="!getCellState([x, y, key]).isHidden"
+            :x-key="key"
+            :x="x"
+            :y="y"
+            :is-current="getCellState([x, y, key]).isCurrent"
+            :is-current-x="getCellState([x, y, key]).isCurrentX"
+            :is-current-y="getCellState([x, y, key]).isCurrentY"
+            :is-filtered-x="getCellState([x, y, key]).isFilteredX"
+            :is-target="getCellState([x, y, key]).isTarget"
+            :has-target="getCellState([x, y, key]).hasTarget"
+            :is-top-target="getCellState([x, y, key]).isTopTarget"
+            :is-right-target="getCellState([x, y, key]).isRightTarget"
+            :is-bottom-target="getCellState([x, y, key]).isBottomTarget"
+            :is-left-target="getCellState([x, y, key]).isLeftTarget"
+            :is-odd="getCellState([x, y, key]).isOdd"
+            @mouseover="() => handleMouseOverCell([x, y, key])"
+            @mouseleave="() => handleMouseLeaveCell([x, y, key])"
+          >
+            <slot
+              :name="key"
+              :data="item[key]"
+              :pos="{ x, y, key}"
+              :entry="item"
+            />
+            <template v-if="!$slots[key]">
+              <template v-if="key === '__index'">
+                {{ (item[key] as number) + 1 }}
+              </template>
+              <template v-else>
+                {{ item[key] }}
+              </template>
             </template>
-            <template v-else>
-              {{ item[key] }}
-            </template>
-          </template>
-        </AppTableCell>
+          </AppTableCell>
+        </template>
       </AppTableRow>
     </tbody>
   </table>
 </template>
 
 <script lang="ts" setup>
-import {
-  ref, computed,
-} from 'vue';
+import { ref, computed } from 'vue';
 import AppTableRow from '@src/components/AppTableRow.vue';
 import AppTableCell from '@src/components/AppTableCell.vue';
 import {
@@ -111,6 +117,7 @@ type CellState = {
   isBottomTarget: boolean;
   isLeftTarget: boolean;
   isOdd: boolean;
+  isHidden: boolean;
 };
 
 type StateMatrix = { [key: string]: CellState };
@@ -120,11 +127,13 @@ type Props = {
   items: Value[];
   indexColumns?: boolean;
   sortableKeys?: TableKey<Value>[];
+  hiddenKeys?: TableKey<Value>[];
 };
 
 const props = withDefaults(defineProps<Props>(), {
   headers: undefined,
   sortableKeys: () => [],
+  hiddenKeys: () => [],
 });
 
 const { theme } = useTheme();
@@ -139,17 +148,13 @@ const leadingInternalKeys = computed(() => {
 const trailingInternalKeys: (keyof TableItemTrailingKeys)[] = [];
 
 const keys = computed<TableKey<Value>[]>(() => {
+  let headerKeys: TableKey<Value>[] = [];
   if (isValue(props.headers)) {
-    const headerKeys = props.headers.map((header) => header.value);
-    return [
-      ...leadingInternalKeys.value,
-      ...headerKeys,
-      ...trailingInternalKeys,
-    ];
+    headerKeys = props.headers.map((header) => header.value);
   }
   const rawKeys: string[] = [];
   props.items.forEach((item) => rawKeys.push(...Object.keys(item)));
-  const itemKeys = new Set(rawKeys);
+  const itemKeys = new Set([...headerKeys, ...rawKeys]);
   return [
     ...leadingInternalKeys.value,
     ...itemKeys,
@@ -157,7 +162,15 @@ const keys = computed<TableKey<Value>[]>(() => {
   ];
 });
 
-const templateColumns = computed(() => Array(keys.value.length).fill('auto').join(' '));
+watch(keys, (newKeys) => {
+  console.log(newKeys);
+});
+
+const templateColumns = computed(
+  () => Array(keys.value.filter((key) => !props.hiddenKeys.includes(key)).length)
+    .fill('auto')
+    .join(' '),
+);
 
 const renderHeaders = computed(() => {
   const { headers } = props;
@@ -342,18 +355,23 @@ function stateMatrixKey(pos: CellPos) {
   return `${x}-${y}-${key}`;
 }
 
+function isHiddenKey(key: TableKey<Value>) {
+  return props.hiddenKeys.includes(key);
+}
+
 const stateMatrix = computed<StateMatrix>(() => {
   const matrix: StateMatrix = {};
   const target = getTarget();
   for (let y = 0; y < renderItems.value.length; y += 1) {
-    const row = renderItems.value[y];
-    const itemKeys = Object.keys(row);
-    for (let x = 0; x < itemKeys.length; x += 1) {
-      const key = itemKeys[x];
+    // const row = renderItems.value[y];
+    // const itemKeys = Object.keys(row);
+    for (let x = 0; x < keys.value.length; x += 1) {
+      const key = keys.value[x];
       const pos: CellPos = [x, y, key];
       const isCX = isCurrentX(x);
       const isCY = isCurrentY(y);
       const isFX = isFilteredKey(key);
+      const isHidden = isHiddenKey(key);
       matrix[stateMatrixKey(pos)] = {
         isCurrent: isCX && isCY,
         isCurrentX: isCX,
@@ -366,6 +384,7 @@ const stateMatrix = computed<StateMatrix>(() => {
         isBottomTarget: isBottomTarget(pos, target),
         isLeftTarget: isLeftTarget(pos, target),
         isOdd: y % 2 !== 0,
+        isHidden,
       };
     }
   }
