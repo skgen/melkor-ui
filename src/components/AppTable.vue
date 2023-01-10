@@ -162,10 +162,6 @@ const keys = computed<TableKey<Value>[]>(() => {
   ];
 });
 
-watch(keys, (newKeys) => {
-  console.log(newKeys);
-});
-
 const templateColumns = computed(
   () => Array(keys.value.filter((key) => !props.hiddenKeys.includes(key)).length)
     .fill('auto')
