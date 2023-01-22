@@ -25,7 +25,7 @@ export default ({ mode }: { mode: string }) => {
         fileName: 'index',
       },
       rollupOptions: {
-        external: ['vue'],
+        external: ['vue', 'pinia', 'vue-router', 'vue-i18n'],
       },
       commonjsOptions: {
         esmExternals: true 
