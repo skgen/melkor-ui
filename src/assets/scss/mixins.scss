@@ -1,5 +1,4 @@
 @use "sass:math";
-@import "variables";
 
 @mixin pseudo($content: "", $pos: absolute, $display: block) {
     position: $pos;
@@ -85,20 +84,20 @@
     }
 }
 
-@mixin mq-to($bp) {
-    @media screen and (max-width: map-get($bps, $bp)) {
+@mixin mq-to($breakpoint) {
+    @media screen and (max-width: $breakpoint) {
         @content;
     }
 }
 
-@mixin mq-from($bp) {
-    @media screen and (min-width: map-get($bps, $bp) + 1) {
+@mixin mq-from($breakpoint) {
+    @media screen and (min-width: $breakpoint + 1) {
         @content;
     }
 }
 
-@mixin mq-from-to($bp_min, $bp_max) {
-    @media screen and (min-width: map-get($bps, $bp_min) + 1) and (max-width: map-get($bps, $bp_max)) {
+@mixin mq-from-to($breakpointMin, $breakpointMax) {
+    @media screen and (min-width: $breakpointMin + 1) and (max-width: $breakpointMax) {
         @content;
     }
 }
