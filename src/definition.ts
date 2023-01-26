@@ -240,17 +240,17 @@ export type TableItemTrailingKeys = {};
 
 export type TableKey<TValue extends Record<string, unknown>> = (keyof (TValue & TableItemLeadingKeys & TableItemTrailingKeys));
 
-export type TableHeader<TValue extends Record<string, unknown>> = {
+export type TableHeader<TValue extends Record<string, unknown>, T> = {
   [key:string]: unknown;
-  text?: string;
-  value: keyof TValue;
+  value: T;
+  key: keyof TValue;
 };
 
 /* Props duplication for export => https://github.com/vuejs/core/issues/4294 */
 // Need to be kept sync manually
 
-export type TableProps<TValue extends Record<string, unknown>> = {
-  headers?: TableHeader<TValue>[];
+export type TableProps<TValue extends Record<string, unknown>, THeader> = {
+  headers?: TableHeader<TValue, THeader>[];
   items: TValue[];
   indexRows?: boolean;
   sortableKeys?: TableKey<TValue>[];

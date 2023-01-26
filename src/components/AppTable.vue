@@ -9,27 +9,35 @@
     >
       <AppTableRow>
         <template
-          v-for="(header) in renderHeaders"
-          :key="header.value"
+          v-for="(header, index) in renderHeaders"
+          :key="header.key"
         >
           <AppTableCell
-            v-if="!isHiddenKey(header.value)"
+            v-if="!isHiddenKey(header.key)"
             header
-            :data-filtered="isFilteredKey(header.value)"
-            @click="() => isSortable(header) ? handleHeaderClick(header) : void 0"
+            :data-filtered="isFilteredKey(header.key)"
+            @click="() => isSortable(header.key) ? handleHeaderClick(header) : void 0"
           >
-            <span class="mk-AppTable-head-entry">
-              <span
-                v-if="header.text"
-                class="mk-AppTable-head-text"
-              >
-                {{ header.text }}
+            <slot
+              :name="`header-${header.key}`"
+              :value="header.value"
+              :pos="{ x: index, y: -1, key: header.key}"
+              :entry="header"
+            />
+            <template v-if="!$slots[`header-${header.key}`]">
+              <span class="mk-AppTable-head-entry">
+                <span
+                  v-if="header.value"
+                  class="mk-AppTable-head-text"
+                >
+                  {{ header.value }}
+                </span>
+                <mk-icon
+                  v-if="header.key === activeHeaderKey && headerIcon"
+                  :icon="headerIcon"
+                />
               </span>
-              <mk-icon
-                v-if="header.value === activeHeaderKey && headerIcon"
-                :icon="headerIcon"
-              />
-            </span>
+            </template>
           </AppTableCell>
         </template>
       </AppTableRow>
@@ -67,7 +75,7 @@
           >
             <slot
               :name="key"
-              :data="item[key]"
+              :value="item[key]"
               :pos="{ x, y, key}"
               :entry="item"
             />
@@ -102,6 +110,8 @@ type Value = {
   [key: string]: unknown;
 };
 
+type HeaderValue = unknown;
+
 // x, y, key
 type CellPos = [number, number, keyof Value];
 
@@ -123,7 +133,7 @@ type CellState = {
 type StateMatrix = { [key: string]: CellState };
 
 type Props = {
-  headers?: TableHeader<Value>[];
+  headers?: TableHeader<Value, HeaderValue>[];
   items: Value[];
   indexRows?: boolean;
   sortableKeys?: TableKey<Value>[];
@@ -150,7 +160,7 @@ const trailingInternalKeys: (keyof TableItemTrailingKeys)[] = [];
 const keys = computed<TableKey<Value>[]>(() => {
   let headerKeys: TableKey<Value>[] = [];
   if (isValue(props.headers)) {
-    headerKeys = props.headers.map((header) => header.value);
+    headerKeys = props.headers.map((header) => header.key);
   }
   const rawKeys: string[] = [];
   props.items.forEach((item) => rawKeys.push(...Object.keys(item)));
@@ -175,8 +185,8 @@ const renderHeaders = computed(() => {
   }
 
   return keys.value.map((key) => {
-    const header = headers.find((h) => h.value === key);
-    return { ...header, value: key };
+    const header = headers.find((h) => h.key === key) ?? null;
+    return { value: header?.value ?? null, key };
   });
 });
 
@@ -191,7 +201,7 @@ const activeHeader = computed(() => {
   if (!isValue(renderHeaders.value) || !isValue(activeHeaderKey.value)) {
     return null;
   }
-  return renderHeaders.value.find((header) => header.value === activeHeaderKey.value) ?? null;
+  return renderHeaders.value.find((header) => header.key === activeHeaderKey.value) ?? null;
 });
 
 const currentCell = ref<CellPos | null>(null);
@@ -235,8 +245,8 @@ const renderItems = computed(() => {
 
   const header = activeHeader.value;
   return [...enhancedItems.value].sort((a, b) => {
-    const itemA = activeHeaderSort.value === HeaderSort.ASC ? a[header.value] : b[header.value];
-    const itemB = activeHeaderSort.value === HeaderSort.ASC ? b[header.value] : a[header.value];
+    const itemA = activeHeaderSort.value === HeaderSort.ASC ? a[header.key] : b[header.key];
+    const itemB = activeHeaderSort.value === HeaderSort.ASC ? b[header.key] : a[header.key];
     if (isString(itemA) && isString(itemB)) {
       return itemA.localeCompare(itemB);
     }
@@ -253,8 +263,8 @@ function isCell(refPos: CellPos, targetPos: CellPos) {
   return xRef === xTarget && yRef === yTarget;
 }
 
-function isSortable(header: TableHeader<Value>) {
-  return props.sortableKeys.includes(header.value);
+function isSortable(key: TableKey<Value>) {
+  return props.sortableKeys.includes(key);
 }
 
 function getTarget(): CellPos | null {
@@ -322,9 +332,9 @@ function isFilteredKey(key: keyof Value) {
   return key === activeHeader.value?.value;
 }
 
-function handleHeaderClick(header: TableHeader<Value>) {
-  if (!isValue(activeHeaderKey.value) || activeHeaderKey.value !== header.value) {
-    activeHeaderKey.value = header.value;
+function handleHeaderClick(header: TableHeader<Value, HeaderValue>) {
+  if (!isValue(activeHeaderKey.value) || activeHeaderKey.value !== header.key) {
+    activeHeaderKey.value = header.key;
     activeHeaderSort.value = HeaderSort.DESC;
     return;
   }
