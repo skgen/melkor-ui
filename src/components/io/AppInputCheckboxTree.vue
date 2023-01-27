@@ -49,6 +49,8 @@ type Props = {
 
 type Emits = {
   (event: 'update:modelValue', value: InputState<Value>): void;
+  (event: 'focus'): void;
+  (event: 'blur'): void;
 };
 
 const props = defineProps<Props>();

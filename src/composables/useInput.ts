@@ -20,9 +20,9 @@ export function createInputState<T>(params: Partial<InputState<T>> & { value: In
   };
 }
 
-type HookParams<TValue> = {
+type HookParams<TValue, TEmits> = {
   props: ComputedRef<InputComponentBaseProps<TValue>>;
-  emits: (event: 'update:modelValue', value : InputState<TValue>) => void;
+  emits: TEmits;
 };
 
 export function validateInputState<TValue>(state: InputState<TValue>, validate?: ValidateInput<TValue>): InputState<TValue> {
@@ -35,7 +35,13 @@ export function validateInputState<TValue>(state: InputState<TValue>, validate?:
   return newState;
 }
 
-export default function useInput<TValue>(params: HookParams<TValue>) {
+type InputEmits<Value> = {
+  (event: 'update:modelValue', value: InputState<Value>): void;
+  (event: 'focus'): void;
+  (event: 'blur'): void;
+};
+
+export default function useInput<TValue>(params: HookParams<TValue, InputEmits<TValue>>) {
   const { emits, props } = params;
 
   const state = computed(() => props.value.modelValue);
@@ -44,10 +50,12 @@ export default function useInput<TValue>(params: HookParams<TValue>) {
   const focus = ref(false);
 
   function onFocus() {
+    emits('focus');
     focus.value = true;
   }
 
   function onBlur() {
+    emits('blur');
     focus.value = false;
   }
 

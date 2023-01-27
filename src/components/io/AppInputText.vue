@@ -11,6 +11,7 @@
         {{ props.label }}
       </AppInputLabel>
       <div class="mk-AppInputText-input">
+        <slot name="lead-icon" />
         <input
           :name="props.name"
           type="text"
@@ -21,7 +22,7 @@
           @focus="onFocus"
           @blur="onBlur"
         >
-        <slot name="icon" />
+        <slot name="trail-icon" />
       </div>
     </label>
     <AppInputHint v-if="props.hint">
@@ -57,6 +58,8 @@ type Props = {
 
 type Emits = {
   (event: 'update:modelValue', value: InputState<Value>): void;
+  (event: 'focus'): void;
+  (event: 'blur'): void;
 };
 
 const props = defineProps<Props>();
