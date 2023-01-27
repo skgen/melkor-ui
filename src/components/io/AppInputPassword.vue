@@ -115,6 +115,7 @@ function handleChange(evt: Event) {
     --mk-input-password-border-radius: var(--app-border-radius);
     --mk-input-password-background-color: var(--app-input-background-color);
     --mk-input-password-border-color: var(--app-input-border-color);
+    --mk-input-password-icon-size: 20px;
 
     $this: &;
 
@@ -142,6 +143,11 @@ function handleChange(evt: Event) {
         transition:
             border-color var(--app-transition-duration-color),
             opacity var(--app-transition-duration-opacity);
+
+        .mk-AppIcon {
+            --mk-icon-size: var(--mk-input-password-icon-size);
+            --mk-icon-color: var(--mk-input-password-icon-color);
+        }
     }
 
     &[data-focus="true"] {
@@ -174,8 +180,6 @@ function handleChange(evt: Event) {
 
         .mk-AppIcon {
             display: block;
-
-            --mk-icon-size: 20px;
         }
     }
 
