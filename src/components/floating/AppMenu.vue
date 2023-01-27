@@ -81,7 +81,7 @@ function handleHide() {
         z-index: initial;
         visibility: visible !important;
 
-        --mk-menu-text-color: var(--app-text-color-on-surface);
+        --mk-menu-text-color: var(--app-text-color);
         --mk-menu-background-color: var(--app-background-color);
 
         &#{$this}__popper {

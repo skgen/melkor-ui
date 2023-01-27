@@ -71,7 +71,7 @@
 
     // Theme
     --app-theme-color: var(--c-white);
-    --app-theme-color-surface: var(--c-black);
+    --app-theme-color-contrast: var(--c-black);
 
     // Background
     --app-background-color: var(--app-theme-color);
@@ -80,18 +80,18 @@
     --app-background-color-soft-hover: var(--c-grey-95);
     --app-background-color-highlight: var(--c-grey-95);
     --app-background-color-highlight-hover: var(--c-grey-90);
-    --app-background-color-surface: var(--app-theme-color-surface);
-    --app-background-color-surface-hover: var(--c-grey-5);
+    --app-background-color-contrast: var(--app-theme-color-contrast);
+    --app-background-color-contrast-hover: var(--c-grey-5);
     --app-background-color-on-primary: var(--app-background-color);
     --app-background-color-on-primary-hover: var(--app-background-color-hover);
 
     // Text
-    --app-text-color: var(--app-theme-color-surface);
+    --app-text-color: var(--app-theme-color-contrast);
     --app-text-color-soft: var(--c-grey-40);
-    --app-text-color-on-surface: var(--app-theme-color);
-    --app-heading-color: var(--app-theme-color-surface);
-    --app-heading-color-on-surface: var(--app-theme-color);
-    --app-text-color-on-primary: var(--app-text-color-on-surface);
+    --app-text-color-on-contrast: var(--app-theme-color);
+    --app-heading-color: var(--app-theme-color-contrast);
+    --app-heading-color-on-contrast: var(--app-theme-color);
+    --app-text-color-on-primary: var(--app-text-color-on-contrast);
 
     // Borders
     --app-border-color: var(--c-grey-80);
@@ -124,7 +124,7 @@
 
     // Theme
     --app-theme-color: var(--c-black);
-    --app-theme-color-surface: var(--c-white);
+    --app-theme-color-contrast: var(--c-white);
 
     // Background
     --app-background-color: var(--app-theme-color);
@@ -133,17 +133,17 @@
     --app-background-color-soft-hover: var(--c-grey-20);
     --app-background-color-highlight: var(--c-grey-20);
     --app-background-color-highlight-hover: var(--c-grey-40);
-    --app-background-color-surface: var(--app-theme-color-surface);
-    --app-background-color-surface-hover: var(--c-grey-98);
-    --app-background-color-on-primary: var(--app-background-color-surface);
+    --app-background-color-contrast: var(--app-theme-color-contrast);
+    --app-background-color-contrast-hover: var(--c-grey-98);
+    --app-background-color-on-primary: var(--app-background-color-contrast);
     --app-background-color-on-primary-hover: var(--app-background-color-hover);
 
     // Text
-    --app-text-color: var(--app-theme-color-surface);
+    --app-text-color: var(--app-theme-color-contrast);
     --app-text-color-soft: var(--c-grey-60);
-    --app-text-color-on-surface: var(--app-theme-color);
-    --app-heading-color: var(--app-theme-color-surface);
-    --app-heading-color-on-surface: var(--app-theme-color);
+    --app-text-color-on-contrast: var(--app-theme-color);
+    --app-heading-color: var(--app-theme-color-contrast);
+    --app-heading-color-on-contrast: var(--app-theme-color);
     --app-text-color-on-primary: var(--app-text-color);
 
     // Borders

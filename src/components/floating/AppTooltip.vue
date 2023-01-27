@@ -47,11 +47,8 @@ const { handleHide } = useFloatingModal({
     $this: &;
 
     &--theme-tooltip {
-        // --mk-tooltip-text-color: var(--app-text-color-on-primary);
-        --mk-tooltip-text-color: var(--app-text-color-on-surface);
-
-        // --mk-tooltip-background-color: var(--app-primary-color);
-        --mk-tooltip-background-color: var(--app-background-color-surface);
+        --mk-tooltip-text-color: var(--app-text-color-on-contrast);
+        --mk-tooltip-background-color: var(--app-background-color-contrast);
 
         z-index: initial;
         visibility: visible !important;
