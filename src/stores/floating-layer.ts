@@ -6,7 +6,7 @@ export type FloatingLayerStoreState = {
 };
 
 export const useFloatingLayerStore = defineStore({
-  id: 'fl-layer',
+  id: 'mk-floating-layer',
   state: (): FloatingLayerStoreState => ({
     modals: [],
   }),

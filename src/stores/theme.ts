@@ -13,7 +13,7 @@ export type ThemeStoreState = {
 };
 
 export const useThemeStore = defineStore({
-  id: 'theme',
+  id: 'mk-theme',
   state: (): ThemeStoreState => ({
     theme: getPreferedTheme(),
     seed: Math.random(),

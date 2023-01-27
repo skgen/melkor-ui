@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-import AppFullscreenView from '@src/components/layout/AppFullscreenView.vue';
+import AppFullscreenView from '@src/components/fullscreen/AppFullscreenView.vue';
 import useTheme from '@src/composables/useTheme';
 
 type Props = {

@@ -1,6 +1,6 @@
 <template>
   <div
-    id="fl-layer"
+    id="mk-floating-layer"
     v-theme="theme"
     class="mk-TheFloatingLayer"
   />

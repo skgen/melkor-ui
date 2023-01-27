@@ -52,6 +52,7 @@ const spreadProps = computed(() => {
 });
 
 function handleHide() {
+  handleFloatingHide();
   if (!props.modelValue) {
     return;
   }
@@ -59,8 +60,6 @@ function handleHide() {
     emit('update:modelValue', false);
     emit('hide');
   }
-
-  handleFloatingHide();
 }
 </script>
 

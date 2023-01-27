@@ -5,7 +5,7 @@ import FloatingVue from 'floating-vue';
 export function registerTooltipConfig() {
   // Global
   FloatingVue.options.disposeTimeout = 256;
-  FloatingVue.options.container = '#fl-layer';
+  FloatingVue.options.container = '#mk-floating-layer';
 
   // Tooltip
   FloatingVue.options.themes.tooltip.delay = 0;
@@ -37,7 +37,7 @@ export function registerTooltipConfig() {
 //     // Default position offset along cross axis (px)
 //     skidding: 0,
 //     // Default container where the tooltip will be appended
-//     container: '#fl-layer',
+//     container: '#mk-floating-layer',
 //     // Element used to compute position and size boundaries
 //     boundary: undefined,
 //     // Skip delay & CSS transitions when another popper is shown, so that the popper appear to instanly move to the new position.

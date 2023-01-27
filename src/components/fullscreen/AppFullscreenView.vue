@@ -1,7 +1,7 @@
 <template>
   <teleport
     v-if="renderActive"
-    to="#fs-layer"
+    to="#mk-fullscreen-layer"
   >
     <div
       v-theme="theme"

@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import TheFullScreenLayer from '@src/components/layout/TheFullScreenLayer.vue';
+import TheFullScreenLayer from '@src/components/fullscreen/TheFullScreenLayer.vue';
 import TheFloatingLayer from '@src/components/floating/TheFloatingLayer.vue';
 import AppThemeContext from '@src/components/AppThemeContext.vue';
 import { computed } from 'vue';
@@ -31,7 +31,7 @@ const theme = computed<ThemeInstance>(() => ({
 </script>
 
 <style lang="scss">
-body[data-fs-modal="true"] {
+body[data-fullscreen-modal="true"] {
     .mk-TheApp {
         filter: blur(1px);
     }

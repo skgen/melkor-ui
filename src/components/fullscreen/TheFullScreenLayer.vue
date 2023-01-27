@@ -1,6 +1,6 @@
 <template>
   <div
-    id="fs-layer"
+    id="mk-fullscreen-layer"
     v-theme="theme"
     class="mk-TheFullScreenLayer"
   />
@@ -38,7 +38,7 @@ const { theme } = useTheme();
 }
 
 body {
-    &:not([data-fs-modal="true"]) {
+    &:not([data-fullscreen-modal="true"]) {
         .mk-TheFullScreenLayer {
             pointer-events: none;
             user-select: none;
@@ -49,7 +49,7 @@ body {
         }
     }
 
-    &[data-fs-modal="true"] {
+    &[data-fullscreen-modal="true"] {
         overflow: hidden;
     }
 }

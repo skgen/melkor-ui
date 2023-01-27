@@ -18,9 +18,6 @@ export { default as AppImage } from '@src/components/AppImage.vue';
 export { default as AppIcon } from '@src/components/AppIcon.vue';
 export { default as AppThemeContext } from '@src/components/AppThemeContext.vue';
 
-export { default as AppTooltip } from '@src/components/floating/AppTooltip.vue';
-export { default as AppMenu } from '@src/components/floating/AppMenu.vue';
-
 export { default as AppInputCheckbox } from '@src/components/io/AppInputCheckbox.vue';
 export { default as AppInputCheckboxTree } from '@src/components/io/AppInputCheckboxTree.vue';
 export * from '@src/components/io/partials/AppInputCheckboxTreeLevel.vue';
@@ -41,5 +38,8 @@ export { default as AppInputError } from '@src/components/io/decoration/AppInput
 export { default as AppInputHint } from '@src/components/io/decoration/AppInputHint.vue';
 export { default as AppInputLabel } from '@src/components/io/decoration/AppInputLabel.vue';
 
-export { default as AppFullscreenView } from '@src/components/layout/AppFullscreenView.vue';
-export { default as AppFullscreenModal } from '@src/components/layout/AppFullscreenModal.vue';
+export { default as AppTooltip } from '@src/components/floating/AppTooltip.vue';
+export { default as AppMenu } from '@src/components/floating/AppMenu.vue';
+
+export { default as AppFullscreenView } from '@src/components/fullscreen/AppFullscreenView.vue';
+export { default as AppFullscreenModal } from '@src/components/fullscreen/AppFullscreenModal.vue';

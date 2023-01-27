@@ -6,7 +6,7 @@ export type FullscreenLayerStoreState = {
 };
 
 export const useFullscreenLayerStore = defineStore({
-  id: 'fs-layer',
+  id: 'mk-fullscreen-layer',
   state: (): FullscreenLayerStoreState => ({
     modalCount: 0,
   }),
@@ -24,9 +24,9 @@ export const useFullscreenLayerStore = defineStore({
       }
 
       if (this.isActive) {
-        document.body.setAttribute('data-fs-modal', 'true');
+        document.body.setAttribute('data-fullscreen-modal', 'true');
       } else {
-        document.body.removeAttribute('data-fs-modal');
+        document.body.removeAttribute('data-fullscreen-modal');
       }
     },
   },
