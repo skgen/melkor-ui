@@ -11,6 +11,8 @@
         {{ props.label }}
       </AppInputLabel>
       <div class="mk-AppInputPassword-input">
+
+        <slot name="leading-icon" />
         <input
           :name="props.name"
           :type="type"
@@ -27,6 +29,8 @@
         >
           <AppIcon :icon="icon" />
         </button>
+
+        <slot name="trailing-icon" />
       </div>
     </label>
     <AppInputHint v-if="props.hint">
@@ -119,7 +123,7 @@ function handleChange(evt: Event) {
     input {
         flex: 1;
         width: 100%;
-        padding: var(--mk-input-password-padding-y) 0 var(--mk-input-password-padding-y) var(--mk-input-password-padding-x);
+        padding: var(--mk-input-password-padding-y) 0;
         color: currentcolor;
         background-color: transparent;
         border: none;
@@ -131,7 +135,7 @@ function handleChange(evt: Event) {
         gap: calc(var(--mk-input-password-padding-x) / 2);
         align-items: center;
         width: 100%;
-        padding-right: var(--mk-input-password-padding-x);
+        padding: 0 var(--mk-input-password-padding-x);
         background-color: var(--mk-input-password-background-color);
         border: 1px solid var(--mk-input-password-border-color);
         border-radius: var(--mk-input-password-border-radius);

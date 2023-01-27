@@ -11,10 +11,12 @@
         {{ props.label }}
       </AppInputLabel>
       <div class="mk-AppInputNumber-input">
+        <slot name="leading-icon" />
         <input
           :name="props.name"
           type="number"
           :value="textValue"
+          :step="props.step"
           :min="props.min"
           :max="props.max"
           :placeholder="props.placeholder"
@@ -23,7 +25,7 @@
           @focus="onFocus"
           @blur="onBlur"
         >
-        <slot name="icon" />
+        <slot name="trailing-icon" />
       </div>
     </label>
     <AppInputHint v-if="props.hint">
@@ -57,6 +59,7 @@ type Props = {
   placeholder?: string;
   min?: number;
   max?: number;
+  step?: number;
 };
 
 type Emits = {

@@ -11,7 +11,7 @@
         {{ props.label }}
       </AppInputLabel>
       <div class="mk-AppInputText-input">
-        <slot name="lead-icon" />
+        <slot name="leading-icon" />
         <input
           :name="props.name"
           type="text"
@@ -22,7 +22,7 @@
           @focus="onFocus"
           @blur="onBlur"
         >
-        <slot name="trail-icon" />
+        <slot name="trailing-icon" />
       </div>
     </label>
     <AppInputHint v-if="props.hint">
