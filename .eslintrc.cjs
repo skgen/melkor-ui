@@ -35,12 +35,12 @@ module.exports = {
       "multilineDetection": "brackets"
     }],
     "max-len": ["error", { code: 150 }],
+    "import/prefer-default-export": "off"
   },
   ignorePatterns: [
     '.eslintrc.cjs',
+    '.stylelintrc.cjs', 
     'vite.config.ts', 
-    'vite.package.config.ts', 
-    'stylelint.config.js', 
     'dist',
   ],
 };
