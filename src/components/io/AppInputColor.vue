@@ -87,7 +87,7 @@ type Emits = {
 };
 
 const props = defineProps<Props>();
-const emits = defineEmits<Emits>();
+const emit = defineEmits<Emits>();
 
 const { theme } = useTheme();
 
@@ -95,7 +95,7 @@ const {
   onChange, onFocus, onBlur, state, focus,
 } = useInput<Value>({
   props: computed(() => props),
-  emits,
+  emit,
 });
 
 const placeholder = computed(() => (props.placeholder ? props.placeholder.replaceAll(/[^0-9a-f]+/gi, '') : null));

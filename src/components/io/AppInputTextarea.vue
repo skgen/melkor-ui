@@ -69,7 +69,7 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: undefined,
   rows: 2,
 });
-const emits = defineEmits<Emits>();
+const emit = defineEmits<Emits>();
 
 const { theme } = useTheme();
 
@@ -77,7 +77,7 @@ const {
   onChange, onFocus, onBlur, state, focus,
 } = useInput<Value>({
   props: computed(() => props),
-  emits,
+  emit,
 });
 
 function handleChange(evt: Event) {

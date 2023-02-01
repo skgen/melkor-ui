@@ -90,7 +90,7 @@ type Emits = {
 };
 
 const props = defineProps<Props>();
-const emits = defineEmits<Emits>();
+const emit = defineEmits<Emits>();
 
 const datePicker = ref<HTMLInputElement | null>(null);
 
@@ -100,7 +100,7 @@ const {
   onChange, onFocus, onBlur, state, focus,
 } = useInput<Value>({
   props: computed(() => props),
-  emits,
+  emit,
 });
 
 const type = computed(() => (props.datetime ? 'datetime-local' : 'date'));

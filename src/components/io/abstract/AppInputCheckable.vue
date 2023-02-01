@@ -38,11 +38,11 @@ const props = withDefaults(
     unchecked: (() => false) as () => unknown,
   },
 );
-const emits = defineEmits<Emits>();
+const emit = defineEmits<Emits>();
 
 const { onChange, state } = useInput<Value>({
   props: computed(() => props),
-  emits,
+  emit,
 });
 
 const renderChecked = computed(() => isEqual(state.value.value, props.checked));

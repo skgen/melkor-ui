@@ -85,7 +85,7 @@ const props = withDefaults(defineProps<Props>(), {
   max: 100,
   step: 1,
 });
-const emits = defineEmits<Emits>();
+const emit = defineEmits<Emits>();
 
 const thumb = ref<HTMLDivElement | null>(null);
 
@@ -95,7 +95,7 @@ const {
   onChange, onFocus, onBlur, state, focus,
 } = useInput<Value>({
   props: computed(() => props),
-  emits,
+  emit,
 });
 
 const thumbSize = ref(0);

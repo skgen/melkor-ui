@@ -54,7 +54,7 @@ type Emits = {
 };
 
 const props = defineProps<Props>();
-const emits = defineEmits<Emits>();
+const emit = defineEmits<Emits>();
 
 const { theme } = useTheme();
 
@@ -62,7 +62,7 @@ const {
   onChange, state,
 } = useInput<Value>({
   props: computed(() => props),
-  emits,
+  emit,
 });
 
 function handleChange(newLevel: NonArray<Value>, index: number) {
