@@ -149,12 +149,12 @@ export function uncheckAllCheckboxTreeLevels<TChecked, TUnchecked>(
 
 export function exportCheckboxTreeLevelData<TChecked, TUnchecked, R>(
   children: CheckboxTreeLevel<TChecked, TUnchecked>[],
-  mappingFunction: (state: InputState<TChecked | TUnchecked>) => R,
+  mappingFunction: (level: CheckboxTreeLevel<TChecked, TUnchecked>) => R,
 ): Record<string, R> {
   let value: Record<string, R> = {};
   for (const child of children) {
     if (child.input.options.name) {
-      value[child.input.options.name] = mappingFunction(child.input.state);
+      value[child.input.options.name] = mappingFunction(child);
     }
     if (child.children) {
       value = {
@@ -166,36 +166,38 @@ export function exportCheckboxTreeLevelData<TChecked, TUnchecked, R>(
   return value;
 }
 
-function mapStateToState<T>(state: InputState<T>): InputState<T> {
-  return { ...state };
+function mapLevelToState<TChecked, TUnchecked>(level: CheckboxTreeLevel<TChecked, TUnchecked>)
+  : InputState<TChecked | TUnchecked> {
+  return { ...level.input.state };
 }
 
-function mapStateToValue<T>(state: InputState<T>): T {
-  return state.value;
+function mapLevelToValue<TChecked, TUnchecked>(level: CheckboxTreeLevel<TChecked, TUnchecked>): TChecked | TUnchecked {
+  return level.input.state.value;
 }
 
-function mapStateToError<T>(state: InputState<T>): InputState<T>['error'] {
-  return state.error;
+function mapLevelToError<TChecked, TUnchecked>(level: CheckboxTreeLevel<TChecked, TUnchecked>)
+  : InputState<TChecked | TUnchecked>['error'] {
+  return level.input.state.error;
 }
 // Exporting states
 export function exportCheckboxTreeLevelStates<TChecked, TUnchecked>(
   children: CheckboxTreeLevel<TChecked, TUnchecked>[],
 ): Record<string, InputState<TChecked | TUnchecked>> {
-  return exportCheckboxTreeLevelData(children, mapStateToState);
+  return exportCheckboxTreeLevelData(children, mapLevelToState);
 }
 
 // Exporting values
 export function exportCheckboxTreeLevelValues<TChecked, TUnchecked>(
   children: CheckboxTreeLevel<TChecked, TUnchecked>[],
 ): Record<string, TChecked | TUnchecked> {
-  return exportCheckboxTreeLevelData(children, mapStateToValue);
+  return exportCheckboxTreeLevelData(children, mapLevelToValue);
 }
 
 // Exporting errors
 export function exportCheckboxTreeLevelErrors<TChecked, TUnchecked>(
   children: CheckboxTreeLevel<TChecked, TUnchecked>[],
 ) : Record<string, InputState<TChecked | TUnchecked>['error']> {
-  return exportCheckboxTreeLevelData(children, mapStateToError);
+  return exportCheckboxTreeLevelData(children, mapLevelToError);
 }
 
 // Exporting errors as array (a simpler way to generate another error)
@@ -205,6 +207,13 @@ export function exportCheckboxTreeLevelErrorsAsArray<TChecked, TUnchecked>(
   const errors = Object.values(exportCheckboxTreeLevelErrors(children));
   type FilteredErrorType = NonNullable<NonArray<typeof errors>>;
   return errors.filter<FilteredErrorType>(isValue);
+}
+
+// Exporting levels
+export function exportCheckboxTreeLevels<TChecked, TUnchecked>(
+  children: CheckboxTreeLevel<TChecked, TUnchecked>[],
+): Record<string, CheckboxTreeLevel<TChecked, TUnchecked>> {
+  return exportCheckboxTreeLevelData(children, (v) => v);
 }
 
 export function findCheckboxTreeLevel<TChecked, TUnchecked>(

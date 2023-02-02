@@ -79,10 +79,6 @@ function handleChange(newLevel: NonArray<Value>, index: number) {
         flex-direction: column;
     }
 
-    .pux-AppInputCheckboxTree {
-        padding: 0 0 0 var(--app-m-2);
-    }
-
     > .mk-AppInputLabel {
         display: block;
         margin-bottom: var(--app-m-1);
