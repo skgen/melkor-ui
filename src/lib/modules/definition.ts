@@ -41,7 +41,8 @@ export function getDefaultAs
   return isValue(t) ? c(t) : d;
 }
 
-export function isEmpty<T extends Record<string, unknown> | unknown[] | string | undefined | null>(v: T): boolean {
+export function isEmpty<T extends Record<string, unknown> | unknown[] | string | undefined | null>(v: T)
+  : v is NonNullable<T> {
   if (!isValue(v)) {
     return true;
   }
