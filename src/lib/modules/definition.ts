@@ -42,7 +42,7 @@ export function getDefaultAs
 }
 
 export function isEmpty<T extends Record<string, unknown> | unknown[] | string | undefined | null>(v: T)
-  : v is NonNullable<T> {
+  : boolean {
   if (!isValue(v)) {
     return true;
   }
