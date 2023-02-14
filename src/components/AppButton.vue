@@ -32,7 +32,7 @@ const type = computed(() => {
   if (props.outlined) {
     return 'outlined';
   }
-  return undefined;
+  return 'plain';
 });
 const onPrimary = computed(() => props.onPrimary || undefined);
 const disabled = computed(() => props.disabled || undefined);
@@ -45,11 +45,15 @@ const disabled = computed(() => props.disabled || undefined);
 .mk-AppButton {
     --mk-button-padding-x: var(--app-m-2);
     --mk-button-padding-y: var(--app-m-1);
+    --mk-button-bordered-padding-x: calc(var(--app-m-2) - var(--mk-button-border-width));
+    --mk-button-bordered-padding-y: calc(var(--app-m-1) - var(--mk-button-border-width));
     --mk-button-spacing-content: var(--app-m-1);
     --mk-button-background-color: var(--app-primary-color);
     --mk-button-text-color: var(--app-text-color-on-primary);
+    --mk-button-hollowed-text-color: var(--app-primary-color);
     --mk-button-border-color: var(--app-primary-color);
     --mk-button-border-width: 1px;
+    --mk-button-border-radius: var(--app-border-radius);
 
     display: inline-flex;
     gap: var(--mk-button-spacing-content);
@@ -57,36 +61,39 @@ const disabled = computed(() => props.disabled || undefined);
     justify-content: center;
     padding: var(--mk-button-padding-y) var(--mk-button-padding-x);
     font-weight: 500;
-    color: var(--mk-button-text-color);
     cursor: pointer;
-    background-color: var(--mk-button-background-color);
     border-color: var(--mk-button-border-color);
     border-width: var(--mk-button-border-width);
-    border-radius: var(--app-border-radius);
+    border-radius: var(--mk-button-border-radius);
 
-    &:not([data-type]) {
+    &[data-type="plain"] {
+        color: var(--mk-button-text-color);
+        background-color: var(--mk-button-background-color);
+
         &[data-on-primary="true"] {
-            --mk-button-background-color: var(--app-background-color-on-primary);
-            --mk-button-text-color: var(--app-primary-color);
+            color: var(--app-primary-color);
+            background-color: var(--app-background-color-on-primary);
+            border-color: var(--app-background-color-on-primary);
         }
     }
 
     &[data-type="outlined"],
     &[data-type="text"] {
-        --mk-button-background-color: transparent;
-        --mk-button-text-color: var(--app-primary-color);
+        color: var(--mk-button-hollowed-text-color);
+        background-color: transparent;
 
         &[data-on-primary="true"] {
-            --mk-button-text-color: var(--app-text-color-on-primary);
-            --mk-button-border-color: var(--app-background-color-on-primary);
+            color: var(--app-text-color-on-primary);
         }
     }
 
     &[data-type="outlined"] {
-        --mk-button-padding-x: calc(var(--app-m-2) - var(--mk-button-border-width));
-        --mk-button-padding-y: calc(var(--app-m-1) - var(--mk-button-border-width));
-
+        padding: var(--mk-button-bordered-padding-y) var(--mk-button-bordered-padding-x);
         border-style: solid;
+
+        &[data-on-primary="true"] {
+            border-color: var(--app-background-color-on-primary);
+        }
     }
 
     &[disabled] {
