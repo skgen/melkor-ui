@@ -54,13 +54,17 @@ const disabled = computed(() => props.disabled || undefined);
     --mk-button-border-color: var(--app-primary-color);
     --mk-button-border-width: 1px;
     --mk-button-border-radius: var(--app-border-radius);
+    --mk-button-font-size: var(--app-font-size);
+    --mk-button-line-height: var(--app-line-height);
 
     display: inline-flex;
     gap: var(--mk-button-spacing-content);
     align-items: center;
     justify-content: center;
     padding: var(--mk-button-padding-y) var(--mk-button-padding-x);
+    font-size: var(--mk-button-font-size);
     font-weight: 500;
+    line-height: var(--mk-button-line-height);
     cursor: pointer;
     border-color: var(--mk-button-border-color);
     border-width: var(--mk-button-border-width);
