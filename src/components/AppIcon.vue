@@ -29,6 +29,7 @@ const { theme } = useTheme();
 <style lang="scss">
 .mk-AppIcon {
     --mk-icon-size: inherit;
+    --mk-icon-line-height: 1;
     --mk-icon-color: currentcolor;
     --mk-icon-weight: 400;
 
@@ -39,6 +40,7 @@ const { theme } = useTheme();
     font-style: normal;
     font-weight: normal;
     font-feature-settings: "liga";
+    line-height: var(--mk-icon-line-height);
     color: var(--mk-icon-color);
     text-transform: none;
     letter-spacing: normal;
