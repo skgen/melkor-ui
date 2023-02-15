@@ -86,6 +86,8 @@ const isRelative = computed(() => {
 .mk-AppLink {
     --mk-link-text-color-active: var(--app-primary-color);
     --mk-link-gap: var(--app-m-1);
+    --mk-link-font-size: inherit;
+    --mk-link-line-height: inherit;
 
     @include light {
         --mk-link-text-color: var(--c-grey-30);
@@ -104,8 +106,8 @@ const isRelative = computed(() => {
         gap: var(--mk-link-gap);
         align-items: center;
         padding: 0;
-        font-size: 1rem;
-        line-height: inherit;
+        font-size: var(--mk-link-font-size);
+        line-height: var(--mk-link-line-height);
         color: var(--mk-link-text-color);
         text-decoration: none;
         cursor: pointer;
