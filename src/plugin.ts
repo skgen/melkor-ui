@@ -6,7 +6,7 @@ import { createPinia } from 'pinia';
 import registerComponents from '@src/registerComponents';
 import registerDirectives from '@src/registerDirectives';
 import { setLocales } from '@src/lib/modules/i18n';
-import { registerTooltipConfig } from '@src/plugins/tooltip';
+import { registerFloatingConfig } from '@src/plugins/floating';
 import { getPreferedTheme, setDocumentTheme, setThemes } from '@src/lib/modules/theme';
 import { configContextKey, type MelkorConfig } from '@src/definition';
 import { createI18n } from 'vue-i18n';
@@ -76,7 +76,7 @@ export default (options?: Partial<PluginOptions>) => {
 
       registerComponents(app);
       registerDirectives(app);
-      registerTooltipConfig();
+      registerFloatingConfig();
 
       app.provide(configContextKey, melkorConfig);
     },

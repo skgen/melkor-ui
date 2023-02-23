@@ -16,8 +16,11 @@ const { theme } = useTheme();
 @import "@style/mixins";
 
 .mk-TheFloatingLayer {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
     z-index: var(--app-floating-layer-order);
+    width: 100%;
 }
 
 </style>

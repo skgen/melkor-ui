@@ -1,8 +1,9 @@
 import { useFloatingLayerStore } from '@src/stores/floating-layer';
 import useTheme from '@src/composables/useTheme';
 import {
-  onMounted, onUnmounted, watch, type DefineComponent, type Ref,
+  onUnmounted, onUpdated, ref, useAttrs, watch, type DefineComponent, type Ref,
 } from 'vue';
+import { clone } from 'lodash';
 
 type HookParams = {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -13,6 +14,14 @@ export default function useFloatingModal(params: HookParams) {
   const { floatingEl } = params;
   const { theme } = useTheme();
   const layerStore = useFloatingLayerStore();
+
+  const attrs = useAttrs();
+
+  const spreadAttrs = ref(attrs);
+
+  onUpdated(() => {
+    spreadAttrs.value = clone(attrs);
+  });
 
   function getModalId() {
     if (!floatingEl.value) {
@@ -29,11 +38,14 @@ export default function useFloatingModal(params: HookParams) {
 
   function handleShow() {
     const id = getModalId();
-    if (!id || !theme?.value) {
+    if (!id) {
       return;
     }
     layerStore.showModal(id);
-    layerStore.updateModalTheme(id, theme.value.theme);
+    if (theme?.value) {
+      layerStore.updateModalTheme(id, theme.value.theme);
+    }
+    layerStore.updateModalAttributes(id, spreadAttrs.value);
   }
 
   function handleHide() {
@@ -47,8 +59,10 @@ export default function useFloatingModal(params: HookParams) {
   function handleMutate(mutations: MutationRecord[]) {
     for (const mutation of mutations) {
       const target = mutation.target as HTMLElement;
-      if (target.classList.contains('v-popper--shown')) {
-        handleShow();
+      if (mutation.attributeName === 'class') {
+        if (target.classList.contains('v-popper--shown')) {
+          handleShow();
+        }
       }
     }
   }
@@ -63,13 +77,24 @@ export default function useFloatingModal(params: HookParams) {
     layerStore.updateModalTheme(id, newTheme.theme);
   });
 
-  onMounted(() => {
-    if (!floatingEl.value) {
+  watch(spreadAttrs, (newSpreadAttributes, oldSpreadAttributes) => {
+    const id = getModalId();
+    if (!id) {
       return;
     }
-    observer.observe(floatingEl.value.$el, {
+    layerStore.updateModalAttributes(id, newSpreadAttributes, oldSpreadAttributes);
+  });
+
+  watch(() => floatingEl.value?.$el, (newElement) => {
+    if (!newElement) {
+      return;
+    }
+    observer.disconnect();
+    observer.observe(newElement, {
       attributeFilter: ['class'],
     });
+  }, {
+    immediate: true,
   });
 
   onUnmounted(() => {
