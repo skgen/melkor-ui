@@ -9,6 +9,12 @@
       v-bind="$attrs"
     >
       <div
+        v-if="!preventAutoClose"
+        class="mk-AppFullscreenView-veil"
+        role="presentation"
+        @click="handleClose"
+      />
+      <div
         class="mk-AppFullscreenView-content"
         :data-center="centerAttr"
         :data-fill="props.fill || undefined"
@@ -26,7 +32,9 @@
 <script lang="ts" setup>
 import {
   computed,
-  onMounted, ref, watch,
+  onMounted,
+  ref,
+  watch,
 } from 'vue';
 import { useFullscreenLayerStore } from '@src/stores/fullscreen-layer';
 import useTheme from '@src/composables/useTheme';
@@ -37,6 +45,7 @@ type Props = {
   centerX?: boolean;
   centerY?: boolean;
   fill?: boolean;
+  preventAutoClose?: boolean;
 };
 
 type Emits = {
@@ -44,7 +53,7 @@ type Emits = {
 };
 
 const props = defineProps<Props>();
-defineEmits<Emits>();
+const emit = defineEmits<Emits>();
 
 const { theme } = useTheme();
 
@@ -68,6 +77,10 @@ const layerStore = useFullscreenLayerStore();
 
 function handleNotifyStore(active: boolean) {
   layerStore.mutateLayer(active);
+}
+
+function handleClose() {
+  emit('update:modelValue', false);
 }
 
 watch([
@@ -107,6 +120,14 @@ onMounted(() => {
 
     &:last-child {
         z-index: calc(var(--app-fullscreen-layer-order) + 2);
+    }
+
+    &-veil {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
     }
 
     &-content {

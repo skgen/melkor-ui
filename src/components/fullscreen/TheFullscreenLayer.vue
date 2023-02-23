@@ -2,7 +2,7 @@
   <div
     id="mk-fullscreen-layer"
     v-theme="theme"
-    class="mk-TheFullScreenLayer"
+    class="mk-TheFullscreenLayer"
   />
 </template>
 
@@ -15,7 +15,11 @@ const { theme } = useTheme();
 <style lang="scss">
 @import "@style/mixins";
 
-.mk-TheFullScreenLayer {
+.mk-TheFullscreenLayer {
+    --mk-fullscreen-layer-background-color: var(--app-background-color);
+    --mk-fullscreen-layer-opacity: 0.8;
+    --mk-fullscreen-layer-opacity-transition-duration: var(--app-transition-duration-opacity);
+
     position: fixed;
     top: 0;
     right: 0;
@@ -31,15 +35,15 @@ const { theme } = useTheme();
         bottom: 0;
         left: 0;
         z-index: calc(var(--app-fullscreen-layer-order) + 1);
-        background-color: var(--app-background-color);
-        opacity: 0.8;
-        transition: opacity 200ms;
+        background-color: var(--mk-fullscreen-layer-background-color);
+        opacity: var(--mk-fullscreen-layer-opacity);
+        transition: opacity var(--mk-fullscreen-layer-opacity-transition-duration);
     }
 }
 
 body {
     &:not([data-fullscreen-modal="true"]) {
-        .mk-TheFullScreenLayer {
+        .mk-TheFullscreenLayer {
             pointer-events: none;
             user-select: none;
 
@@ -53,4 +57,4 @@ body {
         overflow: hidden;
     }
 }
-</style>
+  </style>

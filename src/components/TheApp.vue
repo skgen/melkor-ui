@@ -9,14 +9,14 @@
         <TheFloatingLayer />
       </teleport>
       <teleport to="body">
-        <TheFullScreenLayer />
+        <TheFullscreenLayer />
       </teleport>
     </AppThemeContext>
   </div>
 </template>
 
 <script lang="ts" setup>
-import TheFullScreenLayer from '@src/components/fullscreen/TheFullScreenLayer.vue';
+import TheFullscreenLayer from '@src/components/fullscreen/TheFullscreenLayer.vue';
 import TheFloatingLayer from '@src/components/floating/TheFloatingLayer.vue';
 import AppThemeContext from '@src/components/AppThemeContext.vue';
 import { computed } from 'vue';
