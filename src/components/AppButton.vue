@@ -45,8 +45,8 @@ const disabled = computed(() => props.disabled || undefined);
 .mk-AppButton {
     --mk-button-padding-x: var(--app-m-2);
     --mk-button-padding-y: var(--app-m-1);
-    --mk-button-bordered-padding-x: calc(var(--app-m-2) - var(--mk-button-border-width));
-    --mk-button-bordered-padding-y: calc(var(--app-m-1) - var(--mk-button-border-width));
+    --mk-button-bordered-padding-x: calc(var(--mk-button-padding-x) - var(--mk-button-border-width));
+    --mk-button-bordered-padding-y: calc(var(--mk-button-padding-y) - var(--mk-button-border-width));
     --mk-button-spacing-content: var(--app-m-1);
     --mk-button-background-color: var(--app-primary-color);
     --mk-button-text-color: var(--app-text-color-on-primary);
