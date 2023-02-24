@@ -56,6 +56,7 @@ const disabled = computed(() => props.disabled || undefined);
     --mk-button-border-radius: var(--app-border-radius);
     --mk-button-font-size: var(--app-font-size);
     --mk-button-line-height: var(--app-line-height);
+    --mk-button-font-weight: 500;
 
     display: inline-flex;
     gap: var(--mk-button-spacing-content);
@@ -63,7 +64,7 @@ const disabled = computed(() => props.disabled || undefined);
     justify-content: center;
     padding: var(--mk-button-padding-y) var(--mk-button-padding-x);
     font-size: var(--mk-button-font-size);
-    font-weight: 500;
+    font-weight: var(--mk-button-font-weight);
     line-height: var(--mk-button-line-height);
     cursor: pointer;
     border-color: var(--mk-button-border-color);
