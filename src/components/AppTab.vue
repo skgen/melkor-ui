@@ -6,9 +6,7 @@
     :aria-selected="active"
     @click="handleClick"
   >
-    <span>
-      <slot />
-    </span>
+    <slot />
   </div>
 </template>
 
@@ -46,12 +44,16 @@ function handleClick() {
 
 .mk-AppTab {
     --mk-tab-border-height: 4px;
+    --mk-tab-border-color: var(--app-primary-color);
+    --mk-tab-padding-y: var(--app-m-1);
+    --mk-tab-font-weight: 500;
+    --mk-tab-letter-spacing: 0.1em;
 
     position: relative;
     display: block;
-    padding-bottom: calc(var(--app-m-1) + var(--mk-tab-border-height));
-    font-weight: 500;
-    letter-spacing: 0.1em;
+    padding-bottom: calc(var(--mk-tab-padding-y) + var(--mk-tab-border-height));
+    font-weight: var(--mk-tab-font-weight);
+    letter-spacing: var(--mk-tab-letter-spacing);
     cursor: pointer;
 
     &::before {
@@ -61,9 +63,9 @@ function handleClick() {
         left: 0;
         width: 100%;
         height: var(--mk-tab-border-height);
-        background-color: var(--app-primary-color);
+        background-color: var(--mk-tab-border-color);
         opacity: 0;
-        transition: opacity 128ms;
+        transition: opacity var(--app-transition-duration-opacity);
     }
 
     &[aria-selected="true"] {
