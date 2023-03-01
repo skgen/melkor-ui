@@ -111,14 +111,18 @@ function handleChange(evt: Event) {
 @import "@style/mixins";
 
 .mk-AppInputNumber {
-    --mk-input-number-padding-x: var(--app-input-padding-x);
-    --mk-input-number-padding-y: var(--app-input-padding-y);
-    --mk-input-number-border-radius: var(--app-border-radius);
     --mk-input-number-background-color: var(--app-input-background-color);
     --mk-input-number-border-color: var(--app-input-border-color);
+    --mk-input-number-border-radius: var(--app-input-border-radius);
+    --mk-input-number-border-width: var(--app-input-border-width);
+    --mk-input-number-color: var(--app-input-color);
+    --mk-input-number-font-size: var(--app-input-font-size);
     --mk-input-number-icon-color: var(--app-input-icon-color);
     --mk-input-number-icon-size: 20px;
+    --mk-input-number-padding-x: var(--app-input-padding-x);
+    --mk-input-number-padding-y: var(--app-input-padding-y);
     --mk-input-number-placeholder-color: var(--app-input-placeholder-color);
+    --mk-input-number-spacing: var(--app-input-padding-x);
 
     $this: &;
 
@@ -127,7 +131,8 @@ function handleChange(evt: Event) {
     input {
         width: 100%;
         padding: var(--mk-input-number-padding-y) 0;
-        color: currentcolor;
+        font-size: 1rem;
+        color: var(--mk-input-number-color);
         background-color: transparent;
         border: none;
         outline: none;
@@ -139,12 +144,13 @@ function handleChange(evt: Event) {
 
     &-input {
         display: flex;
-        gap: var(--mk-input-number-padding-x);
+        gap: var(--mk-input-number-spacing);
         align-items: center;
         width: 100%;
         padding: 0 var(--mk-input-number-padding-x);
+        font-size: var(--mk-input-number-font-size);
         background-color: var(--mk-input-number-background-color);
-        border: 1px solid var(--mk-input-number-border-color);
+        border: var(--mk-input-number-border-width) solid var(--mk-input-number-border-color);
         border-radius: var(--mk-input-number-border-radius);
         transition:
             border-color var(--app-transition-duration-color),

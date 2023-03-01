@@ -144,14 +144,17 @@ function handleChange(evt: Event) {
 @import "@style/mixins";
 
 .mk-AppInputDate {
-    --mk-input-date-spacing: var(--app-input-padding-x);
-    --mk-input-date-padding-x: var(--app-input-padding-x);
-    --mk-input-date-padding-y: var(--app-input-padding-y);
-    --mk-input-date-border-radius: var(--app-border-radius);
     --mk-input-date-background-color: var(--app-input-background-color);
     --mk-input-date-border-color: var(--app-input-border-color);
+    --mk-input-date-border-radius: var(--app-input-border-radius);
+    --mk-input-date-border-width: var(--app-input-border-width);
+    --mk-input-date-color: var(--app-input-color);
+    --mk-input-date-font-size: var(--app-input-font-size);
     --mk-input-date-icon-color: var(--app-input-icon-color);
     --mk-input-date-icon-size: 20px;
+    --mk-input-date-padding-x: var(--app-input-padding-x);
+    --mk-input-date-padding-y: var(--app-input-padding-y);
+    --mk-input-date-spacing: var(--app-input-padding-x);
 
     $this: &;
 
@@ -169,8 +172,10 @@ function handleChange(evt: Event) {
         width: 100%;
         min-width: 200px;
         padding: var(--mk-input-date-padding-y) var(--mk-input-date-padding-x);
+        font-size: var(--mk-input-date-font-size);
+        color: var(--mk-input-date-color);
         background-color: var(--mk-input-date-background-color);
-        border: 1px solid var(--mk-input-date-border-color);
+        border: var(--mk-input-date-border-width) solid var(--mk-input-date-border-color);
         border-radius: var(--mk-input-date-border-radius);
         transition:
             border-color var(--app-transition-duration-color),

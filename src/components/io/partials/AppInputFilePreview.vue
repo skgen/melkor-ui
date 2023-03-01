@@ -90,7 +90,7 @@ const isImage = computed(() => preview.value.type === FileType.image);
 @import "@style/mixins";
 
 .mk-AppFilePreview {
-    --mk-input-file-preview-border-radius: var(--app-border-radius);
+    --mk-input-file-preview-border-radius: var(--app-input-border-radius);
     --mk-input-file-preview-icon-border-radius: calc(var(--app-border-radius) * 2);
     --mk-input-file-preview-icon-w: 54px;
     --mk-input-file-preview-icon-h: 54px;

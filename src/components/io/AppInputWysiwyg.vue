@@ -170,12 +170,14 @@ watch(state, (newState) => {
 @import "@style/mixins";
 
 .mk-AppInputWysiwyg {
+    --mk-input-wysiwyg-background-color: var(--app-input-background-color);
+    --mk-input-wysiwyg-border-color: var(--app-input-border-color);
+    --mk-input-wysiwyg-border-width: var(--app-input-border-width);
+    --mk-input-wysiwyg-border-radius: var(--app-input-border-radius);
+    --mk-input-wysiwyg-color: var(--app-input-color);
+    --mk-input-wysiwyg-font-size: var(--app-input-font-size);
     --mk-input-wysiwyg-padding-x: var(--app-m-3);
     --mk-input-wysiwyg-padding-y: var(--app-m-3);
-    --mk-input-wysiwyg-border-radius: var(--app-border-radius);
-
-    // --mk-input-wysiwyg-background-color: var(--app-input-background-color);
-    --mk-input-wysiwyg-border-color: var(--app-input-border-color);
 
     display: inline-block;
 
@@ -191,9 +193,11 @@ watch(state, (newState) => {
         width: 100%;
         min-height: 80px;
         padding: var(--mk-input-wysiwyg-padding-y) var(--mk-input-wysiwyg-padding-x);
+        font-size: var(--mk-input-wysiwyg-font-size);
+        color: var(--mk-input-wysiwyg-color);
         cursor: text;
         background-color: var(--mk-input-wysiwyg-background-color);
-        border: 1px solid var(--mk-input-wysiwyg-border-color);
+        border: var(--mk-input-wysiwyg-border-width) solid var(--mk-input-wysiwyg-border-color);
         border-radius: var(--mk-input-wysiwyg-border-radius);
         outline: none;
         transition: border-color var(--app-transition-duration-color);
@@ -217,4 +221,4 @@ watch(state, (newState) => {
         margin-top: var(--app-m-1);
     }
 }
-  </style>
+</style>

@@ -303,8 +303,10 @@ export function isSomeCheckboxTreeLevelsUnchecked<TChecked, TUnchecked>(children
 
 <style lang="scss">
 .pux-AppInputCheckboxTreeLevel {
+    --app-input-checkbox-tree-level-offset-x: var(--app-m-3);
+
     .pux-AppInputCheckboxTreeLevel {
-        padding: 0 0 0 var(--app-m-3);
+        padding: 0 0 0 var(--app-input-checkbox-tree-level-offset-x);
     }
 }
 </style>

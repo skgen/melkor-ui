@@ -126,11 +126,11 @@ onMounted(() => {
 @import "@style/mixins";
 
 .mk-AppInputRange {
+    --mk-input-range-color-active: var(--app-primary-color);
+    --mk-input-range-thumb-border-width: 4px;
+    --mk-input-range-thumb-size: 16px;
     --mk-input-range-track-background-color: var(--app-border-color);
     --mk-input-range-track-height: 4px;
-    --mk-input-range-thumb-size: 16px;
-    --mk-input-range-thumb-border-width: 4px;
-    --mk-input-range-color-active: var(--app-primary-color);
 
     $this: &;
 

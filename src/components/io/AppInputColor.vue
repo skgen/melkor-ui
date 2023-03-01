@@ -130,15 +130,18 @@ function handleTextChange(evt: Event) {
 @import "@style/mixins";
 
 .mk-AppInputColor {
-    --mk-input-color-spacing: var(--app-input-padding-x);
-    --mk-input-color-padding-x: var(--app-input-padding-x);
-    --mk-input-color-padding-y: var(--app-input-padding-y);
-    --mk-input-color-border-radius: var(--app-border-radius);
     --mk-input-color-background-color: var(--app-input-background-color);
     --mk-input-color-border-color: var(--app-input-border-color);
+    --mk-input-color-border-radius: var(--app-input-border-radius);
+    --mk-input-color-border-width: var(--app-input-border-width);
+    --mk-input-color-color: var(--app-input-color);
+    --mk-input-color-font-size: var(--app-input-font-size);
     --mk-input-color-icon-color: var(--app-input-icon-color);
     --mk-input-color-icon-size: 20px;
+    --mk-input-color-padding-x: var(--app-input-padding-x);
+    --mk-input-color-padding-y: var(--app-input-padding-y);
     --mk-input-color-placeholder-color: var(--app-input-placeholder-color);
+    --mk-input-color-spacing: var(--app-input-padding-x);
 
     $this: &;
 
@@ -149,6 +152,9 @@ function handleTextChange(evt: Event) {
     }
 
     &-hashtag {
+        font-size: var(--mk-input-color-font-size);
+        color: var(--mk-input-color-color);
+
         &[data-placeholder="true"] {
             color: var(--mk-input-color-placeholder-color);
         }
@@ -156,7 +162,8 @@ function handleTextChange(evt: Event) {
 
     input[type="text"] {
         padding: 0;
-        color: currentcolor;
+        font-size: var(--mk-input-color-font-size);
+        color: var(--mk-input-color-color);
         background-color: transparent;
         border: none;
         outline: none;
@@ -175,7 +182,7 @@ function handleTextChange(evt: Event) {
         padding: var(--mk-input-color-padding-y) var(--mk-input-color-padding-x);
         cursor: pointer;
         background-color: var(--mk-input-color-background-color);
-        border: 1px solid var(--mk-input-color-border-color);
+        border: var(--mk-input-color-border-width) solid var(--mk-input-color-border-color);
         border-radius: var(--mk-input-color-border-radius);
         transition:
             border-color var(--app-transition-duration-color),
@@ -195,6 +202,7 @@ function handleTextChange(evt: Event) {
     }
 
     &-value {
+        display: flex;
         flex: 1;
     }
 

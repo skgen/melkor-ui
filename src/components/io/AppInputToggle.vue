@@ -131,15 +131,17 @@ function stateLabel(checked: boolean) {
 @import "@style/mixins";
 
 .mk-AppInputToggle {
+    --mk-input-toggle-background-color: var(--c-grey-50);
+    --mk-input-toggle-color: var(--app-input-icon-color);
     --mk-input-toggle-color-active: var(--app-success-color);
     --mk-input-toggle-color-on-active: var(--c-white);
-    --mk-input-toggle-background-color: var(--c-grey-50);
     --mk-input-toggle-color-on-background: var(--c-white);
+    --mk-input-toggle-font-size: var(--app-input-font-size);
+    --mk-input-toggle-icon-size: calc(var(--mk-input-toggle-size) - calc(var(--mk-input-toggle-target-padding) * 2));
+    --mk-input-toggle-padding: 2px;
     --mk-input-toggle-spacing: var(--app-m-1);
     --mk-input-toggle-size: 16px;
-    --mk-input-toggle-padding: 2px;
     --mk-input-toggle-target-padding: calc(var(--mk-input-toggle-padding) / 2);
-    --mk-input-toggle-icon-size: calc(var(--mk-input-toggle-size) - calc(var(--mk-input-toggle-target-padding) * 2));
 
     $this: &;
 
@@ -157,6 +159,8 @@ function stateLabel(checked: boolean) {
     }
 
     &-stateLabel {
+        font-size: var(--mk-input-toggle-font-size);
+        color: var(--mk-input-toggle-color);
         transition: opacity var(--app-transition-duration-opacity);
     }
 

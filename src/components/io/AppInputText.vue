@@ -92,14 +92,18 @@ function handleChange(evt: Event) {
 @import "@style/mixins";
 
 .mk-AppInputText {
-    --mk-input-text-padding-x: var(--app-input-padding-x);
-    --mk-input-text-padding-y: var(--app-input-padding-y);
-    --mk-input-text-border-radius: var(--app-border-radius);
     --mk-input-text-background-color: var(--app-input-background-color);
     --mk-input-text-border-color: var(--app-input-border-color);
+    --mk-input-text-border-radius: var(--app-input-border-radius);
+    --mk-input-text-border-width: var(--app-input-border-width);
+    --mk-input-text-color: var(--app-input-color);
+    --mk-input-text-font-size: var(--app-input-font-size);
     --mk-input-text-icon-color: var(--app-input-icon-color);
     --mk-input-text-icon-size: 20px;
+    --mk-input-text-padding-x: var(--app-input-padding-x);
+    --mk-input-text-padding-y: var(--app-input-padding-y);
     --mk-input-text-placeholder-color: var(--app-input-placeholder-color);
+    --mk-input-text-spacing: var(--app-input-padding-x);
 
     $this: &;
 
@@ -108,7 +112,8 @@ function handleChange(evt: Event) {
     input {
         width: 100%;
         padding: var(--mk-input-text-padding-y) 0;
-        color: currentcolor;
+        font-size: var(--mk-input-text-font-size);
+        color: var(--mk-input-text-color);
         background-color: transparent;
         border: none;
         outline: none;
@@ -120,12 +125,12 @@ function handleChange(evt: Event) {
 
     &-input {
         display: flex;
-        gap: var(--mk-input-text-padding-x);
+        gap: var(--mk-input-text-spacing);
         align-items: center;
         width: 100%;
         padding: 0 var(--mk-input-text-padding-x);
         background-color: var(--mk-input-text-background-color);
-        border: 1px solid var(--mk-input-text-border-color);
+        border: var(--mk-input-text-border-width) solid var(--mk-input-text-border-color);
         border-radius: var(--mk-input-text-border-radius);
         transition:
             border-color var(--app-transition-duration-color),

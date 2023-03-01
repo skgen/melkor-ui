@@ -54,9 +54,12 @@
     --app-transition-duration-transform: var(--app-transition-duration-2);
 
     // Inputs
+    --app-input-border-radius: var(--app-border-radius);
+    --app-input-border-width: 1px;
+    --app-input-font-size: 1rem;
+    --app-input-opacity-disabled: 0.6;
     --app-input-padding-x: var(--app-m-2);
     --app-input-padding-y: var(--app-m-1);
-    --app-input-opacity-disabled: 0.6;
 
     // Layers
     --app-fullscreen-layer-order: 1000;
@@ -108,6 +111,7 @@
     --app-error-color-soft: rgb(var(--c-tone-red) / 0.05);
 
     // Inputs
+    --app-input-color: currentcolor;
     --app-input-background-color: var(--app-background-color-soft);
     --app-input-background-color-focus: var(--c-grey-98);
     --app-input-border-color: var(--app-border-color);
@@ -161,6 +165,7 @@
     --app-error-color-soft: rgb(var(--c-tone-red) / 0.1);
 
     // Inputs
+    --app-input-color: currentcolor;
     --app-input-background-color: var(--app-background-color-soft);
     --app-input-background-color-focus: var(--c-grey-3);
     --app-input-border-color: var(--app-border-color);

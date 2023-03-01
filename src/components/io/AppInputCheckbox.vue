@@ -41,7 +41,12 @@
 
               </transition-group>
             </div>
-            <span v-if="stateLabel(isChecked)">{{ stateLabel(isChecked) }}</span>
+            <span
+              v-if="stateLabel(isChecked)"
+              class="mk-AppInputCheckbox-option-label"
+            >
+              {{ stateLabel(isChecked) }}
+            </span>
           </div>
         </label>
         <AppInputHint v-if="props.hint">
@@ -101,18 +106,25 @@ function stateLabel(checked: boolean) {
 @import "@style/mixins";
 
 .mk-AppInputCheckbox {
+    --mk-input-checkbox-border-color: var(--app-border-color-highlight);
+    --mk-input-checkbox-border-radius: var(--app-input-border-radius);
+    --mk-input-checkbox-border-width: var(--app-input-border-width);
+    --mk-input-checkbox-color: var(--app-input-color);
     --mk-input-checkbox-color-active: var(--app-primary-color);
     --mk-input-checkbox-color-on-active: var(--app-text-color-on-primary);
-    --mk-input-checkbox-spacing: var(--app-m-1);
-    --mk-input-checkbox-size: 16px;
-    --mk-input-checkbox-target-padding: 1px;
+    --mk-input-checkbox-font-size: var(--app-input-font-size);
     --mk-input-checkbox-icon-size: calc(var(--mk-input-checkbox-size) - calc(var(--mk-input-checkbox-target-padding) * 2));
-    --mk-input-checkbox-border-color: var(--app-border-color-highlight);
-    --mk-input-checkbox-border-width: 1px;
+    --mk-input-checkbox-size: 16px;
+    --mk-input-checkbox-spacing: var(--app-m-1);
+    --mk-input-checkbox-target-padding: 1px;
 
     $this: &;
 
     display: inline-block;
+
+    input {
+        @include a11y-hidden;
+    }
 
     &-input {
         position: relative;
@@ -131,7 +143,7 @@ function stateLabel(checked: boolean) {
         height: var(--mk-input-checkbox-size);
         user-select: none;
         border: var(--mk-input-checkbox-border-width) solid var(--mk-input-checkbox-border-color);
-        border-radius: var(--app-border-radius);
+        border-radius: var(--mk-input-checkbox-border-radius);
         transition:
             background-color var(--app-transition-duration-background),
             border-color var(--app-transition-duration-color);
@@ -147,6 +159,13 @@ function stateLabel(checked: boolean) {
         }
     }
 
+    &-option {
+        &-label {
+            font-size: var(--mk-input-checkbox-font-size);
+            color: var(--mk-input-checkbox-color);
+        }
+    }
+
     .mk-AppIcon {
         &-enter-active,
         &-leave-active {
@@ -157,10 +176,6 @@ function stateLabel(checked: boolean) {
         &-leave-to {
             opacity: 0;
         }
-    }
-
-    input {
-        @include a11y-hidden;
     }
 
     &[data-has-icon="true"] {

@@ -140,10 +140,10 @@ useDropZone(dropZoneRef, handleDrop);
 @import "@style/mixins";
 
 .mk-AppInputFile {
-    --mk-input-file-border-color: var(--app-border-color);
-    --mk-input-file-dropzone-background-color: var(--app-background-color-soft);
-    --mk-input-file-dropzone-border-width: 1px;
-    --mk-input-file-dropzone-border-radius: var(--app-border-radius);
+    --mk-input-file-border-color: var(--app-input-border-color);
+    --mk-input-file-dropzone-background-color: var(--app-input-background-color);
+    --mk-input-file-dropzone-border-radius: var(--app-input-border-radius);
+    --mk-input-file-dropzone-border-width: var(--app-input-border-width);
 
     $this: &;
 

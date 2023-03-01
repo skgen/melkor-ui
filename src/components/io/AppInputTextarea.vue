@@ -99,11 +99,14 @@ function handleChange(evt: Event) {
 @import "@style/mixins";
 
 .mk-AppInputTextarea {
-    --mk-input-textarea-padding-x: var(--app-input-padding-x);
-    --mk-input-textarea-padding-y: var(--app-input-padding-y);
-    --mk-input-textarea-border-radius: var(--app-border-radius);
     --mk-input-textarea-background-color: var(--app-input-background-color);
     --mk-input-textarea-border-color: var(--app-input-border-color);
+    --mk-input-textarea-border-radius: var(--app-input-border-radius);
+    --mk-input-textarea-border-width: var(--app-input-border-width);
+    --mk-input-textarea-font-size: var(--app-input-font-size);
+    --mk-input-textarea-color: var(--app-input-icon-color);
+    --mk-input-textarea-padding-x: var(--app-input-padding-x);
+    --mk-input-textarea-padding-y: var(--app-input-padding-y);
     --mk-input-textarea-placeholder-color: var(--app-input-placeholder-color);
 
     $this: &;
@@ -113,9 +116,10 @@ function handleChange(evt: Event) {
     textarea {
         width: 100%;
         padding: var(--mk-input-textarea-padding-y) var(--mk-input-textarea-padding-x);
-        color: currentcolor;
+        font-size: var(--mk-input-textarea-font-size);
+        color: var(--mk-input-textarea-color);
         background-color: var(--mk-input-textarea-background-color);
-        border: 1px solid var(--mk-input-textarea-border-color);
+        border: var(--mk-input-textarea-border-width) solid var(--mk-input-textarea-border-color);
         border-radius: var(--mk-input-textarea-border-radius);
         outline: none;
         transition: border-color var(--app-transition-duration-color);

@@ -107,12 +107,14 @@ function handleChange(evt: Event) {
 @import "@style/mixins";
 
 .mk-AppInputRadio {
-    --mk-input-radio-spacing: var(--app-m-1);
-    --mk-input-radio-size: 16px;
-    --mk-input-radio-color-active: var(--app-primary-color);
     --mk-input-radio-border-color: var(--app-border-color-highlight);
-    --mk-input-radio-border-width: 1px;
+    --mk-input-radio-border-width: var(--app-input-border-width);
     --mk-input-radio-border-width-active: 4px;
+    --mk-input-radio-color: var(--app-input-color);
+    --mk-input-radio-color-active: var(--app-primary-color);
+    --mk-input-radio-font-size: var(--app-input-font-size);
+    --mk-input-radio-size: 16px;
+    --mk-input-radio-spacing: var(--app-m-1);
 
     $this: &;
 
@@ -120,19 +122,6 @@ function handleChange(evt: Event) {
 
     input {
         @include a11y-hidden;
-    }
-
-    &-target {
-        display: block;
-        flex: 0 0 var(--mk-input-radio-size);
-        width: var(--mk-input-radio-size);
-        height: var(--mk-input-radio-size);
-        user-select: none;
-        border: var(--mk-input-radio-border-width) solid var(--mk-input-radio-border-color);
-        border-radius: 50%;
-        transition:
-            border-width var(--app-transition-duration-color),
-            border-color var(--app-transition-duration-color);
     }
 
     &-input {
@@ -154,6 +143,26 @@ function handleChange(evt: Event) {
                     border-width: var(--mk-input-radio-border-width-active);
                 }
             }
+        }
+    }
+
+    &-target {
+        display: block;
+        flex: 0 0 var(--mk-input-radio-size);
+        width: var(--mk-input-radio-size);
+        height: var(--mk-input-radio-size);
+        user-select: none;
+        border: var(--mk-input-radio-border-width) solid var(--mk-input-radio-border-color);
+        border-radius: 50%;
+        transition:
+            border-width var(--app-transition-duration-color),
+            border-color var(--app-transition-duration-color);
+    }
+
+    &-option {
+        &-label {
+            font-size: var(--mk-input-radio-font-size);
+            color: var(--mk-input-radio-color);
         }
     }
 

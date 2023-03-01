@@ -13,22 +13,24 @@
       <div class="mk-AppInputPassword-input">
 
         <slot name="leading-icon" />
-        <input
-          :name="props.name"
-          :type="type"
-          :value="state.value"
-          :disabled="props.disabled"
-          @input="handleChange"
-          @focus="onFocus"
-          @blur="onBlur"
-        >
-        <button
-          class="mk-AppInputPassword-toggle"
-          :disabled="props.disabled"
-          @click="handleToggle"
-        >
-          <AppIcon :icon="icon" />
-        </button>
+        <div class="mk-AppInputPassword-input-inner">
+          <input
+            :name="props.name"
+            :type="type"
+            :value="state.value"
+            :disabled="props.disabled"
+            @input="handleChange"
+            @focus="onFocus"
+            @blur="onBlur"
+          >
+          <button
+            class="mk-AppInputPassword-toggle"
+            :disabled="props.disabled"
+            @click="handleToggle"
+          >
+            <AppIcon :icon="icon" />
+          </button>
+        </div>
 
         <slot name="trailing-icon" />
       </div>
@@ -110,12 +112,17 @@ function handleChange(evt: Event) {
 @import "@style/mixins";
 
 .mk-AppInputPassword {
-    --mk-input-password-padding-x: var(--app-input-padding-x);
-    --mk-input-password-padding-y: var(--app-input-padding-y);
-    --mk-input-password-border-radius: var(--app-border-radius);
     --mk-input-password-background-color: var(--app-input-background-color);
     --mk-input-password-border-color: var(--app-input-border-color);
+    --mk-input-password-border-radius: var(--app-input-border-radius);
+    --mk-input-password-border-width: var(--app-input-border-width);
+    --mk-input-password-color: var(--app-input-color);
+    --mk-input-password-font-size: var(--app-input-font-size);
+    --mk-input-password-icon-color: var(--app-input-icon-color);
     --mk-input-password-icon-size: 20px;
+    --mk-input-password-padding-x: var(--app-input-padding-x);
+    --mk-input-password-padding-y: var(--app-input-padding-y);
+    --mk-input-password-spacing: var(--app-input-padding-x);
 
     $this: &;
 
@@ -125,7 +132,8 @@ function handleChange(evt: Event) {
         flex: 1;
         width: 100%;
         padding: var(--mk-input-password-padding-y) 0;
-        color: currentcolor;
+        font-size: var(--mk-input-password-font-size);
+        color: var(--mk-input-password-color);
         background-color: transparent;
         border: none;
         outline: none;
@@ -133,16 +141,23 @@ function handleChange(evt: Event) {
 
     &-input {
         display: inline-flex;
-        gap: calc(var(--mk-input-password-padding-x) / 2);
+        gap: var(--mk-input-password-spacing);
         align-items: center;
         width: 100%;
         padding: 0 var(--mk-input-password-padding-x);
         background-color: var(--mk-input-password-background-color);
-        border: 1px solid var(--mk-input-password-border-color);
+        border: var(--mk-input-password-border-width) solid var(--mk-input-password-border-color);
         border-radius: var(--mk-input-password-border-radius);
         transition:
             border-color var(--app-transition-duration-color),
             opacity var(--app-transition-duration-opacity);
+
+        &-inner {
+            display: flex;
+            gap: calc(var(--mk-input-password-spacing) / 2);
+            align-items: center;
+            width: 100%;
+        }
 
         .mk-AppIcon {
             --mk-icon-size: var(--mk-input-password-icon-size);
