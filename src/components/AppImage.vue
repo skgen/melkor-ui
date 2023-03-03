@@ -5,11 +5,13 @@
     :data-ratio="ratio !== 'initial' || undefined"
     :data-fit="fit ?? undefined"
   >
-    <img
-      :src="props.src"
-      :alt="props.alt"
-      :title="props.title"
-    >
+    <div class="mk-AppImage-shape">
+      <img
+        :src="props.src"
+        :alt="props.alt"
+        :title="props.title"
+      >
+    </div>
   </div>
 </template>
 
@@ -56,10 +58,18 @@ const fit = computed(() => {
 
 <style lang="scss">
 .mk-AppImage {
+    $this: &;
+
     position: relative;
 
     &[data-ratio="true"] {
-        padding-top: v-bind("ratio");
+
+        #{$this} {
+            &-shape {
+                width: 100%;
+                padding-top: v-bind("ratio");
+            }
+        }
 
         img {
             position: absolute;
