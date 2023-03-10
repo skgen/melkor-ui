@@ -138,6 +138,7 @@ type Props = {
   indexRows?: boolean;
   sortableKeys?: TableKey<Value>[];
   hiddenKeys?: TableKey<Value>[];
+  activeColumn: TableHeader<Value, HeaderValue>['key'];
 };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -329,7 +330,8 @@ function isCurrentX(x: number) {
 }
 
 function isFilteredKey(key: keyof Value) {
-  return key === activeHeader.value?.value;
+  const refKey = isDef(props.activeColumn) ? props.activeColumn : activeHeader.value?.key;
+  return key === refKey;
 }
 
 function handleHeaderClick(header: TableHeader<Value, HeaderValue>) {
