@@ -17,6 +17,7 @@ export { default as AppAlert } from '@src/components/AppAlert.vue';
 export { default as AppImage } from '@src/components/AppImage.vue';
 export { default as AppIcon } from '@src/components/AppIcon.vue';
 export { default as AppThemeContext } from '@src/components/AppThemeContext.vue';
+export { default as AppInfiniteScroll } from '@src/components/AppInfiniteScroll.vue';
 
 export { default as AppInputCheckbox } from '@src/components/io/AppInputCheckbox.vue';
 export { default as AppInputCheckboxTree } from '@src/components/io/AppInputCheckboxTree.vue';

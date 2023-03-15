@@ -277,6 +277,18 @@ export enum FloatingPlacement {
   leftEnd = 'left-end',
 }
 
+// Infinite scroll
+
+export enum VerticalDirection {
+  top,
+  bottom,
+}
+
+export enum HorizontalDirection {
+  left,
+  right,
+}
+
 // Provide / inject keys
 
 export const configContextKey = Symbol('Inject key of melkor config') as InjectionKey<MelkorConfig>;
