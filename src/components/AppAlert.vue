@@ -93,17 +93,18 @@ const icon = computed(() => {
 
 <style lang="scss">
 .mk-AppAlert {
-    --mk-alert-color: var(--app-border-color);
     --mk-alert-background-color: var(--app-background-color);
+    --mk-alert-border-radius: calc(var(--app-border-radius) * 2);
+    --mk-alert-border-width: 1px;
+    --mk-alert-color: var(--app-border-color);
+    --mk-alert-icon-size: 24px;
     --mk-alert-padding-x: var(--app-m-3);
     --mk-alert-padding-y: var(--app-m-2);
-    --mk-alert-border-radius: calc(var(--app-border-radius) * 2);
-    --mk-alert-icon-size: 24px;
 
     display: block;
     padding: var(--mk-alert-padding-x) var(--mk-alert-padding-y);
     background-color: var(--mk-alert-background-color);
-    border: 1px solid var(--mk-alert-color);
+    border: var(--mk-alert-border-width) solid var(--mk-alert-color);
     border-radius: var(--mk-alert-border-radius);
 
     &-wrapper {
