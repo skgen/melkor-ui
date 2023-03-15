@@ -103,7 +103,6 @@ function handleTrigger(direction: VerticalDirection) {
   timeout = window.setTimeout(() => {
     prevHeight.value = scroller.value.scrollHeight;
     lastDirectionTrigger = direction;
-    console.log(`Trigger = ${VerticalDirection[lastDirectionTrigger]}`);
     emit('infinite', direction);
   }, 200);
 }
@@ -137,7 +136,6 @@ function createIntersectionObserver(direction: VerticalDirection) {
     (entries) => {
       const entry = entries[0];
       if (entry.isIntersecting) {
-        console.log('intersection');
         handleTrigger(direction);
       }
     },
