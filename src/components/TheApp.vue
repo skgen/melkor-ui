@@ -16,10 +16,10 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue';
 import TheFullscreenLayer from '@src/components/fullscreen/TheFullscreenLayer.vue';
 import TheFloatingLayer from '@src/components/floating/TheFloatingLayer.vue';
 import AppThemeContext from '@src/components/AppThemeContext.vue';
-import { computed } from 'vue';
 import { useThemeStore } from '@src/stores/theme';
 import type { ThemeInstance } from '@src/definition';
 

@@ -1,9 +1,11 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
-    "moduleResolution": "node",
     "skipLibCheck": true,
-    "types": ["node", "jsdom"],
+    "types": [
+      "node",
+      "jsdom"
+    ],
     "declaration": true,
     "isolatedModules": true,
     "strict": true,
@@ -11,8 +13,12 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["./src/*"],
-      "@style/*": ["./src/assets/scss/*"]
+      "@src/*": [
+        "./src/*"
+      ],
+      "@style/*": [
+        "./src/assets/scss/*"
+      ]
     },
     "lib": [
       "DOM",
@@ -21,9 +27,9 @@
     ],
   },
   "include": [
-    "env.d.ts", 
-    "src/**/*.ts", 
-    "src/**/*.d.ts", 
+    "env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
     "src/**/*.vue",
     "src/**/*.json",
   ],
