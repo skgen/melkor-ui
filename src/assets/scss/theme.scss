@@ -1,21 +1,16 @@
+@use "sass:math";
+
 @mixin app-root-theme() {
     // Grey nuances
     --c-white: #fff;
+
+    @for $i from 99 through 1 {
+        $gscale: #{$i * math.div(255, 100)};
+
+        --c-grey-#{$i}: rgb(#{$gscale}, #{$gscale}, #{$gscale});
+    }
+
     --c-black: #000;
-    --c-grey-99: #fcfcfc;
-    --c-grey-98: #f9f9f9;
-    --c-grey-95: #f2f2f2;
-    --c-grey-90: #e6e6e6;
-    --c-grey-80: #ccc;
-    --c-grey-70: #b3b3b3;
-    --c-grey-60: #999;
-    --c-grey-50: #808080;
-    --c-grey-40: #666;
-    --c-grey-30: #4d4d4d;
-    --c-grey-20: #333;
-    --c-grey-12: #1e1e1e;
-    --c-grey-5: #0d0d0d;
-    --c-grey-3: #080808;
 
     // Tone colors
     --c-tone-red: 255 71 77;
