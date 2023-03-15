@@ -15,7 +15,10 @@
           <AppTableCell
             v-if="!isHiddenKey(header.key)"
             header
-            :data-filtered="isFilteredKey(header.key)"
+            :x-key="header.key"
+            :x="index"
+            :y="-1"
+            :is-filtered-x="isFilteredKey(header.key)"
             @click="() => isSortable(header.key) ? handleHeaderClick(header) : void 0"
           >
             <slot
@@ -425,7 +428,7 @@ function getCellState(pos: CellPos) {
 
         &-entry {
             display: flex;
-            gap: 5px;
+            gap: var(--app-m-1);
             align-items: center;
 
             .mk-AppIcon {
