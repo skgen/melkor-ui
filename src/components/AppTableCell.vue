@@ -110,7 +110,7 @@ const { theme } = useTheme();
         background-color: var(--mk-table-cell-header-background-color);
         border-color: var(--mk-table-cell-header-border-color);
 
-        &[data-filtered="true"] {
+        &[data-is-filtered-x="true"] {
             background-color: var(--mk-table-cell-header-background-color-highlighted);
             border-bottom-color: var(--mk-table-cell-border-color);
         }
