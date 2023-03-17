@@ -1,14 +1,14 @@
 import type { ComputedRef, InjectionKey, WritableComputedRef } from 'vue';
 import type { FileType } from '@src/lib/modules/file';
+import type { MelkorConfig } from '@src/plugin';
 
-export type MelkorConfig = {
-  i18n: {
-    active: boolean;
-  };
-  router: {
-    active: boolean;
-  };
-};
+// Helpers
+
+export type NonArray<T> = T extends (infer U)[] ? U : T;
+
+export type RecursiveRequired<T> = Required<{
+  [P in keyof T]: T[P] extends object | undefined ? RecursiveRequired<Required<T[P]>> : T[P];
+}>;
 
 // Theme
 
@@ -219,9 +219,6 @@ export type FileInputOptions = InputOptions<FileInputValue> & {
 
 // Misc
 
-// export type NonArray<T, D> = T extends D[] ? never : T;
-export type NonArray<T> = T extends (infer U)[] ? U : T;
-
 export type FileModel = {
   name: string | null;
   url: string | null;
@@ -287,6 +284,13 @@ export enum VerticalDirection {
 export enum HorizontalDirection {
   left,
   right,
+}
+
+// Icons
+
+export enum IconShape {
+  rounded,
+  sharp,
 }
 
 // Provide / inject keys

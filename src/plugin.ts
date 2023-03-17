@@ -8,15 +8,49 @@ import registerDirectives from '@src/registerDirectives';
 import { setLocales } from '@src/lib/modules/i18n';
 import { registerFloatingConfig } from '@src/plugins/floating';
 import { getPreferedTheme, setDocumentTheme, setThemes } from '@src/lib/modules/theme';
-import { configContextKey, type MelkorConfig } from '@src/definition';
+import {
+  configContextKey, IconShape, type RecursiveRequired,
+} from '@src/definition';
 import { createI18n } from 'vue-i18n';
 import defaultI18nKeys from '@src/assets/i18n/default.json';
+import merge from 'lodash/merge';
+
+type IconOptions = {
+  shape?: IconShape;
+};
 
 export type PluginOptions = {
   router: Router | null;
   i18n: I18n | null;
   debug: boolean;
   themes: string[];
+  components?: {
+    icon?: IconOptions;
+  };
+};
+
+type RequiredPluginOptions = RecursiveRequired<PluginOptions>;
+
+const defaultOptions: RequiredPluginOptions = {
+  router: null,
+  i18n: null,
+  debug: false,
+  themes: [],
+  components: {
+    icon: {
+      shape: IconShape.rounded,
+    },
+  },
+};
+
+export type MelkorConfig = {
+  i18n: {
+    active: boolean;
+  };
+  router: {
+    active: boolean;
+  };
+  components: RequiredPluginOptions['components'];
 };
 
 let debugMode = false;
@@ -26,17 +60,7 @@ export function isDebugMode() {
 }
 
 export default (options?: Partial<PluginOptions>) => {
-  const defaultOptions: PluginOptions = {
-    router: null,
-    i18n: null,
-    debug: false,
-    themes: [],
-  };
-
-  const pluginOptions: PluginOptions = options ? {
-    ...defaultOptions,
-    ...options,
-  } : defaultOptions;
+  const pluginOptions: RequiredPluginOptions = options ? merge(merge({}, defaultOptions), options) : defaultOptions;
 
   debugMode = pluginOptions.debug;
 
@@ -45,6 +69,7 @@ export default (options?: Partial<PluginOptions>) => {
       const melkorConfig: MelkorConfig = {
         i18n: { active: false },
         router: { active: false },
+        components: pluginOptions.components,
       };
       // eslint-disable-next-line no-param-reassign
       app.config.globalProperties.$melkor = melkorConfig;

@@ -55,9 +55,9 @@
 </template>
 
 <script lang="ts" setup>
+import useGlobalConfig from '@src/composables/useGlobalConfig';
 import useTheme from '@src/composables/useTheme';
-import { configContextKey } from '@src/definition';
-import { computed, inject } from 'vue';
+import { computed } from 'vue';
 
 type Props = {
   to?: string;
@@ -70,10 +70,10 @@ const props = defineProps<Props>();
 
 const { theme } = useTheme();
 
-const config = inject(configContextKey);
+const config = useGlobalConfig();
 
 const isRelative = computed(() => {
-  if (!config?.router.active) {
+  if (!config.router.active) {
     return false;
   }
   return (props.to ? !/^(http:\/\/|https:\/\/|file:\/\/|tel:|mailto:)/i.test(props.to) : false);
