@@ -70,13 +70,13 @@ import useTheme from '@src/composables/useTheme';
 import { isValue } from '@src/lib/modules/definition';
 
 type Props = {
-  page: number;
+  modelValue: number;
   range: [number, number];
   gap?: number;
 };
 
 type Emits = {
-  (event: 'click', page: number): void;
+  (event: 'update:modelValue', page: number): void;
 };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -89,21 +89,21 @@ const { theme } = useTheme();
 const {
   page, blocks, firstPage, lastPage,
 } = usePagination(reactive({
-  page: computed(() => props.page),
+  page: computed(() => props.modelValue),
   range: computed(() => props.range),
   gap: computed(() => props.gap),
 }));
 
 function handlePrev() {
-  emit('click', page.value - 1);
+  emit('update:modelValue', page.value - 1);
 }
 
 function handleNext() {
-  emit('click', page.value + 1);
+  emit('update:modelValue', page.value + 1);
 }
 
 function handlePage(pageNumber: number) {
-  emit('click', pageNumber);
+  emit('update:modelValue', pageNumber);
 }
 
 </script>
@@ -227,7 +227,6 @@ function handlePage(pageNumber: number) {
         padding: 0;
         border-top: var(--mk-pagination-border-width) solid var(--mk-pagination-border-color);
         border-bottom: var(--mk-pagination-border-width) solid var(--mk-pagination-border-color);
-        transition: border-color var(--mk-pagination-transition-duration);
     }
 }
 </style>
