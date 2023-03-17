@@ -3,20 +3,23 @@
     v-theme="theme"
     class="mk-AppIcon"
     :data-fill="props.fill || undefined"
-    :data-round="props.round || undefined"
+    :data-shape="shape"
   >
     {{ props.icon }}
   </span>
 </template>
 
 <script lang="ts" setup>
+import useGlobalConfig from '@src/composables/useGlobalConfig';
 import useTheme from '@src/composables/useTheme';
+import { IconShape } from '@src/definition';
 import { computed } from 'vue';
 
 type Props = {
   icon: string;
   fill?: boolean;
-  round?: boolean;
+  rounded?: boolean;
+  sharp?: boolean;
 };
 
 const props = defineProps<Props>();
@@ -24,6 +27,21 @@ const props = defineProps<Props>();
 const fillSetting = computed(() => (props.fill ? 1 : 0));
 
 const { theme } = useTheme();
+
+const config = useGlobalConfig();
+
+const shape = computed(() => {
+  if (props.rounded) {
+    return 'rounded';
+  }
+  if (props.sharp) {
+    return 'sharp';
+  }
+  if (config.components.icon.shape === IconShape.sharp) {
+    return 'sharp';
+  }
+  return 'rounded';
+});
 </script>
 
 <style lang="scss">
@@ -34,7 +52,6 @@ const { theme } = useTheme();
     --mk-icon-weight: 400;
 
     display: inline-block;
-    font-family: "Material Symbols Outlined", sans-serif;
     font-size: var(--mk-icon-size);
     font-variation-settings: "FILL" v-bind(fillSetting), "wght" var(--mk-icon-weight);
     font-style: normal;
@@ -49,8 +66,12 @@ const { theme } = useTheme();
     direction: ltr;
     -webkit-font-smoothing: antialiased;
 
-    &[data-round="true"] {
+    &[data-shape="rounded"] {
         font-family: "Material Symbols Rounded", sans-serif;
+    }
+
+    &[data-shape="sharp"] {
+        font-family: "Material Symbols Sharp", sans-serif;
     }
 }
 </style>
