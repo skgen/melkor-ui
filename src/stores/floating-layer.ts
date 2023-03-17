@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { setElementTheme } from '@src/lib/modules/theme';
-import { isObject, isString } from 'lodash';
+import isObject from 'lodash/isObject';
+import isString from 'lodash/isString';
 import styleToObject from 'style-to-object';
 import { isValue } from '@src/lib/modules/definition';
 

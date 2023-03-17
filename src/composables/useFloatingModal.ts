@@ -3,7 +3,7 @@ import useTheme from '@src/composables/useTheme';
 import {
   onUnmounted, onUpdated, ref, useAttrs, watch, type DefineComponent, type Ref,
 } from 'vue';
-import { clone } from 'lodash';
+import clone from 'lodash/clone';
 
 type HookParams = {
   // eslint-disable-next-line @typescript-eslint/ban-types

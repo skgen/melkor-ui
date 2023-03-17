@@ -11,7 +11,7 @@
 import { computed, provide } from 'vue';
 import useTheme from '@src/composables/useTheme';
 import { tabsContextKey } from '@src/definition';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
 type Props = {
   modelValue: unknown;
