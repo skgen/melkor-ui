@@ -11,6 +11,8 @@ export { default as AppThemeToggle } from '@src/components/AppThemeToggle.vue';
 export { default as AppTabs } from '@src/components/AppTabs.vue';
 export { default as AppTab } from '@src/components/AppTab.vue';
 export { default as AppTable } from '@src/components/AppTable.vue';
+export { default as AppTableRow } from '@src/components/AppTableRow.vue';
+export { default as AppTableCell } from '@src/components/AppTableCell.vue';
 export { default as AppWysiwygPreview } from '@src/components/AppWysiwygPreview.vue';
 export { default as AppSkeleton } from '@src/components/AppSkeleton.vue';
 export { default as AppAlert } from '@src/components/AppAlert.vue';
