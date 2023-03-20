@@ -7,7 +7,11 @@
       v-if="isValue(renderHeaders) && renderHeaders.length > 0"
       class="mk-AppTable-head"
     >
-      <AppTableRow :is-current="getIsCurrentRow(-1)">
+      <AppTableRow
+        :y="-1"
+        :is-odd="-1 % 2 !== 0"
+        :is-current="getIsCurrentRow(-1)"
+      >
         <template
           v-for="(header, index) in renderHeaders"
           :key="header.key"
@@ -52,6 +56,8 @@
       <AppTableRow
         v-for="(item, y) in renderItems"
         :key="y"
+        :y="y"
+        :is-odd="y % 2 !== 0"
         :is-current="getIsCurrentRow(y)"
       >
         <template
@@ -179,12 +185,6 @@ const keys = computed<TableKey<Value>[]>(() => {
     ...trailingInternalKeys,
   ];
 });
-
-const templateColumns = computed(
-  () => Array(keys.value.filter((key) => !props.hiddenKeys.includes(key)).length)
-    .fill('auto')
-    .join(' '),
-);
 
 const renderHeaders = computed(() => {
   const { headers } = props;
@@ -426,16 +426,9 @@ watch(currentCell, (newCurrentCell) => {
 
 <style lang="scss">
 .mk-AppTable {
-    display: grid;
-    grid-template-columns: v-bind(templateColumns);
     width: 100%;
-    min-width: 100%;
+    height: 1px;
     border-collapse: collapse;
-
-    &-head,
-    &-body {
-        display: contents;
-    }
 
     &-head {
         &-text {

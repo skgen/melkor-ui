@@ -2,7 +2,10 @@
   <tr
     v-theme="theme"
     class="mk-AppTableRow"
+    :data-header="props.header || undefined"
+    :data-y="props.y ?? undefined"
     :data-is-current="props.isCurrent || undefined"
+    :data-is-odd="props.isOdd|| undefined"
   >
     <slot />
   </tr>
@@ -12,7 +15,10 @@
 import useTheme from '@src/composables/useTheme';
 
 type Props = {
-  isCurrent? : boolean;
+  header?: boolean;
+  y?: number;
+  isCurrent?: boolean;
+  isOdd?: boolean;
 };
 
 const props = defineProps<Props>();
@@ -20,12 +26,3 @@ const props = defineProps<Props>();
 const { theme } = useTheme();
 
 </script>
-
-<style lang="scss">
-.mk-AppTableRow {
-    display: contents;
-
-    // &[data-is-current="true"] {
-    // }
-}
-</style>

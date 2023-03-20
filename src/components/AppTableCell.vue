@@ -18,7 +18,9 @@
     :data-is-left-target="props.isLeftTarget || undefined"
     :data-is-odd="props.isOdd|| undefined"
   >
-    <slot />
+    <div class="mk-AppTableCell-content">
+      <slot />
+    </div>
   </td>
 </template>
 
@@ -97,24 +99,40 @@ const { theme } = useTheme();
 
     $this: &;
 
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding: var(--app-m-1) var(--app-m-2);
-    background-color: var(--mk-table-cell-background-color);
+    padding: 0;
     border-bottom: 1px solid var(--mk-table-cell-border-color);
+
+    &-content {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: var(--app-m-1) var(--app-m-2);
+        background-color: var(--mk-table-cell-background-color);
+    }
 
     & + & {
         border-left: 1px solid var(--mk-table-cell-border-color);
     }
 
     &[data-header="true"] {
-        background-color: var(--mk-table-cell-header-background-color);
-        border-color: var(--mk-table-cell-header-border-color);
+
+        #{$this} {
+            border-color: var(--mk-table-cell-header-border-color);
+
+            &-content {
+                background-color: var(--mk-table-cell-header-background-color);
+            }
+        }
 
         &[data-is-filtered-x="true"] {
-            background-color: var(--mk-table-cell-header-background-color-highlighted);
             border-bottom-color: var(--mk-table-cell-border-color);
+
+            #{$this} {
+                &-content {
+                    background-color: var(--mk-table-cell-header-background-color-highlighted);
+                }
+            }
         }
 
         &:hover {
@@ -123,13 +141,22 @@ const { theme } = useTheme();
     }
 
     &[data-is-odd="true"] {
-        background-color: var(--mk-table-cell-row-odd-background-color);
+
+        #{$this} {
+            &-content {
+                background-color: var(--mk-table-cell-row-odd-background-color);
+            }
+        }
     }
 
     &[data-is-current-y="true"] {
-        // background-color: yellow;
-        background-color: var(--mk-table-cell-background-color-highlighted);
         border-color: var(--mk-table-cell-border-color-highlighted);
+
+        #{$this} {
+            &-content {
+                background-color: var(--mk-table-cell-background-color-highlighted);
+            }
+        }
     }
 
     // &[data-is-current-x="true"] {
@@ -139,30 +166,39 @@ const { theme } = useTheme();
     // }
 
     &[data-is-filtered-x="true"] {
-        background-color: var(--mk-table-cell-background-color-highlighted);
+        #{$this} {
+            &-content {
+                background-color: var(--mk-table-cell-background-color-highlighted);
+            }
+        }
     }
 
     // &[data-has-target="true"] {
     // }
 
     &[data-is-target="true"] {
-        background-color: var(--mk-table-cell-background-color-active);
         border-color: var(--mk-table-cell-border-color);
 
-        &::before {
-            @include pseudo;
+        #{$this} {
+            &-content {
+                background-color: var(--mk-table-cell-background-color-active);
 
-            top: -1px;
-            right: -1px;
-            bottom: -1px;
-            left: -1px;
-            z-index: 1;
-            border: 1px solid var(--mk-table-cell-border-color-active);
+                &::before {
+                    @include pseudo;
+
+                    top: -1px;
+                    right: -1px;
+                    bottom: -1px;
+                    left: -1px;
+                    z-index: 1;
+                    pointer-events: none;
+                    border: 1px solid var(--mk-table-cell-border-color-active);
+                }
+            }
         }
     }
 
     &[data-is-top-target="true"] {
-        // background-color: lime;
         border-bottom-color: var(--mk-table-cell-border-color);
     }
 
