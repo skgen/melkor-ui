@@ -63,35 +63,37 @@ const { theme } = useTheme();
 .mk-AppTableCell {
     @include light {
         // Cell
-        --mk-table-cell-border-color-highlighted: rgb(var(--app-primary-tone-color) / 0.2);
-        --mk-table-cell-border-color-active: rgb(var(--app-primary-tone-color) / 0.4);
-        --mk-table-cell-background-color-highlighted: rgb(var(--app-primary-tone-color) / 0.05);
         --mk-table-cell-background-color-active: rgb(var(--app-primary-tone-color) / 0.1);
+        --mk-table-cell-background-color-highlighted: rgb(var(--app-primary-tone-color) / 0.05);
+        --mk-table-cell-border-color-active: rgb(var(--app-primary-tone-color) / 0.4);
+        --mk-table-cell-border-color-highlighted: rgb(var(--app-primary-tone-color) / 0.2);
 
         // Header
-        --mk-table-cell-header-border-color: var(--c-grey-70);
         --mk-table-cell-header-background-color-highlighted: rgb(var(--app-primary-tone-color) / 0.15);
+        --mk-table-cell-header-border-color: var(--c-grey-70);
     }
 
     @include dark {
         // Cell
-        --mk-table-cell-border-color-highlighted: rgb(var(--app-primary-tone-color) / 0.4);
-        --mk-table-cell-border-color-active: rgb(var(--app-primary-tone-color) / 0.5);
-        --mk-table-cell-background-color-highlighted: rgb(var(--app-primary-tone-color) / 0.2);
         --mk-table-cell-background-color-active: rgb(var(--app-primary-tone-color) / 0.35);
+        --mk-table-cell-background-color-highlighted: rgb(var(--app-primary-tone-color) / 0.2);
+        --mk-table-cell-border-color-active: rgb(var(--app-primary-tone-color) / 0.5);
+        --mk-table-cell-border-color-highlighted: rgb(var(--app-primary-tone-color) / 0.4);
 
         // Header
-        --mk-table-cell-header-border-color: var(--c-grey-50);
         --mk-table-cell-header-background-color-highlighted: rgb(var(--app-primary-tone-color) / 0.3);
+        --mk-table-cell-header-border-color: var(--c-grey-50);
     }
 
     // Cell
-    --mk-table-cell-border-color: var(--app-border-color);
     --mk-table-cell-background-color: var(--app-background-color);
-    --mk-table-cell-row-odd-background-color: var(--app-background-color-soft);
+    --mk-table-cell-border-color: var(--app-border-color);
 
     // Header
     --mk-table-cell-header-background-color: var(--app-background-color-highlight);
+
+    // Row
+    --mk-table-cell-row-odd-background-color: var(--app-background-color-soft);
 
     $this: &;
 
