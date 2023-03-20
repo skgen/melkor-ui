@@ -7,7 +7,7 @@
       v-if="isValue(renderHeaders) && renderHeaders.length > 0"
       class="mk-AppTable-head"
     >
-      <AppTableRow>
+      <AppTableRow :is-current="getIsCurrentRow(-1)">
         <template
           v-for="(header, index) in renderHeaders"
           :key="header.key"
@@ -52,6 +52,7 @@
       <AppTableRow
         v-for="(item, y) in renderItems"
         :key="y"
+        :is-current="getIsCurrentRow(y)"
       >
         <template
           v-for="(key, x) in keys"
@@ -98,7 +99,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import AppTableRow from '@src/components/AppTableRow.vue';
 import AppTableCell from '@src/components/AppTableCell.vue';
 import {
@@ -117,6 +118,8 @@ type HeaderValue = unknown;
 
 // x, y, key
 type CellPos = [number, number, keyof Value];
+// y, key
+type RowPos = number;
 
 type CellState = {
   isCurrent: boolean;
@@ -141,13 +144,14 @@ type Props = {
   indexRows?: boolean;
   sortableKeys?: TableKey<Value>[];
   hiddenKeys?: TableKey<Value>[];
-  activeColumn: TableHeader<Value, HeaderValue>['key'];
+  activeColumn?: TableHeader<Value, HeaderValue>['key'];
 };
 
 const props = withDefaults(defineProps<Props>(), {
   headers: undefined,
   sortableKeys: () => [],
   hiddenKeys: () => [],
+  activeColumn: undefined,
 });
 
 const { theme } = useTheme();
@@ -209,6 +213,7 @@ const activeHeader = computed(() => {
 });
 
 const currentCell = ref<CellPos | null>(null);
+const currentRow = ref<RowPos | null>(null);
 
 type EnhancedItem = TableItemLeadingKeys & TableItemTrailingKeys & Value;
 
@@ -374,8 +379,6 @@ const stateMatrix = computed<StateMatrix>(() => {
   const matrix: StateMatrix = {};
   const target = getTarget();
   for (let y = 0; y < renderItems.value.length; y += 1) {
-    // const row = renderItems.value[y];
-    // const itemKeys = Object.keys(row);
     for (let x = 0; x < keys.value.length; x += 1) {
       const key = keys.value[x];
       const pos: CellPos = [x, y, key];
@@ -405,6 +408,19 @@ const stateMatrix = computed<StateMatrix>(() => {
 function getCellState(pos: CellPos) {
   return stateMatrix.value[stateMatrixKey(pos)];
 }
+
+function getIsCurrentRow(y: number) {
+  return currentRow.value === y;
+}
+
+watch(currentCell, (newCurrentCell) => {
+  if (!isValue(newCurrentCell)) {
+    currentRow.value = null;
+  } else {
+    // eslint-disable-next-line prefer-destructuring
+    currentRow.value = newCurrentCell[1];
+  }
+});
 
 </script>
 
