@@ -156,6 +156,7 @@ const { theme } = useTheme();
             right: -1px;
             bottom: -1px;
             left: -1px;
+            z-index: 1;
             border: 1px solid var(--mk-table-cell-border-color-active);
         }
     }
