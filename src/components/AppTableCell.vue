@@ -90,6 +90,8 @@ const { theme } = useTheme();
     // Cell
     --mk-table-cell-background-color: var(--app-background-color);
     --mk-table-cell-border-color: var(--app-border-color);
+    --mk-table-cell-padding-x: var(--app-m-2);
+    --mk-table-cell-padding-y: var(--app-m-1);
 
     // Header
     --mk-table-cell-header-background-color: var(--app-background-color-highlight);
@@ -107,7 +109,7 @@ const { theme } = useTheme();
         display: flex;
         align-items: center;
         height: 100%;
-        padding: var(--app-m-1) var(--app-m-2);
+        padding: var(--mk-table-cell-padding-y) var(--mk-table-cell-padding-x);
         background-color: var(--mk-table-cell-background-color);
     }
 
