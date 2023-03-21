@@ -239,8 +239,29 @@ export type TableKey<TValue extends Record<string, unknown>> = (keyof (TValue & 
 
 export type TableHeader<TValue extends Record<string, unknown>, T> = {
   [key:string]: unknown;
-  value: T;
+  value?: T;
   key: keyof TValue;
+};
+
+export type TableDraggableOptions<TValue extends Record<string, unknown>> = {
+  itemKey: TableKey<TValue>;
+  handle?: string;
+};
+
+// Table Cell
+export type CellState = {
+  isCurrent: boolean;
+  isCurrentX: boolean;
+  isCurrentY: boolean;
+  isFilteredX: boolean;
+  isTarget: boolean;
+  hasTarget: boolean;
+  isTopTarget: boolean;
+  isRightTarget: boolean;
+  isBottomTarget: boolean;
+  isLeftTarget: boolean;
+  isOdd: boolean;
+  isHidden: boolean;
 };
 
 /* Props duplication for export => https://github.com/vuejs/core/issues/4294 */

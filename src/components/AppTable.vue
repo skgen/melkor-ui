@@ -49,70 +49,134 @@
         </template>
       </AppTableRow>
     </thead>
-    <tbody
-      v-if="renderItems.length > 0"
-      class="mk-AppTable-body"
-    >
-      <AppTableRow
-        v-for="(item, y) in renderItems"
-        :key="y"
-        :y="y"
-        :is-odd="y % 2 !== 0"
-        :is-current="getIsCurrentRow(y)"
+    <template v-if="renderItems.length > 0">
+      <tbody
+        v-if="!props.draggable"
+        class="mk-AppTable-body"
       >
-        <template
-          v-for="(key, x) in keys"
-          :key="x"
+        <AppTableRow
+          v-for="(item, y) in renderItems"
+          :key="y"
+          :y="y"
+          :is-odd="y % 2 !== 0"
+          :is-current="getIsCurrentRow(y)"
         >
-          <AppTableCell
-            v-if="!getCellState([x, y, key]).isHidden"
-            :x-key="key"
-            :x="x"
-            :y="y"
-            :is-current="getCellState([x, y, key]).isCurrent"
-            :is-current-x="getCellState([x, y, key]).isCurrentX"
-            :is-current-y="getCellState([x, y, key]).isCurrentY"
-            :is-filtered-x="getCellState([x, y, key]).isFilteredX"
-            :is-target="getCellState([x, y, key]).isTarget"
-            :has-target="getCellState([x, y, key]).hasTarget"
-            :is-top-target="getCellState([x, y, key]).isTopTarget"
-            :is-right-target="getCellState([x, y, key]).isRightTarget"
-            :is-bottom-target="getCellState([x, y, key]).isBottomTarget"
-            :is-left-target="getCellState([x, y, key]).isLeftTarget"
-            :is-odd="getCellState([x, y, key]).isOdd"
-            @mouseover="() => handleMouseOverCell([x, y, key])"
-            @mouseleave="() => handleMouseLeaveCell([x, y, key])"
+          <template
+            v-for="(key, x) in keys"
+            :key="x"
           >
-            <slot
-              :name="key"
-              :value="item[key]"
-              :pos="{ x, y, key}"
-              :entry="item"
-            />
-            <template v-if="!$slots[key]">
-              <template v-if="key === '__index'">
-                {{ (item[key] as number) + 1 }}
+            <AppTableCell
+              v-if="!getCellState([x, y, key]).isHidden"
+              :x-key="key"
+              :x="x"
+              :y="y"
+              :is-current="getCellState([x, y, key]).isCurrent"
+              :is-current-x="getCellState([x, y, key]).isCurrentX"
+              :is-current-y="getCellState([x, y, key]).isCurrentY"
+              :is-filtered-x="getCellState([x, y, key]).isFilteredX"
+              :is-target="getCellState([x, y, key]).isTarget"
+              :has-target="getCellState([x, y, key]).hasTarget"
+              :is-top-target="getCellState([x, y, key]).isTopTarget"
+              :is-right-target="getCellState([x, y, key]).isRightTarget"
+              :is-bottom-target="getCellState([x, y, key]).isBottomTarget"
+              :is-left-target="getCellState([x, y, key]).isLeftTarget"
+              :is-odd="getCellState([x, y, key]).isOdd"
+              @mouseover="() => handleMouseOverCell([x, y, key])"
+              @mouseleave="() => handleMouseLeaveCell([x, y, key])"
+            >
+              <slot
+                :name="key"
+                :value="item[key]"
+                :pos="{ x, y, key}"
+                :entry="item"
+              />
+              <template v-if="!$slots[key]">
+                <template v-if="key === '__index'">
+                  {{ (item[key] as number) + 1 }}
+                </template>
+                <template v-else>
+                  {{ item[key] }}
+                </template>
               </template>
-              <template v-else>
-                {{ item[key] }}
-              </template>
+            </AppTableCell>
+          </template>
+        </AppTableRow>
+      </tbody>
+      <Draggable
+        v-else
+        :list="renderItems"
+        tag="tbody"
+        class="mk-AppTable-body"
+        :item-key="props.draggable.itemKey.toString()"
+        :handle="props.draggable.handle"
+        @start="handleDragStart"
+        @end="handleDragEnd"
+        @change="handleDragChange"
+      >
+        <template #item="{element: item, index: y}">
+          <AppTableRow
+            :key="y"
+            :y="y"
+            :is-odd="y % 2 !== 0"
+            :is-current="getIsCurrentRow(y)"
+            :is-draggable="!isValue(props.draggable.handle)"
+          >
+            <template
+              v-for="(key, x) in keys"
+              :key="x"
+            >
+              <AppTableCell
+                v-if="!getCellState([x, y, key]).isHidden"
+                :x-key="key"
+                :x="x"
+                :y="y"
+                :is-current="getCellState([x, y, key]).isCurrent"
+                :is-current-x="getCellState([x, y, key]).isCurrentX"
+                :is-current-y="getCellState([x, y, key]).isCurrentY"
+                :is-filtered-x="getCellState([x, y, key]).isFilteredX"
+                :is-target="getCellState([x, y, key]).isTarget"
+                :has-target="getCellState([x, y, key]).hasTarget"
+                :is-top-target="getCellState([x, y, key]).isTopTarget"
+                :is-right-target="getCellState([x, y, key]).isRightTarget"
+                :is-bottom-target="getCellState([x, y, key]).isBottomTarget"
+                :is-left-target="getCellState([x, y, key]).isLeftTarget"
+                :is-odd="getCellState([x, y, key]).isOdd"
+                @mouseover="() => handleMouseOverCell([x, y, key])"
+                @mouseleave="() => handleMouseLeaveCell([x, y, key])"
+              >
+                <slot
+                  :name="key"
+                  :value="item[key]"
+                  :pos="{ x, y, key}"
+                  :entry="item"
+                />
+                <template v-if="!$slots[key]">
+                  <template v-if="key === '__index'">
+                    {{ (item[key] as number) + 1 }}
+                  </template>
+                  <template v-else>
+                    {{ item[key] }}
+                  </template>
+                </template>
+              </AppTableCell>
             </template>
-          </AppTableCell>
+          </AppTableRow>
         </template>
-      </AppTableRow>
-    </tbody>
+      </Draggable>
+    </template>
   </table>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed, watch } from 'vue';
+import Draggable from 'vuedraggable';
 import AppTableRow from '@src/components/AppTableRow.vue';
 import AppTableCell from '@src/components/AppTableCell.vue';
 import {
   isDef, isNumber, isString, isValue,
 } from '@src/lib/modules/definition';
 import type {
-  TableHeader, TableKey, TableItemLeadingKeys, TableItemTrailingKeys,
+  TableHeader, TableKey, TableItemLeadingKeys, TableItemTrailingKeys, TableDraggableOptions,
 } from '@src/definition';
 import useTheme from '@src/composables/useTheme';
 
@@ -151,6 +215,11 @@ type Props = {
   sortableKeys?: TableKey<Value>[];
   hiddenKeys?: TableKey<Value>[];
   activeColumn?: TableHeader<Value, HeaderValue>['key'];
+  draggable?: TableDraggableOptions<Value>;
+};
+
+type Emits = {
+  (event: 'update:items', items: Value[]): void;
 };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -158,7 +227,10 @@ const props = withDefaults(defineProps<Props>(), {
   sortableKeys: () => [],
   hiddenKeys: () => [],
   activeColumn: undefined,
+  draggable: undefined,
 });
+
+const emit = defineEmits<Emits>();
 
 const { theme } = useTheme();
 
@@ -170,6 +242,8 @@ const leadingInternalKeys = computed(() => {
   return keys;
 });
 const trailingInternalKeys: (keyof TableItemTrailingKeys)[] = [];
+
+const isDragging = ref(false);
 
 const keys = computed<TableKey<Value>[]>(() => {
   let headerKeys: TableKey<Value>[] = [];
@@ -357,10 +431,16 @@ function handleHeaderClick(header: TableHeader<Value, HeaderValue>) {
 }
 
 function handleMouseOverCell(pos: CellPos) {
+  if (isDragging.value) {
+    return;
+  }
   currentCell.value = pos;
 }
 
 function handleMouseLeaveCell(pos: CellPos) {
+  if (isDragging.value) {
+    return;
+  }
   if (isValue(currentCell.value) && isCell(pos, currentCell.value)) {
     currentCell.value = null;
   }
@@ -421,6 +501,24 @@ watch(currentCell, (newCurrentCell) => {
     currentRow.value = newCurrentCell[1];
   }
 });
+
+function handleDragChange(params: { moved: { element: Value; newIndex: number; oldIndex: number } }) {
+  const { moved } = params;
+  const { element, newIndex, oldIndex } = moved;
+  const orderedItems = [...props.items];
+  orderedItems.splice(oldIndex, 1);
+  orderedItems.splice(newIndex, 0, element);
+  emit('update:items', orderedItems);
+}
+
+function handleDragStart() {
+  isDragging.value = true;
+  currentCell.value = null;
+}
+
+function handleDragEnd() {
+  isDragging.value = false;
+}
 
 </script>
 

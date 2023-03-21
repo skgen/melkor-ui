@@ -21,6 +21,7 @@ export { default as AppIcon } from '@src/components/AppIcon.vue';
 export { default as AppThemeContext } from '@src/components/AppThemeContext.vue';
 export { default as AppInfiniteScroll } from '@src/components/AppInfiniteScroll.vue';
 export { default as AppPagination } from '@src/components/AppPagination.vue';
+export { default as AppDraggable } from 'vuedraggable';
 
 export { default as AppInputCheckbox } from '@src/components/io/AppInputCheckbox.vue';
 export { default as AppInputCheckboxTree } from '@src/components/io/AppInputCheckboxTree.vue';

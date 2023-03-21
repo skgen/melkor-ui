@@ -6,6 +6,7 @@
     :data-y="props.y ?? undefined"
     :data-is-current="props.isCurrent || undefined"
     :data-is-odd="props.isOdd|| undefined"
+    :data-is-draggable="props.isDraggable|| undefined"
   >
     <slot />
   </tr>
@@ -19,6 +20,7 @@ type Props = {
   y?: number;
   isCurrent?: boolean;
   isOdd?: boolean;
+  isDraggable?: boolean;
 };
 
 const props = defineProps<Props>();
@@ -26,3 +28,11 @@ const props = defineProps<Props>();
 const { theme } = useTheme();
 
 </script>
+
+<style lang="scss">
+.mk-AppTableRow {
+    &[data-is-draggable="true"] {
+        cursor: move;
+    }
+}
+</style>
