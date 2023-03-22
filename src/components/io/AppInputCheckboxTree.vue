@@ -1,12 +1,12 @@
 <template>
   <div
     v-theme="theme"
-    class="pux-AppInputCheckboxTree"
+    class="mk-AppInputCheckboxTree"
   >
     <AppInputLabel v-if="props.label">
       {{ props.label }}
     </AppInputLabel>
-    <div class="pux-AppInputCheckboxTree-children">
+    <div class="mk-AppInputCheckboxTree-children">
       <AppInputCheckboxTreeLevel
         v-for="(level, index) in props.modelValue.value"
         :key="index"
@@ -73,7 +73,7 @@ function handleChange(newLevel: NonArray<Value>, index: number) {
 </script>
 
 <style lang="scss">
-.pux-AppInputCheckboxTree {
+.mk-AppInputCheckboxTree {
     &-children {
         display: flex;
         flex-direction: column;

@@ -14,7 +14,7 @@ module.exports = {
         'unit-allowed-list': ['px', '%', 'vh', 'vw', 'deg', 'fr', 'ms', 'rem', 'em'],
         'value-no-vendor-prefix': [true, { ignoreValues: ["box"] }],
         'alpha-value-notation': 'number',
-        'max-line-length': 150
+        'max-line-length': 150,
       },
     },
     {

@@ -1,5 +1,5 @@
 <template>
-  <div class="pux-AppInputCheckboxTreeLevel">
+  <div class="mk-AppInputCheckboxTreeLevel">
     <AppInputCheckbox
       :model-value="props.input.state"
       v-bind="props.input.options"
@@ -302,10 +302,10 @@ export function isSomeCheckboxTreeLevelsUnchecked<TChecked, TUnchecked>(children
 </script>
 
 <style lang="scss">
-.pux-AppInputCheckboxTreeLevel {
+.mk-AppInputCheckboxTreeLevel {
     --app-input-checkbox-tree-level-offset-x: var(--app-m-3);
 
-    .pux-AppInputCheckboxTreeLevel {
+    .mk-AppInputCheckboxTreeLevel {
         padding: 0 0 0 var(--app-input-checkbox-tree-level-offset-x);
     }
 }

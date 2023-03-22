@@ -546,7 +546,7 @@ const props = defineProps<Props>();
     pre code,
     pre tt {
         display: inline;
-        max-width: auto;
+        max-width: none;
         padding: 0;
         margin: 0;
         overflow: visible;
