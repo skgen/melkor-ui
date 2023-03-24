@@ -97,12 +97,16 @@ const icon = computed(() => {
     --mk-alert-border-radius: calc(var(--app-border-radius) * 2);
     --mk-alert-border-width: 1px;
     --mk-alert-color: var(--app-border-color);
+    --mk-alert-content-font-size: calc(var(--app-font-size) * 0.875);
+    --mk-alert-content-letter-spacing: 0.1em;
+    --mk-alert-font-size: var(--app-font-size);
     --mk-alert-icon-size: 24px;
     --mk-alert-padding-x: var(--app-m-3);
     --mk-alert-padding-y: var(--app-m-2);
 
     display: block;
     padding: var(--mk-alert-padding-x) var(--mk-alert-padding-y);
+    font-size: var(--mk-alert-font-size);
     background-color: var(--mk-alert-background-color);
     border: var(--mk-alert-border-width) solid var(--mk-alert-color);
     border-radius: var(--mk-alert-border-radius);
@@ -131,8 +135,8 @@ const icon = computed(() => {
 
     &-content {
         display: block;
-        font-size: 0.875rem;
-        letter-spacing: 0.1em;
+        font-size: var(--mk-alert-content-font-size);
+        letter-spacing: var(--mk-alert-content-letter-spacing);
     }
 
     &[data-type="info"] {
