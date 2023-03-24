@@ -132,7 +132,8 @@ function handlePage(pageNumber: number) {
     > :first-child {
         border-left: var(--mk-pagination-border-width) solid var(--mk-pagination-border-color);
 
-        &, &::before {
+        &,
+        &::before {
             border-top-left-radius: var(--mk-pagination-border-radius);
             border-bottom-left-radius: var(--mk-pagination-border-radius);
         }
@@ -141,7 +142,8 @@ function handlePage(pageNumber: number) {
     >  :last-child {
         border-right: var(--mk-pagination-border-width) solid var(--mk-pagination-border-color);
 
-        &, &::before {
+        &,
+        &::before {
             border-top-right-radius: var(--mk-pagination-border-radius);
             border-bottom-right-radius: var(--mk-pagination-border-radius);
         }
@@ -154,10 +156,10 @@ function handlePage(pageNumber: number) {
         > * {
             border-left: var(--mk-pagination-border-width) solid var(--mk-pagination-border-color);
         }
-
     }
 
-    &-cta, &-page {
+    &-cta,
+    &-page {
         &::before {
             @include pseudo;
 
@@ -208,7 +210,8 @@ function handlePage(pageNumber: number) {
             transition: opacity var(--mk-pagination-transition-duration);
         }
 
-        &:hover, &[data-active="true"] {
+        &:hover,
+        &[data-active="true"] {
             background-color: var(--mk-pagination-background-color-active);
 
             &::before {
