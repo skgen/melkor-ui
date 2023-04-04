@@ -56,7 +56,7 @@ export default ({ mode }: { mode: string }) => {
             persistent: true,
           }
         }
-      })
+      }),
     ],
     resolve: {
       alias: [

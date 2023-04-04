@@ -42,5 +42,6 @@ module.exports = {
     '.stylelintrc.cjs', 
     'vite.config.ts', 
     'dist',
+    'scripts'
   ],
 };

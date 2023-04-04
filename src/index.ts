@@ -19,6 +19,7 @@ export * from '@src/lib/modules/file';
 export * from '@src/lib/modules/i18n';
 export * from '@src/lib/modules/math';
 export * from '@src/lib/modules/theme';
+export * from '@src/lib/modules/icons';
 
 export { default as createMelkorUi } from '@src/plugin';
 export type { PluginOptions } from '@src/plugin';

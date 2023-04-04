@@ -34,7 +34,7 @@
     "src/**/*.json",
   ],
   "exclude": [
+    "scripts/**",
     "src/**/__tests__/*",
-    "public/code"
   ]
 }
