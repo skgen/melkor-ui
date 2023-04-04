@@ -118,7 +118,7 @@ function handleChange(evt: Event) {
     --mk-input-number-color: var(--app-input-color);
     --mk-input-number-font-size: var(--app-input-font-size);
     --mk-input-number-icon-color: var(--app-input-icon-color);
-    --mk-input-number-icon-size: 20px;
+    --mk-input-number-icon-size: var(--app-input-icon-size);
     --mk-input-number-padding-x: var(--app-input-padding-x);
     --mk-input-number-padding-y: var(--app-input-padding-y);
     --mk-input-number-placeholder-color: var(--app-input-placeholder-color);

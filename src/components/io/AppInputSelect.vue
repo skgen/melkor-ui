@@ -113,8 +113,9 @@ function handleChange(evt: Event) {
     --mk-input-select-border-radius: var(--app-input-border-radius);
     --mk-input-select-border-width: var(--app-input-border-width);
     --mk-input-select-color: var(--app-input-color);
+    --mk-input-select-icon-size: 24px;
     --mk-input-select-padding-x-left: var(--app-input-padding-x);
-    --mk-input-select-padding-x-right: calc(var(--app-input-padding-x) * 2);
+    --mk-input-select-padding-x-right: calc(var(--app-input-padding-x) * 2 + var(--mk-input-select-icon-size));
     --mk-input-select-padding-y: var(--app-input-padding-y);
 
     $this: &;
@@ -148,7 +149,7 @@ function handleChange(evt: Event) {
             opacity var(--app-transition-duration-opacity);
 
         .mk-AppIcon {
-            --mk-icon-size: 24px;
+            --mk-icon-size: var(--mk-input-select-icon-size);
 
             position: absolute;
             top: 50%;

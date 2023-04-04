@@ -137,7 +137,7 @@ function handleTextChange(evt: Event) {
     --mk-input-color-color: var(--app-input-color);
     --mk-input-color-font-size: var(--app-input-font-size);
     --mk-input-color-icon-color: var(--app-input-icon-color);
-    --mk-input-color-icon-size: 20px;
+    --mk-input-color-icon-size: var(--app-input-icon-size);
     --mk-input-color-padding-x: var(--app-input-padding-x);
     --mk-input-color-padding-y: var(--app-input-padding-y);
     --mk-input-color-placeholder-color: var(--app-input-placeholder-color);

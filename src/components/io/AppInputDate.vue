@@ -151,7 +151,7 @@ function handleChange(evt: Event) {
     --mk-input-date-color: var(--app-input-color);
     --mk-input-date-font-size: var(--app-input-font-size);
     --mk-input-date-icon-color: var(--app-input-icon-color);
-    --mk-input-date-icon-size: 20px;
+    --mk-input-date-icon-size: var(--app-input-icon-size);
     --mk-input-date-padding-x: var(--app-input-padding-x);
     --mk-input-date-padding-y: var(--app-input-padding-y);
     --mk-input-date-spacing: var(--app-input-padding-x);

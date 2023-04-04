@@ -99,7 +99,7 @@ function handleChange(evt: Event) {
     --mk-input-text-color: var(--app-input-color);
     --mk-input-text-font-size: var(--app-input-font-size);
     --mk-input-text-icon-color: var(--app-input-icon-color);
-    --mk-input-text-icon-size: 20px;
+    --mk-input-text-icon-size: var(--app-input-icon-size);
     --mk-input-text-padding-x: var(--app-input-padding-x);
     --mk-input-text-padding-y: var(--app-input-padding-y);
     --mk-input-text-placeholder-color: var(--app-input-placeholder-color);
