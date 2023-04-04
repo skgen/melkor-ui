@@ -22,6 +22,7 @@
             v-for="(option, index) in props.options"
             :key="index"
             :value="index"
+            :disabled="option.disabled"
             :selected="isSelectedOption(option.value)"
           >
             {{ option.label }}
@@ -65,6 +66,7 @@ type Props = {
   options: {
     label: string;
     value: Value;
+    disabled?: boolean;
   }[];
 };
 

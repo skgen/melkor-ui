@@ -188,6 +188,7 @@ export type SelectInputModel<TValue> = Required<InputModel<TValue, SelectInputOp
 export type SelectInputOption<TValue> = {
   label: string;
   value: TValue;
+  disabled?: boolean;
 };
 
 export type SelectInputOptions<TValue> = InputOptions<TValue> & {
