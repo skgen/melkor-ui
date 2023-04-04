@@ -105,11 +105,12 @@ const disabled = computed(() => props.disabled || undefined);
     border-radius: var(--mk-button-border-radius);
 
     &[data-size="wide"] {
-        padding: var( --mk-button-wide-padding-y) var(--mk-button-wide-padding-x);
+        padding: var(--mk-button-wide-padding-y) var(--mk-button-wide-padding-x);
         font-size: var(--mk-button-wide-font-size);
     }
 
-    &[data-type="plain"], &[data-type="light"] {
+    &[data-type="plain"],
+    &[data-type="light"] {
         &[data-on-primary="true"] {
             color: var(--app-primary-color);
             background-color: var(--app-background-color-on-primary);
