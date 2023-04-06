@@ -176,6 +176,7 @@ watch(state, (newState) => {
     --mk-input-wysiwyg-border-radius: var(--app-input-border-radius);
     --mk-input-wysiwyg-color: var(--app-input-color);
     --mk-input-wysiwyg-font-size: var(--app-input-font-size);
+    --mk-input-wysiwyg-line-height: var(--app-input-line-height);
     --mk-input-wysiwyg-padding-x: var(--app-m-3);
     --mk-input-wysiwyg-padding-y: var(--app-m-3);
 
@@ -194,6 +195,7 @@ watch(state, (newState) => {
         min-height: 80px;
         padding: var(--mk-input-wysiwyg-padding-y) var(--mk-input-wysiwyg-padding-x);
         font-size: var(--mk-input-wysiwyg-font-size);
+        line-height: var(--mk-input-wysiwyg-line-height);
         color: var(--mk-input-wysiwyg-color);
         cursor: text;
         background-color: var(--mk-input-wysiwyg-background-color);

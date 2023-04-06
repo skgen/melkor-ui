@@ -117,6 +117,7 @@ function handleChange(evt: Event) {
     --mk-input-number-border-width: var(--app-input-border-width);
     --mk-input-number-color: var(--app-input-color);
     --mk-input-number-font-size: var(--app-input-font-size);
+    --mk-input-number-line-height: var(--app-input-line-height);
     --mk-input-number-icon-color: var(--app-input-icon-color);
     --mk-input-number-icon-size: var(--app-input-icon-size);
     --mk-input-number-padding-x: var(--app-input-padding-x);
@@ -131,7 +132,8 @@ function handleChange(evt: Event) {
     input {
         width: 100%;
         padding: var(--mk-input-number-padding-y) 0;
-        font-size: 1rem;
+        font-size: var(--mk-input-number-font-size);
+        line-height: var(--mk-input-number-line-height);
         color: var(--mk-input-number-color);
         background-color: transparent;
         border: none;
@@ -148,7 +150,6 @@ function handleChange(evt: Event) {
         align-items: center;
         width: 100%;
         padding: 0 var(--mk-input-number-padding-x);
-        font-size: var(--mk-input-number-font-size);
         background-color: var(--mk-input-number-background-color);
         border: var(--mk-input-number-border-width) solid var(--mk-input-number-border-color);
         border-radius: var(--mk-input-number-border-radius);

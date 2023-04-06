@@ -118,6 +118,7 @@ function handleChange(evt: Event) {
     --mk-input-password-border-width: var(--app-input-border-width);
     --mk-input-password-color: var(--app-input-color);
     --mk-input-password-font-size: var(--app-input-font-size);
+    --mk-input-password-line-height: var(--app-input-line-height);
     --mk-input-password-icon-color: var(--app-input-icon-color);
     --mk-input-password-icon-size: var(--app-input-icon-size);
     --mk-input-password-padding-x: var(--app-input-padding-x);
@@ -133,6 +134,7 @@ function handleChange(evt: Event) {
         width: 100%;
         padding: var(--mk-input-password-padding-y) 0;
         font-size: var(--mk-input-password-font-size);
+        line-height: var(--mk-input-password-line-height);
         color: var(--mk-input-password-color);
         background-color: transparent;
         border: none;

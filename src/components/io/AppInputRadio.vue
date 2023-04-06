@@ -113,6 +113,7 @@ function handleChange(evt: Event) {
     --mk-input-radio-color: var(--app-input-color);
     --mk-input-radio-color-active: var(--app-primary-color);
     --mk-input-radio-font-size: var(--app-input-font-size);
+    --mk-input-radio-line-height: var(--app-input-line-height);
     --mk-input-radio-size: 16px;
     --mk-input-radio-spacing: var(--app-m-1);
 
@@ -162,6 +163,7 @@ function handleChange(evt: Event) {
     &-option {
         &-label {
             font-size: var(--mk-input-radio-font-size);
+            line-height: var(--mk-input-radio-line-height);
             color: var(--mk-input-radio-color);
         }
     }

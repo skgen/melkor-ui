@@ -137,6 +137,7 @@ function stateLabel(checked: boolean) {
     --mk-input-toggle-color-on-active: var(--c-white);
     --mk-input-toggle-color-on-background: var(--c-white);
     --mk-input-toggle-font-size: var(--app-input-font-size);
+    --mk-input-toggle-line-height: var(--app-input-line-height);
     --mk-input-toggle-icon-size: calc(var(--mk-input-toggle-size) - calc(var(--mk-input-toggle-target-padding) * 2));
     --mk-input-toggle-padding: 2px;
     --mk-input-toggle-spacing: var(--app-m-1);
@@ -160,6 +161,7 @@ function stateLabel(checked: boolean) {
 
     &-stateLabel {
         font-size: var(--mk-input-toggle-font-size);
+        line-height: var(--mk-input-toggle-line-height);
         color: var(--mk-input-toggle-color);
         transition: opacity var(--app-transition-duration-opacity);
     }

@@ -153,6 +153,7 @@ function handleTextChange(evt: Event) {
 
     &-hashtag {
         font-size: var(--mk-input-color-font-size);
+        line-height: var(--mk-input-color-line-height);
         color: var(--mk-input-color-color);
 
         &[data-placeholder="true"] {
@@ -163,6 +164,7 @@ function handleTextChange(evt: Event) {
     input[type="text"] {
         padding: 0;
         font-size: var(--mk-input-color-font-size);
+        line-height: var(--mk-input-color-line-height);
         color: var(--mk-input-color-color);
         background-color: transparent;
         border: none;

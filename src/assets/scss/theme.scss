@@ -51,7 +51,8 @@
     // Inputs
     --app-input-border-radius: var(--app-border-radius);
     --app-input-border-width: 1px;
-    --app-input-font-size: 1rem;
+    --app-input-font-size: var(--app-font-size);
+    --app-input-line-height: var(--app-line-height);
     --app-input-opacity-disabled: 0.6;
     --app-input-padding-x: var(--app-m-2);
     --app-input-padding-y: var(--app-m-1);

@@ -98,6 +98,7 @@ function handleChange(evt: Event) {
     --mk-input-text-border-width: var(--app-input-border-width);
     --mk-input-text-color: var(--app-input-color);
     --mk-input-text-font-size: var(--app-input-font-size);
+    --mk-input-text-line-height: var(--app-input-line-height);
     --mk-input-text-icon-color: var(--app-input-icon-color);
     --mk-input-text-icon-size: var(--app-input-icon-size);
     --mk-input-text-padding-x: var(--app-input-padding-x);
@@ -113,6 +114,7 @@ function handleChange(evt: Event) {
         width: 100%;
         padding: var(--mk-input-text-padding-y) 0;
         font-size: var(--mk-input-text-font-size);
+        line-height: var(--mk-input-text-line-height);
         color: var(--mk-input-text-color);
         background-color: transparent;
         border: none;

@@ -113,6 +113,8 @@ function handleChange(evt: Event) {
     --mk-input-select-border-radius: var(--app-input-border-radius);
     --mk-input-select-border-width: var(--app-input-border-width);
     --mk-input-select-color: var(--app-input-color);
+    --mk-input-select-font-size: var(--app-input-font-size);
+    --mk-input-select-line-height: var(--app-input-line-height);
     --mk-input-select-icon-size: 24px;
     --mk-input-select-padding-x-left: var(--app-input-padding-x);
     --mk-input-select-padding-x-right: calc(var(--app-input-padding-x) * 2 + var(--mk-input-select-icon-size));
@@ -129,6 +131,8 @@ function handleChange(evt: Event) {
             var(--mk-input-select-padding-x-right)
             var(--mk-input-select-padding-y)
             var(--mk-input-select-padding-x-left);
+        font-size: var(--mk-input-select-font-size);
+        line-height: var(--mk-input-select-line-height);
         color: var(--mk-input-select-color);
         background-color: var(--mk-input-select-background-color);
         border: var(--mk-input-select-border-width) solid var(--mk-input-select-border-color);

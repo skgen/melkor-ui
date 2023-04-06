@@ -113,6 +113,7 @@ function stateLabel(checked: boolean) {
     --mk-input-checkbox-color-active: var(--app-primary-color);
     --mk-input-checkbox-color-on-active: var(--app-text-color-on-primary);
     --mk-input-checkbox-font-size: var(--app-input-font-size);
+    --mk-input-checkbox-line-height: var(--app-input-line-height);
     --mk-input-checkbox-icon-size: calc(var(--mk-input-checkbox-size) - calc(var(--mk-input-checkbox-target-padding) * 2));
     --mk-input-checkbox-size: 16px;
     --mk-input-checkbox-spacing: var(--app-m-1);
@@ -162,6 +163,7 @@ function stateLabel(checked: boolean) {
     &-option {
         &-label {
             font-size: var(--mk-input-checkbox-font-size);
+            line-height: var(--mk-input-checkbox-line-height);
             color: var(--mk-input-checkbox-color);
         }
     }

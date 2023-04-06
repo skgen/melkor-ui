@@ -150,6 +150,7 @@ function handleChange(evt: Event) {
     --mk-input-date-border-width: var(--app-input-border-width);
     --mk-input-date-color: var(--app-input-color);
     --mk-input-date-font-size: var(--app-input-font-size);
+    --mk-input-date-line-height: var(--app-input-line-height);
     --mk-input-date-icon-color: var(--app-input-icon-color);
     --mk-input-date-icon-size: var(--app-input-icon-size);
     --mk-input-date-padding-x: var(--app-input-padding-x);
@@ -173,6 +174,7 @@ function handleChange(evt: Event) {
         min-width: 200px;
         padding: var(--mk-input-date-padding-y) var(--mk-input-date-padding-x);
         font-size: var(--mk-input-date-font-size);
+        line-height: var(--mk-input-date-line-height);
         color: var(--mk-input-date-color);
         background-color: var(--mk-input-date-background-color);
         border: var(--mk-input-date-border-width) solid var(--mk-input-date-border-color);
