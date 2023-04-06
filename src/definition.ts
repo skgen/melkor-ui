@@ -196,6 +196,17 @@ export type SelectInputOptions<TValue> = InputOptions<TValue> & {
   options: SelectInputOption<TValue>[];
 };
 
+// Icon Input
+export type IconInputValue = string | null;
+
+export type IconInputModel = Required<InputModel<IconInputValue, SelectInputOptions<IconInputValue>>>;
+
+export type IconInputOption<TValue> = SelectInputOption<TValue>;
+
+export type IconInputOptions<TValue> = InputOptions<TValue> & {
+  fill?: boolean;
+};
+
 // Radio
 
 export type RadioInputModel<TValue> = Required<InputModel<TValue, RadioInputOptions<TValue>>>;

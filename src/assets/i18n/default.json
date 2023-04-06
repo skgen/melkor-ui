@@ -4,6 +4,27 @@
             "inputFile": {
                 "dragdrop": "Drag & drop or {search}",
                 "search": "browse"
+            },
+            "inputIcon": {
+                "uIActions": "UI actions",
+                "social": "Social",
+                "commonActions": "Common actions",
+                "communication": "Communication",
+                "photo&Image": "Photo & image",
+                "business&Payments": "Business & payments",
+                "maps": "Maps",
+                "textFormatting": "Text formatting",
+                "audio&Video": "Audio & video",
+                "transportation": "Transportation",
+                "activities": "Activities",
+                "hardware": "Hardware",
+                "android": "Android",
+                "privacy&Security": "Privacy & security",
+                "travel": "Travel",
+                "household": "Household",
+                "home": "Home",
+                "brand": "Brand",
+                "others": "others"
             }
         },
         "theme": {
