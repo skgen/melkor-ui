@@ -31,6 +31,12 @@
     }
 }
 
+@mixin font-size($font-size, $height) {
+    font-size: #{$font-size}px;
+
+    @include line-height($font-size, $height);
+}
+
 @mixin line-height($font-size, $height) {
     line-height: math.div($height, $font-size);
 }
