@@ -33,6 +33,7 @@
 import {
   computed,
   onMounted,
+  onUnmounted,
   ref,
   watch,
 } from 'vue';
@@ -108,6 +109,10 @@ onMounted(() => {
   }
 });
 
+onUnmounted(() => {
+  handleClose();
+  handleNotifyStore(false);
+});
 </script>
 
 <style lang="scss">
