@@ -73,14 +73,6 @@ function handleClickVeil() {
 @import "@style/mixins";
 
 .mk-AppFullscreenModal {
-    @include light {
-        --mk-veil-background-color: var(--app-background-color) / 0.3;
-    }
-
-    @include dark {
-        --mk-veil-background-color: var(--app-background-color) / 0.7;
-    }
-
     &-veil {
         position: absolute;
         top: 0;
