@@ -15,10 +15,11 @@ const { theme } = useTheme();
 
 <style lang="scss">
 .mk-AppInputError {
-    --input-hint-color: var(--app-error-color);
+    --mk-input-error-color: var(--app-error-color);
+    --mk-input-error-font-size: 0.75rem;
 
-    font-size: 0.75rem;
-    color: var(--input-hint-color);
+    font-size: var(--mk-input-error-font-size);
+    color: var(--mk-input-error-color);
     white-space: pre-line;
 }
 </style>
