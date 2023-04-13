@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputRadio"
-    :data-disabled="props.disabled || undefined"
+    :data-is-disabled="props.disabled || undefined"
   >
     <AppInputLabel v-if="props.label">
       {{ props.label }}
@@ -12,7 +12,6 @@
         v-for="(option, index) in props.options"
         :key="index"
         class="mk-AppInputRadio-input"
-        :data-checked="isSelectedOption(option.value)"
       >
         <input
           :name="name"
@@ -22,7 +21,10 @@
           :disabled="props.disabled"
           @click="handleChange"
         >
-        <div class="mk-AppInputRadio-target" />
+        <AppRadio
+          :disabled="props.disabled"
+          :checked="isSelectedOption(option.value)"
+        />
         <span class="mk-AppInputRadio-option-label">
           {{ option.label }}
         </span>
@@ -41,6 +43,7 @@
 import { computed } from 'vue';
 import isEqual from 'lodash/isEqual';
 import type { InputState, ValidateInput } from '@src/definition';
+import AppRadio from '@src/components/checkables/AppRadio.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
@@ -107,14 +110,9 @@ function handleChange(evt: Event) {
 @import "@style/mixins";
 
 .mk-AppInputRadio {
-    --mk-input-radio-border-color: var(--app-border-color-highlight);
-    --mk-input-radio-border-width: var(--app-input-border-width);
-    --mk-input-radio-border-width-active: 4px;
     --mk-input-radio-color: var(--app-input-color);
-    --mk-input-radio-color-active: var(--app-primary-color);
     --mk-input-radio-font-size: var(--app-input-font-size);
     --mk-input-radio-line-height: var(--app-input-line-height);
-    --mk-input-radio-size: 16px;
     --mk-input-radio-spacing: var(--app-m-1);
 
     $this: &;
@@ -136,28 +134,6 @@ function handleChange(evt: Event) {
         &-label {
             font-size: 0.9375rem;
         }
-
-        &[data-checked="true"] {
-            #{$this} {
-                &-target {
-                    border-color: var(--mk-input-radio-color-active);
-                    border-width: var(--mk-input-radio-border-width-active);
-                }
-            }
-        }
-    }
-
-    &-target {
-        display: block;
-        flex: 0 0 var(--mk-input-radio-size);
-        width: var(--mk-input-radio-size);
-        height: var(--mk-input-radio-size);
-        user-select: none;
-        border: var(--mk-input-radio-border-width) solid var(--mk-input-radio-border-color);
-        border-radius: 50%;
-        transition:
-            border-width var(--app-transition-duration-color),
-            border-color var(--app-transition-duration-color);
     }
 
     &-option {
@@ -168,14 +144,10 @@ function handleChange(evt: Event) {
         }
     }
 
-    &[data-disabled="true"] {
+    &[data-is-disabled="true"] {
         #{$this} {
             &-input {
                 opacity: var(--app-input-opacity-disabled);
-            }
-
-            &-target {
-                border-color: var(--app-input-color-disabled);
             }
         }
     }
