@@ -72,14 +72,9 @@ const disabled = computed(() => props.disabled || undefined);
     --mk-button-line-height: var(--app-line-height);
     --mk-button-font-weight: 500;
 
-    // Bordered
-    --mk-button-bordered-padding-x: calc(var(--mk-button-padding-x) - var(--mk-button-border-width));
-    --mk-button-bordered-padding-y: calc(var(--mk-button-padding-y) - var(--mk-button-border-width));
-
     // Wide
     --mk-button-wide-font-size: calc(var(--app-font-size) * 1.2);
-    --mk-button-wide-bordered-padding-x: calc(var(--mk-button-wide-padding-x) - var(--mk-button-border-width));
-    --mk-button-wide-bordered-padding-y: calc(var(--mk-button-wide-padding-y) - var(--mk-button-border-width));
+    --mk-button-wide-line-height: calc(var(--app-font-size) * 1.2);
     --mk-button-wide-padding-x: calc(var(--app-m-2) * 1.5);
     --mk-button-wide-padding-y: calc(var(--app-m-1) * 1.5);
 
@@ -101,6 +96,7 @@ const disabled = computed(() => props.disabled || undefined);
     line-height: var(--mk-button-line-height);
     cursor: var(--mk-button-cursor);
     border-color: var(--mk-button-border-color);
+    border-style: solid;
     border-width: var(--mk-button-border-width);
     border-radius: var(--mk-button-border-radius);
 
@@ -121,17 +117,20 @@ const disabled = computed(() => props.disabled || undefined);
     &[data-type="plain"] {
         color: var(--mk-button-text-color);
         background-color: var(--mk-button-background-color);
+        border-color: var(--mk-button-background-color);
     }
 
     &[data-type="light"] {
         color: var(--mk-button-light-text-color);
         background-color: var(--mk-button-light-background-color);
+        border-color: var(--mk-button-light-background-color);
     }
 
     &[data-type="outlined"],
     &[data-type="text"] {
         color: var(--mk-button-hollowed-text-color);
         background-color: transparent;
+        border-color: transparent;
 
         &[data-on-primary="true"] {
             color: var(--app-text-color-on-primary);
@@ -139,11 +138,10 @@ const disabled = computed(() => props.disabled || undefined);
     }
 
     &[data-type="outlined"] {
-        padding: var(--mk-button-bordered-padding-y) var(--mk-button-bordered-padding-x);
-        border-style: solid;
+        padding: var(--mk-button-padding-y) var(--mk-button-padding-x);
 
         &[data-size="wide"] {
-            padding: var(--mk-button-wide-bordered-padding-y) var(--mk-button-wide-bordered-padding-x);
+            padding: var(--mk-button-wide-padding-y) var(--mk-button-wide-padding-x);
         }
 
         &[data-on-primary="true"] {
