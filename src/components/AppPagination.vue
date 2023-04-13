@@ -17,7 +17,7 @@
     <div class="mk-AppPagination-list">
       <button
         class="mk-AppPagination-slot mk-AppPagination-page"
-        :data-active="page === firstPage || undefined"
+        :data-is-current="page === firstPage || undefined"
         @click="() => handlePage(firstPage)"
       >
         {{ firstPage }}
@@ -29,7 +29,7 @@
         <button
           v-if="isValue(s)"
           class="mk-AppPagination-slot mk-AppPagination-page"
-          :data-active="s === page || undefined"
+          :data-is-current="s === page || undefined"
           @click="() => handlePage(s)"
         >
           {{ s }}
@@ -43,7 +43,7 @@
       </template>
       <button
         class="mk-AppPagination-slot mk-AppPagination-page"
-        :data-active="page === lastPage || undefined"
+        :data-is-current="page === lastPage || undefined"
         @click="() => handlePage(lastPage)"
       >
         {{ lastPage }}
@@ -120,11 +120,13 @@ function handlePage(pageNumber: number) {
     --mk-pagination-transition-duration: var(--app-transition-duration-opacity);
 
     @include light {
-        --mk-pagination-background-color-active: rgb(var(--app-primary-tone-color) / 0.15);
+        --mk-pagination-background-color-current: rgb(var(--app-primary-tone-color) / 0.15);
+        --mk-pagination-background-color-active: rgb(var(--app-primary-tone-color) / 0.4);
     }
 
     @include dark {
-        --mk-pagination-background-color-active: rgb(var(--app-primary-tone-color) / 0.3);
+        --mk-pagination-background-color-current: rgb(var(--app-primary-tone-color) / 0.3);
+        --mk-pagination-background-color-active: rgb(var(--app-primary-tone-color) / 0.5);
     }
 
     display: flex;
@@ -160,6 +162,9 @@ function handlePage(pageNumber: number) {
 
     &-cta,
     &-page {
+        cursor: pointer;
+        transition: background-color var(--mk-pagination-transition-duration);
+
         &::before {
             @include pseudo;
 
@@ -177,13 +182,17 @@ function handlePage(pageNumber: number) {
 
     &-cta {
         color: var(--app-text-color-soft);
-        cursor: pointer;
 
         &:not([disabled]) {
-            &:hover {
+            &:hover,
+            &:active, {
                 &::before {
                     opacity: 1;
                 }
+            }
+
+            &:active {
+                background-color: var(--mk-pagination-background-color-active);
             }
         }
 
@@ -193,9 +202,6 @@ function handlePage(pageNumber: number) {
     }
 
     &-page {
-        cursor: pointer;
-        transition: background-color var(--mk-pagination-transition-duration);
-
         &::before {
             @include pseudo;
 
@@ -211,12 +217,19 @@ function handlePage(pageNumber: number) {
         }
 
         &:hover,
-        &[data-active="true"] {
-            background-color: var(--mk-pagination-background-color-active);
-
+        &:active,
+        &[data-is-current="true"] {
             &::before {
                 opacity: 1;
             }
+        }
+
+        &:active {
+            background-color: var(--mk-pagination-background-color-active);
+        }
+
+        &[data-is-current="true"] {
+            background-color: var(--mk-pagination-background-color-current);
         }
     }
 
