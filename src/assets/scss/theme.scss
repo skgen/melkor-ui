@@ -137,7 +137,7 @@
     --app-background-color-contrast: var(--app-theme-color-contrast);
     --app-background-color-contrast-hover: var(--c-grey-98);
     --app-background-color-on-primary: var(--app-background-color-contrast);
-    --app-background-color-on-primary-hover: var(--app-background-color-hover);
+    --app-background-color-on-primary-hover: var(--app-background-color-contrast-hover);
 
     // Text
     --app-text-color: var(--app-theme-color-contrast);
