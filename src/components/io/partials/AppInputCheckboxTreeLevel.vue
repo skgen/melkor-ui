@@ -1,13 +1,13 @@
 <template>
   <div class="mk-AppInputCheckboxTreeLevel">
     <AppInputCheckbox
-      :model-value="props.input.state"
+      :model-value="modelValue"
       v-bind="props.input.options"
       :disabled="props.disabled ?? props.input.options.disabled"
       @update:model-value="handleInputChange"
     >
       <template
-        v-if="props.children && (someCheckboxTreeLevelsChecked && !allCheckboxTreeLevelsChecked)"
+        v-if="shadowValue"
         #checked-icon
       >
         <AppIcon icon="remove" />
@@ -33,7 +33,7 @@ import AppInputCheckbox from '@src/components/io/AppInputCheckbox.vue';
 import AppIcon from '@src/components/AppIcon.vue';
 import isEqual from 'lodash/isEqual';
 import { computed } from 'vue';
-import { validateInputState } from '@src/composables/useInput';
+import { createInputState, validateInputState } from '@src/composables/useInput';
 import { isDef, isValue } from '@src/lib/modules/definition';
 
 type Props = {
@@ -52,6 +52,18 @@ const emit = defineEmits<Emits>();
 const someCheckboxTreeLevelsChecked = computed(() => (props.children ? isSomeCheckboxTreeLevelsChecked(props.children) : false));
 const allCheckboxTreeLevelsChecked = computed(() => (props.children ? isAllCheckboxTreeLevelsChecked(props.children) : false));
 
+const shadowValue = computed(() => props.children && (someCheckboxTreeLevelsChecked.value && !allCheckboxTreeLevelsChecked.value));
+
+const modelValue = computed(() => {
+  if (shadowValue.value) {
+    return createInputState({
+      ...props.input.state,
+      value: props.input.options.checked,
+    });
+  }
+  return props.input.state;
+});
+
 function handleInputChange(newInputState: InputState<Value>) {
   const newLevel = {
     ...props,
@@ -60,6 +72,10 @@ function handleInputChange(newInputState: InputState<Value>) {
       state: newInputState,
     },
   };
+  if (shadowValue.value) {
+    newLevel.input.state.value = newLevel.input.options.checked;
+  }
+  newLevel.input.state = validateInputState(newLevel.input.state, newLevel.input.options.validate);
 
   const checkedValue = getCheckedOptionValue(newLevel.input.options.checked);
   const uncheckedValue = getUncheckedOptionValue(newLevel.input.options.unchecked);

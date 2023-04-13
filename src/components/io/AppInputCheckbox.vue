@@ -11,10 +11,9 @@
       <div
         v-theme="theme"
         class="mk-AppInputCheckbox"
-        :data-checked="isChecked"
-        :data-has-icon="isChecked || !!$slots['checked-icon']"
+        :data-is-checked="(props.checked || !!$slots['checked-icon']) || undefined"
         v-bind="$attrs"
-        :data-disabled="props.disabled || undefined"
+        :data-is-disabled="props.disabled || undefined"
       >
         <label>
           <AppInputLabel v-if="props.label">
@@ -28,19 +27,12 @@
               :disabled="props.disabled"
               @input="onChange"
             >
-            <div class="mk-AppInputCheckbox-target">
-              <transition-group
-                v-if="isChecked || !!$slots['checked-icon']"
-                name="mk-AppIcon"
-              >
-                <AppIcon
-                  v-if="!$slots['checked-icon']"
-                  icon="check"
-                />
-                <slot name="checked-icon" />
-
-              </transition-group>
-            </div>
+            <AppCheckbox
+              :checked="isChecked"
+              :disabled="props.disabled"
+            >
+              <slot name="checked-icon" />
+            </AppCheckbox>
             <span
               v-if="stateLabel(isChecked)"
               class="mk-AppInputCheckbox-option-label"
@@ -63,7 +55,7 @@
 <script lang="ts" setup>
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputCheckable from '@src/components/io/abstract/AppInputCheckable.vue';
-import AppIcon from '@src/components/AppIcon.vue';
+import AppCheckbox from '@src/components/checkables/AppCheckbox.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
@@ -107,18 +99,10 @@ function stateLabel(checked: boolean) {
 @import "@style/mixins";
 
 .mk-AppInputCheckbox {
-    --mk-input-checkbox-border-color: var(--app-border-color-highlight);
-    --mk-input-checkbox-border-radius: var(--app-input-border-radius);
-    --mk-input-checkbox-border-width: var(--app-input-border-width);
     --mk-input-checkbox-color: var(--app-input-color);
-    --mk-input-checkbox-color-active: var(--app-primary-color);
-    --mk-input-checkbox-color-on-active: var(--app-text-color-on-primary);
     --mk-input-checkbox-font-size: var(--app-input-font-size);
     --mk-input-checkbox-line-height: var(--app-input-line-height);
-    --mk-input-checkbox-icon-size: calc(var(--mk-input-checkbox-size) - calc(var(--mk-input-checkbox-target-padding) * 2));
-    --mk-input-checkbox-size: 16px;
     --mk-input-checkbox-spacing: var(--app-m-1);
-    --mk-input-checkbox-target-padding: 1px;
 
     $this: &;
 
@@ -136,29 +120,6 @@ function stateLabel(checked: boolean) {
         padding: var(--app-m-1) 0;
         cursor: pointer;
         transition: opacity var(--app-transition-duration-opacity);
-    }
-
-    &-target {
-        position: relative;
-        flex: 0 0 var(--mk-input-checkbox-size);
-        width: var(--mk-input-checkbox-size);
-        height: var(--mk-input-checkbox-size);
-        user-select: none;
-        border: var(--mk-input-checkbox-border-width) solid var(--mk-input-checkbox-border-color);
-        border-radius: var(--mk-input-checkbox-border-radius);
-        transition:
-            background-color var(--app-transition-duration-background),
-            border-color var(--app-transition-duration-color);
-
-        .mk-AppIcon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-
-            --mk-icon-size: var(--mk-input-checkbox-icon-size);
-            --mk-icon-color: var(--mk-input-checkbox-color-on-active);
-        }
     }
 
     &-option {
@@ -181,28 +142,8 @@ function stateLabel(checked: boolean) {
         }
     }
 
-    &[data-has-icon="true"] {
+    &[data-is-disabled="true"] {
         #{$this} {
-            &-target {
-                background-color: var(--mk-input-checkbox-color-active);
-                border-color: var(--mk-input-checkbox-color-active);
-            }
-        }
-    }
-
-    &[data-disabled="true"] {
-        &[data-has-icon="true"] {
-            #{$this} {
-                &-target {
-                    background-color: var(--app-input-color-disabled);
-                }
-            }
-        }
-        #{$this} {
-            &-target {
-                border-color: var(--app-input-color-disabled);
-            }
-
             &-input {
                 cursor: default;
                 opacity: var(--app-input-opacity-disabled);
