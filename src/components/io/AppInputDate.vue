@@ -20,7 +20,7 @@
       </span>
       <div class="mk-AppInputDate-input">
         <input
-          ref="datePicker"
+          ref="dateInput"
           :name="props.name"
           :type="type"
           :disabled="props.disabled"
@@ -34,16 +34,21 @@
             name="preview"
             :datetime="props.datetime"
             :value="state.value"
-          />
-          <template v-if="!$slots['preview']">
+          >
             {{ previewValue }}
-          </template>
+          </slot>
         </span>
-        <AppIcon
-          v-if="!$slots.icon"
-          icon="calendar_month"
-        />
-        <slot name="icon" />
+        <AppInputTextableCancel
+          v-if="isCancelable"
+          :disabled="props.disabled"
+          @click="handleCancel"
+        >
+          <slot name="cancel" />
+        </AppInputTextableCancel>
+
+        <slot name="icon">
+          <AppIcon icon="calendar_month" />
+        </slot>
       </div>
     </label>
     <AppInputHint v-if="props.hint">
@@ -56,15 +61,14 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  computed, ref,
-} from 'vue';
+import { computed, ref } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
+import AppIcon from '@src/components/AppIcon.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
+import AppInputTextableCancel from '@src/components/io/partials/AppInputTextableCancel.vue';
 import useInput from '@src/composables/useInput';
-import AppIcon from '@src/components/AppIcon.vue';
 import useTheme from '@src/composables/useTheme';
 import { classicDate, classicTime, formatDate } from '@src/lib/modules/date';
 import { isValue } from '@src/lib/modules/definition';
@@ -79,6 +83,7 @@ type Props = {
   hint?: string;
   disabled?: boolean;
   fill?: boolean;
+  cancelable?: boolean;
   datetime?: boolean;
   showTimezone?: boolean;
 };
@@ -92,7 +97,7 @@ type Emits = {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const datePicker = ref<HTMLInputElement | null>(null);
+const dateInput = ref<HTMLInputElement | null>(null);
 
 const { theme } = useTheme();
 
@@ -116,13 +121,13 @@ const previewValue = computed(() => {
 });
 
 function handleFocus() {
-  if (!datePicker.value) {
+  if (!dateInput.value) {
     return;
   }
   // @todo find why this triggers error on TS review
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  datePicker.value.showPicker();
+  dateInput.value.showPicker();
   onFocus();
 }
 
@@ -137,6 +142,18 @@ function handleChange(evt: Event) {
   } else {
     onChange(new Date(value));
   }
+}
+
+const isCancelable = computed(() => props.cancelable && isValue(state.value.value));
+
+function handleCancel() {
+  onChange(null);
+  requestAnimationFrame(() => {
+    if (!dateInput.value) {
+      return;
+    }
+    dateInput.value.blur();
+  });
 }
 </script>
 
@@ -228,6 +245,11 @@ function handleChange(evt: Event) {
     .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
+    }
+
+    .mk-AppInputTextableCancel {
+        --mk-input-textable-cancel-color: var(--mk-input-date-icon-color);
+        --mk-input-textable-cancel-size: var(--mk-input-date-icon-size);
     }
 }
 </style>

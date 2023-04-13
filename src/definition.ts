@@ -60,6 +60,7 @@ export type TextInputModel = InputModel<TextInputValue, TextInputOptions>;
 export type TextInputOptions = InputOptions<TextInputValue> & {
   fill?: boolean;
   placeholder?: string;
+  cancelable?: boolean;
 };
 
 // Textarea
@@ -80,6 +81,7 @@ export type PasswordInputModel = InputModel<PasswordInputValue, PasswordInputOpt
 
 export type PasswordInputOptions = InputOptions<PasswordInputValue> & {
   fill?: boolean;
+  cancelable?: boolean;
 };
 
 // Number
@@ -90,6 +92,7 @@ export type NumberInputModel = InputModel<NumberInputValue, NumberInputOptions>;
 export type NumberInputOptions = InputOptions<NumberInputValue> & {
   fill?: boolean;
   placeholder?: string;
+  cancelable?: boolean;
   min?: number;
   max?: number;
 };
@@ -111,6 +114,7 @@ export type ColorInputModel = InputModel<ColorInputValue, ColorInputOptions>;
 export type ColorInputOptions = InputOptions<ColorInputValue> & {
   fill?: boolean;
   placeholder?: string;
+  cancelable?: boolean;
 };
 
 // Date
@@ -120,6 +124,7 @@ export type DateInputModel = InputModel<DateInputValue, DateInputOptions>;
 
 export type DateInputOptions = InputOptions<DateInputValue> & {
   fill?: boolean;
+  cancelable?: boolean;
   datetime?: boolean;
   showTimezone?: boolean;
 };

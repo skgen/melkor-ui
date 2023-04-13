@@ -13,6 +13,7 @@
       <div class="mk-AppInputText-input">
         <slot name="leading-icon" />
         <input
+          ref="textInput"
           :name="props.name"
           type="text"
           :value="state.value"
@@ -22,6 +23,13 @@
           @focus="onFocus"
           @blur="onBlur"
         >
+        <AppInputTextableCancel
+          v-if="isCancelable"
+          :disabled="props.disabled"
+          @click="handleCancel"
+        >
+          <slot name="cancel" />
+        </AppInputTextableCancel>
         <slot name="trailing-icon" />
       </div>
     </label>
@@ -35,13 +43,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
+import AppInputTextableCancel from '@src/components/io/partials/AppInputTextableCancel.vue';
 import useInput from '@src/composables/useInput';
 import useTheme from '@src/composables/useTheme';
+import { isValue } from '@src/lib/modules/definition';
 
 type Value = string | null;
 
@@ -54,6 +64,7 @@ type Props = {
   disabled?: boolean;
   fill?: boolean;
   placeholder?: string;
+  cancelable?: boolean;
 };
 
 type Emits = {
@@ -64,6 +75,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+
+const textInput = ref<HTMLInputElement | null>(null);
 
 const { theme } = useTheme();
 
@@ -85,6 +98,18 @@ function handleChange(evt: Event) {
   } else {
     onChange(value);
   }
+}
+
+const isCancelable = computed(() => props.cancelable && isValue(state.value.value));
+
+function handleCancel() {
+  onChange(null);
+  requestAnimationFrame(() => {
+    if (!textInput.value) {
+      return;
+    }
+    textInput.value.blur();
+  });
 }
 </script>
 
@@ -177,6 +202,11 @@ function handleChange(evt: Event) {
     .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
+    }
+
+    .mk-AppInputTextableCancel {
+        --mk-input-textable-cancel-color: var(--mk-input-text-icon-color);
+        --mk-input-textable-cancel-size: var(--mk-input-text-icon-size);
     }
 }
 </style>

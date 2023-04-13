@@ -16,6 +16,7 @@
           :style="`background-color: ${state.value};`"
         />
         <input
+          ref="colorInput"
           :name="props.name"
           type="color"
           :value="state.value"
@@ -39,12 +40,17 @@
             @blur="onBlur"
           >
         </span>
-        <AppIcon
-          v-if="!$slots['icon']"
-          icon="palette"
-          class="mk-AppInputColor-icon"
-        />
-        <slot name="icon" />
+        <AppInputTextableCancel
+          v-if="isCancelable"
+          :disabled="props.disabled"
+          @click="handleCancel"
+        >
+          <slot name="cancel" />
+        </AppInputTextableCancel>
+
+        <slot name="icon">
+          <AppIcon icon="palette" />
+        </slot>
       </div>
     </label>
     <AppInputHint v-if="props.hint">
@@ -57,12 +63,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import useInput from '@src/composables/useInput';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
+import AppInputTextableCancel from '@src/components/io/partials/AppInputTextableCancel.vue';
 import AppIcon from '@src/components/AppIcon.vue';
 import useTheme from '@src/composables/useTheme';
 import { isValue } from '@src/lib/modules/definition';
@@ -78,6 +85,7 @@ type Props = {
   disabled?: boolean;
   fill?: boolean;
   placeholder?: string;
+  cancelable?: boolean;
 };
 
 type Emits = {
@@ -88,6 +96,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+
+const colorInput = ref<HTMLInputElement | null>(null);
 
 const { theme } = useTheme();
 
@@ -123,6 +133,18 @@ function handleTextChange(evt: Event) {
   } else {
     onChange(`#${filteredValue}`);
   }
+}
+
+const isCancelable = computed(() => props.cancelable && isValue(state.value.value));
+
+function handleCancel() {
+  onChange(null);
+  requestAnimationFrame(() => {
+    if (!colorInput.value) {
+      return;
+    }
+    colorInput.value.blur();
+  });
 }
 </script>
 
@@ -242,6 +264,11 @@ function handleTextChange(evt: Event) {
     .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
+    }
+
+    .mk-AppInputTextableCancel {
+        --mk-input-textable-cancel-color: var(--mk-input-color-icon-color);
+        --mk-input-textable-cancel-size: var(--mk-input-color-icon-size);
     }
 }
 </style>

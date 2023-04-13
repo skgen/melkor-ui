@@ -13,6 +13,7 @@
       <div class="mk-AppInputNumber-input">
         <slot name="leading-icon" />
         <input
+          ref="numberInput"
           :name="props.name"
           type="number"
           :value="textValue"
@@ -25,6 +26,13 @@
           @focus="onFocus"
           @blur="onBlur"
         >
+        <AppInputTextableCancel
+          v-if="isCancelable"
+          :disabled="props.disabled"
+          @click="handleCancel"
+        >
+          <slot name="cancel" />
+        </AppInputTextableCancel>
         <slot name="trailing-icon" />
       </div>
     </label>
@@ -43,8 +51,10 @@ import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
+import AppInputTextableCancel from '@src/components/io/partials/AppInputTextableCancel.vue';
 import useInput from '@src/composables/useInput';
 import useTheme from '@src/composables/useTheme';
+import { isValue } from '@src/lib/modules/definition';
 
 type Value = number | null;
 
@@ -57,6 +67,7 @@ type Props = {
   disabled?: boolean;
   fill?: boolean;
   placeholder?: string;
+  cancelable?: boolean;
   min?: number;
   max?: number;
   step?: number;
@@ -70,6 +81,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+
+const numberInput = ref<HTMLInputElement | null>(null);
 
 const { theme } = useTheme();
 
@@ -104,6 +117,18 @@ function handleChange(evt: Event) {
   } else {
     onChange(numbered);
   }
+}
+
+const isCancelable = computed(() => props.cancelable && isValue(state.value.value));
+
+function handleCancel() {
+  onChange(null);
+  requestAnimationFrame(() => {
+    if (!numberInput.value) {
+      return;
+    }
+    numberInput.value.blur();
+  });
 }
 </script>
 
@@ -196,6 +221,11 @@ function handleChange(evt: Event) {
     .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
+    }
+
+    .mk-AppInputTextableCancel {
+        --mk-input-textable-cancel-color: var(--mk-input-number-icon-color);
+        --mk-input-textable-cancel-size: var(--mk-input-number-icon-size);
     }
 }
 </style>

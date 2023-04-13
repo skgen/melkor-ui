@@ -13,24 +13,30 @@
       <div class="mk-AppInputPassword-input">
 
         <slot name="leading-icon" />
-        <div class="mk-AppInputPassword-input-inner">
-          <input
-            :name="props.name"
-            :type="type"
-            :value="state.value"
-            :disabled="props.disabled"
-            @input="handleChange"
-            @focus="onFocus"
-            @blur="onBlur"
-          >
-          <button
-            class="mk-AppInputPassword-toggle"
-            :disabled="props.disabled"
-            @click="handleToggle"
-          >
-            <AppIcon :icon="icon" />
-          </button>
-        </div>
+        <input
+          ref="passwordInput"
+          :name="props.name"
+          :type="type"
+          :value="state.value"
+          :disabled="props.disabled"
+          @input="handleChange"
+          @focus="onFocus"
+          @blur="onBlur"
+        >
+        <AppInputTextableCancel
+          v-if="isCancelable"
+          :disabled="props.disabled"
+          @click="handleCancel"
+        >
+          <slot name="cancel" />
+        </AppInputTextableCancel>
+        <button
+          class="mk-AppInputPassword-toggle"
+          :disabled="props.disabled"
+          @click="handleToggle"
+        >
+          <AppIcon :icon="icon" />
+        </button>
 
         <slot name="trailing-icon" />
       </div>
@@ -51,8 +57,10 @@ import AppIcon from '@src/components/AppIcon.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
+import AppInputTextableCancel from '@src/components/io/partials/AppInputTextableCancel.vue';
 import useInput from '@src/composables/useInput';
 import useTheme from '@src/composables/useTheme';
+import { isValue } from '@src/lib/modules/definition';
 
 type Value = string | null;
 
@@ -64,6 +72,7 @@ type Props = {
   disabled?: boolean;
   label?: string;
   fill?: boolean;
+  cancelable?: boolean;
 };
 
 type Emits = {
@@ -74,6 +83,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+
+const passwordInput = ref<HTMLInputElement | null>(null);
 
 const { theme } = useTheme();
 
@@ -104,6 +115,18 @@ function handleChange(evt: Event) {
   } else {
     onChange(value);
   }
+}
+
+const isCancelable = computed(() => props.cancelable && isValue(state.value.value));
+
+function handleCancel() {
+  onChange(null);
+  requestAnimationFrame(() => {
+    if (!passwordInput.value) {
+      return;
+    }
+    passwordInput.value.blur();
+  });
 }
 
 </script>
@@ -142,7 +165,7 @@ function handleChange(evt: Event) {
     }
 
     &-input {
-        display: inline-flex;
+        display: flex;
         gap: var(--mk-input-password-spacing);
         align-items: center;
         width: 100%;
@@ -153,13 +176,6 @@ function handleChange(evt: Event) {
         transition:
             border-color var(--app-transition-duration-color),
             opacity var(--app-transition-duration-opacity);
-
-        &-inner {
-            display: flex;
-            gap: calc(var(--mk-input-password-spacing) / 2);
-            align-items: center;
-            width: 100%;
-        }
 
         .mk-AppIcon {
             --mk-icon-size: var(--mk-input-password-icon-size);
@@ -213,6 +229,11 @@ function handleChange(evt: Event) {
     .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
+    }
+
+    .mk-AppInputTextableCancel {
+        --mk-input-textable-cancel-color: var(--mk-input-password-icon-color);
+        --mk-input-textable-cancel-size: var(--mk-input-password-icon-size);
     }
 }
 </style>
