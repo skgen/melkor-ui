@@ -9,7 +9,7 @@
       @click="handlePrev"
     >
       <slot name="prev-icon" />
-      <mk-icon
+      <AppIcon
         v-if="!$slots['prev-icon']"
         icon="arrow_back_ios_new"
       />
@@ -38,7 +38,7 @@
           v-else
           class="mk-AppPagination-slot mk-AppPagination-gap"
         >
-          <mk-icon icon="more_horiz" />
+          <AppIcon icon="more_horiz" />
         </div>
       </template>
       <button
@@ -55,7 +55,7 @@
       @click="handleNext"
     >
       <slot name="next-icon" />
-      <mk-icon
+      <AppIcon
         v-if="!$slots['next-icon']"
         icon="arrow_forward_ios"
       />
@@ -65,6 +65,7 @@
 
 <script lang="ts" setup>
 import { computed, reactive } from 'vue';
+import AppIcon from '@src/components/AppIcon.vue';
 import usePagination from '@src/composables/usePagination';
 import useTheme from '@src/composables/useTheme';
 import { isValue } from '@src/lib/modules/definition';

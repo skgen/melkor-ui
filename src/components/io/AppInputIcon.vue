@@ -37,7 +37,7 @@
             class="mk-AppInputIcon-options"
           >
             <div class="mk-AppInputIcon-options-list">
-              <mk-infinite-scroll
+              <AppInfiniteScroll
                 scrollable
                 bottom
                 :distance="200"
@@ -66,7 +66,7 @@
                     </li>
                   </ul>
                 </template>
-              </mk-infinite-scroll>
+              </AppInfiniteScroll>
             </div>
           </div>
         </transition>
@@ -87,10 +87,11 @@ import isEqual from 'lodash/isEqual';
 import type {
   InputState, ValidateInput,
 } from '@src/definition';
+import AppIcon from '@src/components/AppIcon.vue';
+import AppInfiniteScroll from '@src/components/AppInfiniteScroll.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
-import AppIcon from '@src/components/AppIcon.vue';
 import useInput from '@src/composables/useInput';
 import useTheme from '@src/composables/useTheme';
 import { getIcons } from '@src/lib/modules/icons';

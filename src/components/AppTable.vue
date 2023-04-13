@@ -39,7 +39,7 @@
                 >
                   {{ header.value }}
                 </span>
-                <mk-icon
+                <AppIcon
                   v-if="header.key === activeHeaderKey && headerIcon"
                   :icon="headerIcon"
                 />
@@ -172,6 +172,7 @@ import { ref, computed, watch } from 'vue';
 import Draggable from 'vuedraggable';
 import AppTableRow from '@src/components/AppTableRow.vue';
 import AppTableCell from '@src/components/AppTableCell.vue';
+import AppIcon from '@src/components/AppIcon.vue';
 import {
   isDef, isNumber, isString, isValue,
 } from '@src/lib/modules/definition';

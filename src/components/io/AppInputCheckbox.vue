@@ -33,7 +33,7 @@
                 v-if="isChecked || !!$slots['checked-icon']"
                 name="mk-AppIcon"
               >
-                <mk-icon
+                <AppIcon
                   v-if="!$slots['checked-icon']"
                   icon="check"
                 />
@@ -63,6 +63,7 @@
 <script lang="ts" setup>
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputCheckable from '@src/components/io/abstract/AppInputCheckable.vue';
+import AppIcon from '@src/components/AppIcon.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
