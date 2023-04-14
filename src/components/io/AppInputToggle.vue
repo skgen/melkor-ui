@@ -10,20 +10,16 @@
     <template #default="{ inputName, checked: isChecked, onChange, state }">
       <div
         v-theme="theme"
-        class="mk-AppInputToggle"
-        :data-checked="isChecked"
-        :data-fill="props.fill || undefined"
-        :data-disabled="props.disabled || undefined"
         v-bind="$attrs"
+        class="mk-AppInputToggle"
+        :data-is-checked="isChecked || undefined"
+        :data-is-disabled="props.disabled || undefined"
+        :data-fill="props.fill || undefined"
       >
         <label class="mk-AppInputToggle-label">
           <AppInputLabel v-if="props.label">
             {{ props.label }}
           </AppInputLabel>
-          <span
-            v-if="stateLabel(isChecked)"
-            class="mk-AppInputToggle-stateLabel"
-          >{{ stateLabel(isChecked) }}</span>
           <div class="mk-AppInputToggle-input">
             <input
               :name="inputName"
@@ -32,46 +28,24 @@
               :disabled="props.disabled"
               @input="onChange"
             >
-            <div class="mk-AppInputToggle-target">
-              <template v-if="!props.iconInBackground">
-                <transition name="mk-AppIcon">
-                  <slot
-                    v-if="isChecked && $slots['checked-icon']"
-                    name="checked-icon"
-                  />
-                </transition>
-                <transition name="mk-AppIcon">
-                  <slot
-                    v-if="!isChecked && $slots['unchecked-icon']"
-                    name="unchecked-icon"
-                  />
-                </transition>
-              </template>
-            </div>
-            <div
-              v-if="props.iconInBackground"
-              class="mk-AppInputToggle-icons"
+            <span
+              v-if="stateLabel(isChecked)"
+              class="mk-AppInputToggle-stateLabel"
             >
-              <transition name="mk-AppIcon">
-                <div
-                  v-if="isChecked && $slots['checked-icon']"
-                  class="mk-AppInputToggle-icon"
-                  data-state="checked"
-                >
-
-                  <slot name="checked-icon" />
-                </div>
-              </transition>
-              <transition name="mk-AppIcon">
-                <div
-                  v-if="!isChecked && $slots['unchecked-icon']"
-                  class="mk-AppInputToggle-icon"
-                  data-state="unchecked"
-                >
-                  <slot name="unchecked-icon" />
-                </div>
-              </transition>
-            </div>
+              {{ stateLabel(isChecked) }}
+            </span>
+            <AppToggle
+              :checked="isChecked"
+              :disabled="props.disabled"
+              :icon-in-background="props.iconInBackground"
+            >
+              <template #checked-icon>
+                <slot name="checked-icon" />
+              </template>
+              <template #unchecked-icon>
+                <slot name="unchecked-icon" />
+              </template>
+            </AppToggle>
           </div>
         </label>
         <AppInputHint v-if="props.hint">
@@ -88,6 +62,7 @@
 <script lang="ts" setup>
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputCheckable from '@src/components/io/abstract/AppInputCheckable.vue';
+import AppToggle from '@src/components/checkables/AppToggle.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
@@ -131,18 +106,10 @@ function stateLabel(checked: boolean) {
 @import "@style/mixins";
 
 .mk-AppInputToggle {
-    --mk-input-toggle-background-color: var(--c-grey-50);
     --mk-input-toggle-color: var(--app-input-icon-color);
-    --mk-input-toggle-color-active: var(--app-success-color);
-    --mk-input-toggle-color-on-active: var(--c-white);
-    --mk-input-toggle-color-on-background: var(--c-white);
     --mk-input-toggle-font-size: var(--app-input-font-size);
     --mk-input-toggle-line-height: var(--app-input-line-height);
-    --mk-input-toggle-icon-size: calc(var(--mk-input-toggle-size) - calc(var(--mk-input-toggle-target-padding) * 2));
-    --mk-input-toggle-padding: 2px;
     --mk-input-toggle-spacing: var(--app-m-1);
-    --mk-input-toggle-size: 16px;
-    --mk-input-toggle-target-padding: calc(var(--mk-input-toggle-padding) / 2);
 
     $this: &;
 
@@ -154,9 +121,12 @@ function stateLabel(checked: boolean) {
         align-items: center;
     }
 
-    &-stateLabel,
     &-input {
+        display: flex;
+        gap: var(--mk-input-toggle-spacing);
+        align-items: center;
         cursor: pointer;
+        transition: opacity var(--app-transition-duration-opacity);
     }
 
     &-stateLabel {
@@ -166,116 +136,20 @@ function stateLabel(checked: boolean) {
         transition: opacity var(--app-transition-duration-opacity);
     }
 
-    &-input {
-        position: relative;
-        display: block;
-        width: calc(var(--mk-input-toggle-size) * 2 + var(--mk-input-toggle-padding) * 2);
-        padding: var(--mk-input-toggle-padding);
-        background-color: var(--mk-input-toggle-background-color);
-        border-radius: var(--mk-input-toggle-size);
-        transition:
-            background-color var(--app-transition-duration-background),
-            opacity var(--app-transition-duration-opacity);
-    }
-
-    &-target {
-        position: relative;
-        width: var(--mk-input-toggle-size);
-        height: var(--mk-input-toggle-size);
-        user-select: none;
-        background-color: var(--mk-input-toggle-color-on-background);
-        border-radius: 50%;
-        transition:
-            background-color var(--app-transition-duration-background),
-            transform var(--app-transition-duration-transform);
-
-        .mk-AppIcon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-
-            --mk-icon-color: var(--mk-input-toggle-background-color);
-        }
-    }
-
-    .mk-AppIcon {
-        --mk-icon-size: var(--mk-input-toggle-icon-size);
-
-        &-enter-active,
-        &-leave-active {
-            transition: opacity var(--app-transition-duration-opacity);
-        }
-
-        &-enter-from,
-        &-leave-to {
-            opacity: 0;
-        }
-    }
-
-    &-icon {
-        position: absolute;
-        top: 50%;
-
-        .mk-AppIcon {
-            display: block;
-            opacity: 0.6;
-
-            --mk-icon-color: var(--mk-input-toggle-color-on-background);
-        }
-
-        &[data-state="checked"] {
-            left: calc((var(--mk-input-toggle-padding) + var(--mk-input-toggle-size) / 2));
-            transform: translate(-50%, -50%);
-        }
-
-        &[data-state="unchecked"] {
-            right: calc((var(--mk-input-toggle-padding) + var(--mk-input-toggle-size) / 2));
-            transform: translate(50%, -50%);
-        }
-    }
-
     input {
         @include a11y-hidden;
-    }
-
-    &[data-checked="true"] {
-        #{$this} {
-            &-target {
-                background-color: var(--mk-input-toggle-color-on-active);
-                transform: translate(100%, 0);
-
-                .mk-AppIcon {
-                    --mk-icon-color: var(--mk-input-toggle-color-active);
-                }
-            }
-
-            &-input {
-                background-color: var(--mk-input-toggle-color-active);
-            }
-        }
     }
 
     &[data-fill="true"] {
         @include mk-fill;
     }
 
-    &[data-disabled="true"] {
+    &[data-is-disabled="true"] {
+
         #{$this} {
-            &-input,
-            &-stateLabel {
+            &-input {
                 cursor: default;
                 opacity: var(--app-input-opacity-disabled);
-            }
-
-            &-target {
-                .mk-AppIcon {
-                    --mk-icon-color: var(--app-input-color-disabled);
-                }
-            }
-
-            &-input {
-                background-color: var(--app-input-color-disabled);
             }
         }
     }
@@ -293,6 +167,10 @@ function stateLabel(checked: boolean) {
     .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
+    }
+
+    .mk-AppToggle {
+        opacity: 1;
     }
 }
 </style>

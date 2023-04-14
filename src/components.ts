@@ -43,6 +43,7 @@ export { default as AppInputIcon } from '@src/components/io/AppInputIcon.vue';
 
 export { default as AppCheckbox } from '@src/components/checkables/AppCheckbox.vue';
 export { default as AppRadio } from '@src/components/checkables/AppRadio.vue';
+export { default as AppToggle } from '@src/components/checkables/AppToggle.vue';
 
 export { default as AppInputError } from '@src/components/io/decoration/AppInputError.vue';
 export { default as AppInputHint } from '@src/components/io/decoration/AppInputHint.vue';
