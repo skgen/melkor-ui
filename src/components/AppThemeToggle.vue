@@ -12,7 +12,7 @@
       >{{ label }}</span>
       <div class="mk-AppThemeToggle-input">
         <div class="mk-AppThemeToggle-icons">
-          <transition-group name="mk-AppIcon">
+          <transition-group name="mk-fade">
             <AppIcon
               v-if="theme?.theme === Theme.light"
               icon="light_mode"
@@ -31,7 +31,7 @@
           class="mk-AppThemeToggle-target"
           :data-scheme="theme?.theme"
         >
-          <transition name="mk-AppIcon">
+          <transition name="mk-fade">
             <AppIcon
               v-if="theme?.theme === Theme.auto"
               icon="settings"
@@ -157,16 +157,6 @@ function handleNext() {
 
     .mk-AppIcon {
         --mk-icon-size: var(--mk-theme-toggle-icon-size);
-
-        &-enter-active,
-        &-leave-active {
-            transition: opacity var(--app-transition-duration-opacity);
-        }
-
-        &-enter-from,
-        &-leave-to {
-            opacity: 0 !important;
-        }
     }
 
     &-icons {

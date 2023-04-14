@@ -166,5 +166,9 @@ function handleChange(evt: Event) {
         display: block;
         margin-top: var(--app-m-1);
     }
+
+    .mk-AppRadio {
+        opacity: 1;
+    }
 }
 </style>

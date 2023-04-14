@@ -10,9 +10,9 @@
     <template #default="{ inputName, checked: isChecked, onChange, state }">
       <div
         v-theme="theme"
-        class="mk-AppInputCheckbox"
-        :data-is-checked="(props.checked || !!$slots['checked-icon']) || undefined"
         v-bind="$attrs"
+        class="mk-AppInputCheckbox"
+        :data-is-checked="isChecked || undefined"
         :data-is-disabled="props.disabled || undefined"
       >
         <label>
@@ -113,7 +113,6 @@ function stateLabel(checked: boolean) {
     }
 
     &-input {
-        position: relative;
         display: flex;
         gap: var(--mk-input-checkbox-spacing);
         align-items: center;
@@ -127,18 +126,6 @@ function stateLabel(checked: boolean) {
             font-size: var(--mk-input-checkbox-font-size);
             line-height: var(--mk-input-checkbox-line-height);
             color: var(--mk-input-checkbox-color);
-        }
-    }
-
-    .mk-AppIcon {
-        &-enter-active,
-        &-leave-active {
-            transition: opacity var(--app-transition-duration-opacity);
-        }
-
-        &-enter-from,
-        &-leave-to {
-            opacity: 0;
         }
     }
 
@@ -164,6 +151,10 @@ function stateLabel(checked: boolean) {
     .mk-AppInputError {
         display: block;
         margin-top: var(--app-m-1);
+    }
+
+    .mk-AppCheckbox {
+        opacity: 1;
     }
 }
 </style>

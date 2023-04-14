@@ -1,22 +1,24 @@
 <template>
   <div
+    v-theme="theme"
     class="mk-AppCheckbox"
     :data-is-checked="props.checked || undefined"
     :data-is-disabled="props.disabled || undefined"
   >
-    <transition-group name="mk-AppIcon">
+    <transition name="mk-fade">
       <slot>
         <AppIcon
           v-if="props.checked"
           icon="check"
         />
       </slot>
-    </transition-group>
+    </transition>
   </div>
 </template>
 
 <script lang="ts" setup>
 import AppIcon from '@src/components/AppIcon.vue';
+import useTheme from '@src/composables/useTheme';
 
 type Props = {
   checked?: boolean;
@@ -24,6 +26,8 @@ type Props = {
 };
 
 const props = defineProps<Props>();
+
+const { theme } = useTheme();
 </script>
 
 <style lang="scss">
@@ -37,7 +41,7 @@ const props = defineProps<Props>();
     --mk-checkbox-size: 16px;
 
     position: relative;
-    flex: 0 0 var(--mk-checkbox-size);
+    display: block;
     width: var(--mk-checkbox-size);
     height: var(--mk-checkbox-size);
     user-select: none;
@@ -45,7 +49,8 @@ const props = defineProps<Props>();
     border-radius: var(--mk-checkbox-border-radius);
     transition:
         background-color var(--app-transition-duration-background),
-        border-color var(--app-transition-duration-color);
+        border-color var(--app-transition-duration-background),
+        opacity var(--app-transition-duration-opacity);
 
     .mk-AppIcon {
         position: absolute;
@@ -68,6 +73,7 @@ const props = defineProps<Props>();
 
     &[data-is-disabled="true"] {
         border-color: var(--app-input-color-disabled);
+        opacity: var(--app-input-opacity-disabled);
     }
 }
 </style>

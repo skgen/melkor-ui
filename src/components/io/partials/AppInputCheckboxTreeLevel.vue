@@ -1,5 +1,8 @@
 <template>
-  <div class="mk-AppInputCheckboxTreeLevel">
+  <div
+    v-theme="theme"
+    class="mk-AppInputCheckboxTreeLevel"
+  >
     <AppInputCheckbox
       :model-value="modelValue"
       v-bind="props.input.options"
@@ -35,6 +38,7 @@ import isEqual from 'lodash/isEqual';
 import { computed } from 'vue';
 import { createInputState, validateInputState } from '@src/composables/useInput';
 import { isDef, isValue } from '@src/lib/modules/definition';
+import useTheme from '@src/composables/useTheme';
 
 type Props = {
   input: CheckboxInputModel<Value, Value>;
@@ -48,6 +52,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+
+const { theme } = useTheme();
 
 const someCheckboxTreeLevelsChecked = computed(() => (props.children ? isSomeCheckboxTreeLevelsChecked(props.children) : false));
 const allCheckboxTreeLevelsChecked = computed(() => (props.children ? isAllCheckboxTreeLevelsChecked(props.children) : false));

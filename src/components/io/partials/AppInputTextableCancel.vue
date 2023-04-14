@@ -1,5 +1,8 @@
 <template>
-  <button class="mk-AppInputTextableCancel">
+  <button
+    v-theme="theme"
+    class="mk-AppInputTextableCancel"
+  >
     <slot>
       <AppIcon
         icon="cancel"
@@ -11,6 +14,9 @@
 
 <script lang="ts" setup>
 import AppIcon from '@src/components/AppIcon.vue';
+import useTheme from '@src/composables/useTheme';
+
+const { theme } = useTheme();
 </script>
 
 <style lang="scss">
