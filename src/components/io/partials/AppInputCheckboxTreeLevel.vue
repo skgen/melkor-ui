@@ -6,7 +6,7 @@
     <AppInputCheckbox
       :model-value="modelValue"
       v-bind="props.input.options"
-      :disabled="props.disabled ?? props.input.options.disabled"
+      :disabled="props.disabled || props.input.options.disabled"
       @update:model-value="handleInputChange"
     >
       <template
