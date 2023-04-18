@@ -130,11 +130,14 @@ const disabled = computed(() => props.disabled || undefined);
     &[data-type="text"] {
         color: var(--mk-button-hollowed-text-color);
         background-color: transparent;
-        border-color: transparent;
 
         &[data-on-primary="true"] {
             color: var(--app-text-color-on-primary);
         }
+    }
+
+    &[data-type="text"] {
+        border-color: transparent;
     }
 
     &[data-type="outlined"] {
