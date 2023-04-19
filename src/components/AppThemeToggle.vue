@@ -84,15 +84,14 @@ function handleNext() {
     --mk-theme-toggle-spacing: var(--app-m-1);
     --mk-theme-toggle-size: 16px;
     --mk-theme-toggle-padding: 2px;
-    --mk-theme-toggle-target-padding: calc(var(--mk-theme-toggle-padding) / 2);
-    --mk-theme-toggle-icon-size: calc(var(--mk-theme-toggle-size) - calc(var(--mk-theme-toggle-target-padding) * 4));
+    --mk-theme-toggle-icon-size: 12px;
 
     @include light {
-        --mk-theme-toggle-icon-color-on-background: var(--c-grey-20);
+        --mk-theme-toggle-icon-color-on-background: var(--c-grey-40);
     }
 
     @include dark {
-        --mk-theme-toggle-icon-color-on-background: var(--c-grey-95);
+        --mk-theme-toggle-icon-color-on-background: var(--c-grey-70);
     }
 
     $this: &;
@@ -164,7 +163,8 @@ function handleNext() {
             position: absolute;
             top: 50%;
             display: block;
-            opacity: 0.6;
+
+            // opacity: 0.6;
 
             --mk-icon-color: var(--mk-theme-toggle-icon-color-on-background);
 
