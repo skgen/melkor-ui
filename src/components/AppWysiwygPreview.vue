@@ -30,14 +30,17 @@ const props = defineProps<Props>();
 @import "@style/mixins";
 
 .mk-AppWysiwygPreview {
-    --mk-wysiwyg-preview-text-color: var(--app-text-color);
-    --mk-wysiwyg-preview-text-color-accent: var(--app-primary-color);
-    --mk-wysiwyg-preview-text-color-soft: var(--app-text-color-soft);
     --mk-wysiwyg-preview-background-color: transparent;
     --mk-wysiwyg-preview-background-color-soft: var(--app-background-color-soft);
     --mk-wysiwyg-preview-background-color-highlight: var(--app-background-color-highlight);
     --mk-wysiwyg-preview-border-color: var(--app-border-color);
     --mk-wysiwyg-preview-border-color-soft: var(--app-border-color-highlight);
+    --mk-wysiwyg-preview-font-family: var(--app-font-family-base);
+    --mk-wysiwyg-preview-font-size: var(--app-font-size);
+    --mk-wysiwyg-preview-line-height: var(--app-line-height);
+    --mk-wysiwyg-preview-text-color: var(--app-text-color);
+    --mk-wysiwyg-preview-text-color-accent: var(--app-primary-color);
+    --mk-wysiwyg-preview-text-color-soft: var(--app-text-color-soft);
 
     @include light {
         --mk-wysiwyg-preview-background-color-attention: rgb(var(--app-primary-tone-color) / 0.15);
@@ -48,9 +51,9 @@ const props = defineProps<Props>();
     }
 
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-    font-size: 16px;
-    line-height: 1.5;
+    font-family: var(--mk-wysiwyg-preview-font-family);
+    font-size: var(--mk-wysiwyg-preview-font-size);
+    line-height: var(--mk-wysiwyg-preview-line-height);
     color: var(--mk-wysiwyg-preview-text-color);
     word-wrap: break-word;
     background-color: var(--mk-wysiwyg-preview-background-color);
