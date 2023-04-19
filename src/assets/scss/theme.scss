@@ -23,8 +23,11 @@
     --c-orange: rgb(var(--c-tone-orange));
 
     // App
-    --app-font-family-base: "Roboto Flex", sans-serif;
-    --app-family-special: serif;
+    // definitions
+    --app-font-family-base-def: "Roboto Flex";
+    /* stylelint-disable-next-line value-keyword-case */
+    --app-font-family-fallback-def: Oxygen, -apple-system, Ubuntu, sans-serif;
+    --app-font-family-base: var(--app-font-family-base-def), var(--app-font-family-fallback-def);
     --app-font-size: 16px;
     --app-line-height: 1.1875;
 
