@@ -32,7 +32,6 @@
 <script lang="ts" setup>
 import {
   computed,
-  onMounted,
   onUnmounted,
   ref,
   watch,
@@ -84,34 +83,24 @@ function handleClose() {
   emit('update:modelValue', false);
 }
 
-watch([
-  () => props.modelValue,
-  () => layerStore.isActive,
-], ([valueActive, isActive]) => {
-  requestAnimationFrame(() => {
-    renderActive.value = valueActive && isActive;
-  });
-});
-
 watch(renderActive, (newRenderActive) => {
-  requestAnimationFrame(() => {
-    renderContent.value = newRenderActive;
-  });
+  renderContent.value = newRenderActive;
+}, {
+  flush: 'post',
 });
 
 watch(() => props.modelValue, (newModelValue) => {
   handleNotifyStore(newModelValue);
-});
-
-onMounted(() => {
-  if (props.modelValue) {
-    handleNotifyStore(props.modelValue);
-  }
+  renderActive.value = newModelValue;
+}, {
+  immediate: true,
 });
 
 onUnmounted(() => {
-  handleClose();
-  handleNotifyStore(false);
+  if (props.modelValue) {
+    handleClose();
+    handleNotifyStore(false);
+  }
 });
 </script>
 
