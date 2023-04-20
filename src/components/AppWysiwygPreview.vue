@@ -44,10 +44,12 @@ const props = defineProps<Props>();
 
     @include light {
         --mk-wysiwyg-preview-background-color-attention: rgb(var(--app-primary-tone-color) / 0.15);
+        --mk-wysiwyg-preview-text-color-attention: var(--app-text-color);
     }
 
     @include dark {
         --mk-wysiwyg-preview-background-color-attention: var(--app-primary-color);
+        --mk-wysiwyg-preview-text-color-attention: var(--app-text-color-on-primary);
     }
 
     margin: 0;
@@ -205,7 +207,7 @@ const props = defineProps<Props>();
 
     mark {
         @include raw {
-            color: var(--mk-wysiwyg-preview-text-color);
+            color: var(--mk-wysiwyg-preview-text-color-attention);
             background-color: var(--mk-wysiwyg-preview-background-color-attention);
         }
     }
