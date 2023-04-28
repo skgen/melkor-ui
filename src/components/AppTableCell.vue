@@ -101,6 +101,7 @@ const { theme } = useTheme();
 
     $this: &;
 
+    height: 100%;
     padding: 0;
     border-bottom: 1px solid var(--mk-table-cell-border-color);
 
