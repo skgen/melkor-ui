@@ -129,3 +129,17 @@
         @content;
     }
 }
+
+@mixin not-disabled() {
+    &:not([disabled]),
+    &:not([data-disabled="true"]) {
+        @content;
+    }
+}
+
+@mixin disabled() {
+    &[disabled],
+    &[data-disabled="true"] {
+        @content;
+    }
+}

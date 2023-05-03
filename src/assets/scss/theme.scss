@@ -40,7 +40,7 @@
 
     // Shapes
     --app-border-radius: 4px;
-    --app-opacity-disabled: 0.2;
+    --app-opacity-disabled: 0.4;
 
     // Transitions
     --app-transition-duration-1: 128ms;
@@ -95,6 +95,7 @@
     --app-heading-color: var(--app-theme-color-contrast);
     --app-heading-color-on-contrast: var(--app-theme-color);
     --app-text-color-on-primary: var(--app-text-color-on-contrast);
+    --app-text-color-on-background-color-on-primary: var(--app-text-color);
 
     // Borders
     --app-border-color: var(--c-grey-80);
@@ -131,7 +132,7 @@
     --app-theme-color-contrast: var(--c-white);
 
     // Background
-    --app-background-color: var(--app-theme-color);
+    --app-background-color: var(--c-grey-3);
     --app-background-color-hover: var(--c-grey-5);
     --app-background-color-soft: var(--c-grey-5);
     --app-background-color-soft-hover: var(--c-grey-20);
@@ -149,6 +150,7 @@
     --app-heading-color: var(--app-theme-color-contrast);
     --app-heading-color-on-contrast: var(--app-theme-color);
     --app-text-color-on-primary: var(--app-text-color);
+    --app-text-color-on-background-color-on-primary: var(--app-theme-color);
 
     // Borders
     --app-border-color: var(--c-grey-30);
