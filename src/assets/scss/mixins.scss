@@ -131,8 +131,7 @@
 }
 
 @mixin not-disabled() {
-    &:not([disabled]),
-    &:not([data-disabled="true"]) {
+    &:not([disabled], [data-disabled="true"]) {
         @content;
     }
 }
