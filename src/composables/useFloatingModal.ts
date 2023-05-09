@@ -1,17 +1,17 @@
 import { useFloatingLayerStore } from '@src/stores/floating-layer';
 import useTheme from '@src/composables/useTheme';
 import {
-  onUnmounted, onUpdated, ref, useAttrs, watch, type DefineComponent, type Ref,
+  onUnmounted, onUpdated, ref, useAttrs, watch, type Ref, type ComponentPublicInstance,
 } from 'vue';
 import clone from 'lodash/clone';
 
-type HookParams = {
+type UseFloatingModalOptions = {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  floatingEl: Ref<DefineComponent<{}, {}, any>>;
+  floatingEl: Ref<ComponentPublicInstance>;
 };
 
-export default function useFloatingModal(params: HookParams) {
-  const { floatingEl } = params;
+export default function useFloatingModal(options: UseFloatingModalOptions) {
+  const { floatingEl } = options;
   const { theme } = useTheme();
   const layerStore = useFloatingLayerStore();
 

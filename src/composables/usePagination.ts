@@ -1,17 +1,17 @@
 import { toRefs } from '@vueuse/core';
 import { computed, reactive } from 'vue';
 
-type UsePaginationParams = {
+type UsePaginationOptions = {
   page: number;
   range: [number, number];
   gap?: number;
 };
 
-const defaultParams: Required<Pick<UsePaginationParams, 'gap'>> = {
+const defaultParams: Required<Pick<UsePaginationOptions, 'gap'>> = {
   gap: 1,
 };
 
-export default (params: UsePaginationParams) => {
+export default (params: UsePaginationOptions) => {
   const refParams = {
     ...toRefs(params),
     gap: computed(() => params.gap ?? defaultParams.gap),
