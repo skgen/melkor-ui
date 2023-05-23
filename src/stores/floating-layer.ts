@@ -9,6 +9,8 @@ export type FloatingLayerStoreState = {
   modals: string[];
 };
 
+const FLOATING_LAYER_KEY = 'data-is-floating-layer-active';
+
 const forbiddenKeys = ['style', 'class', 'id', 'aria-hidden', 'data-popper-placement', 'data-theme'];
 
 function filterAttrsKeys(attrs: Record<string, unknown>) {
@@ -41,15 +43,25 @@ export const useFloatingLayerStore = defineStore({
   state: (): FloatingLayerStoreState => ({
     modals: [],
   }),
+  getters: {
+    modalCount: (state) => state.modals.length,
+    isActive: (state) => state.modals.length > 0,
+  },
   actions: {
     showModal(id: string) {
       const index = this.modals.indexOf(id);
       if (index === -1) {
         this.modals = [...this.modals, id];
       }
+      if (this.isActive) {
+        document.body.setAttribute(FLOATING_LAYER_KEY, 'true');
+      }
     },
     hideModal(id: string) {
       this.modals = this.modals.filter((mid) => mid !== id);
+      if (!this.isActive) {
+        document.body.removeAttribute(FLOATING_LAYER_KEY);
+      }
     },
     updateModalTheme(id: string, theme: string) {
       const el = document.getElementById(id);

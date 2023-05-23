@@ -4,6 +4,7 @@
     to="#mk-fullscreen-layer"
   >
     <div
+      :id="id"
       v-theme="theme"
       class="mk-AppFullscreenView"
       v-bind="$attrs"
@@ -38,6 +39,7 @@ import {
 } from 'vue';
 import { useFullscreenLayerStore } from '@src/stores/fullscreen-layer';
 import useTheme from '@src/composables/useTheme';
+import { nanoid } from 'nanoid';
 
 type Props = {
   modelValue: boolean;
@@ -57,6 +59,7 @@ const emit = defineEmits<Emits>();
 
 const { theme } = useTheme();
 
+const id = nanoid();
 const renderActive = ref(false);
 const renderContent = ref(renderActive.value);
 
@@ -76,7 +79,11 @@ const centerAttr = computed(() => {
 const layerStore = useFullscreenLayerStore();
 
 function handleNotifyStore(active: boolean) {
-  layerStore.mutateLayer(active);
+  if (active) {
+    layerStore.showView(id);
+  } else {
+    layerStore.hideView(id);
+  }
 }
 
 function handleClose() {

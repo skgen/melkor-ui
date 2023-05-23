@@ -1,32 +1,34 @@
 import { defineStore } from 'pinia';
-import { warn } from '@src/lib/modules/logger';
+
+const FULLSCREEN_LAYER_KEY = 'data-is-fullscreen-layer-active';
 
 export type FullscreenLayerStoreState = {
-  modalCount: number;
+  views: string[];
 };
 
 export const useFullscreenLayerStore = defineStore({
   id: 'mk-fullscreen-layer',
   state: (): FullscreenLayerStoreState => ({
-    modalCount: 0,
+    views: [],
   }),
   getters: {
-    isActive: (state) => state.modalCount > 0,
+    modalCount: (state) => state.views.length,
+    isActive: (state) => state.views.length > 0,
   },
   actions: {
-    mutateLayer(active: boolean) {
-      if (active) {
-        this.modalCount += 1;
-      } else if (this.modalCount > 0) {
-        this.modalCount -= 1;
-      } else {
-        warn('Something went wrong... a remove mutation fired in fullscreen layer while no active modal exists.');
+    showView(id: string) {
+      const index = this.views.indexOf(id);
+      if (index === -1) {
+        this.views = [...this.views, id];
       }
-
       if (this.isActive) {
-        document.body.setAttribute('data-fullscreen-modal', 'true');
-      } else {
-        document.body.removeAttribute('data-fullscreen-modal');
+        document.body.setAttribute(FULLSCREEN_LAYER_KEY, 'true');
+      }
+    },
+    hideView(id: string) {
+      this.views = this.views.filter((mid) => mid !== id);
+      if (!this.isActive) {
+        document.body.removeAttribute(FULLSCREEN_LAYER_KEY);
       }
     },
   },

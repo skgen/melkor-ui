@@ -31,7 +31,7 @@ const theme = computed<ThemeInstance>(() => ({
 </script>
 
 <style lang="scss">
-body[data-fullscreen-modal="true"] {
+body[data-is-fullscreen-layer-active="true"] {
     .mk-TheApp {
         filter: blur(1px);
     }

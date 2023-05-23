@@ -6,7 +6,6 @@ import {
 import clone from 'lodash/clone';
 
 type UseFloatingModalOptions = {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   floatingEl: Ref<ComponentPublicInstance>;
 };
 
@@ -16,6 +15,8 @@ export default function useFloatingModal(options: UseFloatingModalOptions) {
   const layerStore = useFloatingLayerStore();
 
   const attrs = useAttrs();
+
+  let cachedId: string | null = null;
 
   const spreadAttrs = ref(attrs);
 
@@ -33,6 +34,7 @@ export default function useFloatingModal(options: UseFloatingModalOptions) {
       return null;
     }
     const id = child.getAttribute('aria-describedby');
+    cachedId = id;
     return id;
   }
 
@@ -50,7 +52,7 @@ export default function useFloatingModal(options: UseFloatingModalOptions) {
 
   function handleHide() {
     const id = getModalId();
-    if (!id || !theme) {
+    if (!id) {
       return;
     }
     layerStore.hideModal(id);
@@ -99,7 +101,9 @@ export default function useFloatingModal(options: UseFloatingModalOptions) {
 
   onUnmounted(() => {
     observer.disconnect();
-    handleHide();
+    if (cachedId) {
+      layerStore.hideModal(cachedId);
+    }
   });
 
   return {

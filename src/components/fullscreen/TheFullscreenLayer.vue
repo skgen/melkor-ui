@@ -42,7 +42,7 @@ const { theme } = useTheme();
 }
 
 body {
-    &:not([data-fullscreen-modal="true"]) {
+    &:not([data-is-fullscreen-layer-active="true"]) {
         .mk-TheFullscreenLayer {
             pointer-events: none;
             user-select: none;
@@ -53,7 +53,7 @@ body {
         }
     }
 
-    &[data-fullscreen-modal="true"] {
+    &[data-is-fullscreen-layer-active="true"] {
         overflow: hidden;
     }
 }
