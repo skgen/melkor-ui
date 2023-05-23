@@ -276,6 +276,7 @@ onClickOutside(input, handleClose);
         position: absolute;
         bottom: 0;
         left: 0;
+        z-index: 1;
         background-color: var(--mk-input-icon-option-background-color);
         border: var(--mk-input-icon-border-width) solid var(--mk-input-icon-border-color);
         border-radius: var(--mk-input-icon-border-radius);
