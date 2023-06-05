@@ -48,7 +48,7 @@
                   :key="key"
                 >
                   <div class="mk-AppInputIcon-options-title">
-                    {{ $t(`melkor.component.inputIcon.${key}`) }}
+                    {{ $t(`melkor.component.AppInputIcon.${key}`) }}
                   </div>
                   <ul
                     v-if="group.length > 0"
