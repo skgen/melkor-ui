@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputIcon"
-    :data-focus="focus || undefined"
+    :data-focus="state.focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -164,7 +164,7 @@ const open = ref(false);
 const input = ref<HTMLDivElement | null>(null);
 
 const {
-  onChange, onFocus, onBlur, state, focus,
+  onChange, onFocus, onBlur, state,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -175,7 +175,7 @@ function isSelectedOption(option: Value) {
 }
 
 function handleChange(newIcon: Value) {
-  onChange(newIcon);
+  onChange({ value: newIcon });
 }
 
 function handleOpen() {

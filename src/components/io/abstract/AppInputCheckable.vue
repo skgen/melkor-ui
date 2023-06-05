@@ -53,9 +53,9 @@ function handleChange(evt: Event) {
   }
 
   if (renderChecked.value) {
-    onChange(props.unchecked);
+    onChange({ value: props.unchecked });
   } else {
-    onChange(props.checked);
+    onChange({ value: props.checked });
   }
 }
 </script>

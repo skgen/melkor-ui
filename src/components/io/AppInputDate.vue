@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputDate"
-    :data-focus="focus || undefined"
+    :data-focus="state.focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -102,7 +102,7 @@ const dateInput = ref<HTMLInputElement | null>(null);
 const { theme } = useTheme();
 
 const {
-  onChange, onFocus, onBlur, state, focus,
+  onChange, onFocus, onBlur, state,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -138,23 +138,37 @@ function handleChange(evt: Event) {
   const { value } = evt.target as HTMLInputElement;
 
   if (value === '') {
-    onChange(null);
+    onChange({ value: null });
   } else {
-    onChange(new Date(value));
+    onChange({ value: new Date(value) });
   }
 }
 
 const isCancelable = computed(() => props.cancelable && isValue(state.value.value));
 
 function handleCancel() {
-  onChange(null);
-  requestAnimationFrame(() => {
-    if (!dateInput.value) {
-      return;
-    }
-    dateInput.value.blur();
-  });
+  onChange({ value: null });
+  onBlur();
 }
+
+function focus() {
+  if (!dateInput.value) {
+    return;
+  }
+  dateInput.value.focus();
+}
+
+function blur() {
+  if (!dateInput.value) {
+    return;
+  }
+  dateInput.value.blur();
+}
+
+defineExpose({
+  focus,
+  blur,
+});
 </script>
 
 <style lang="scss">

@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputTextarea"
-    :data-focus="focus || undefined"
+    :data-focus="state.focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
@@ -71,10 +71,12 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const emit = defineEmits<Emits>();
 
+const textareaInput = ref<HTMLTextAreaElement | null>(null);
+
 const { theme } = useTheme();
 
 const {
-  onChange, onFocus, onBlur, state, focus,
+  onChange, onFocus, onBlur, state,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -87,12 +89,30 @@ function handleChange(evt: Event) {
   const { value } = evt.target as HTMLTextAreaElement;
 
   if (value === '') {
-    onChange(null);
+    onChange({ value: null });
   } else {
-    onChange(value);
+    onChange({ value });
   }
 }
 
+function focus() {
+  if (!textareaInput.value) {
+    return;
+  }
+  textareaInput.value.focus();
+}
+
+function blur() {
+  if (!textareaInput.value) {
+    return;
+  }
+  textareaInput.value.blur();
+}
+
+defineExpose({
+  focus,
+  blur,
+});
 </script>
 
 <style lang="scss">

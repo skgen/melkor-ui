@@ -102,13 +102,13 @@ const { onChange, state } = useInput<Value>({
 
 function processFiles(files: File[] | null) {
   if (!isValue(files)) {
-    onChange([]);
+    onChange({ value: [] });
   } else {
     const newFiles = [...state.value.value];
     for (let i = 0; i < files.length; i += 1) {
       newFiles.push(fileToFileModel(files[i]));
     }
-    onChange(newFiles);
+    onChange({ value: newFiles });
   }
 }
 
@@ -121,7 +121,7 @@ function handleDelete(indexToRemove: number) {
     return;
   }
   const newValue = state.value.value.filter((v, index) => index !== indexToRemove);
-  onChange(newValue);
+  onChange({ value: newValue });
 }
 
 function handleChange(evt: Event) {
