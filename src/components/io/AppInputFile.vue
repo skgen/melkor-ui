@@ -21,11 +21,11 @@
           @input="handleChange"
         >
         <i18n-t
-          keypath="melkor.component.inputFile.dragdrop"
+          keypath="melkor.component.AppInputFile.dragdrop"
           scope="global"
         >
           <template #search>
-            <em>{{ t(`melkor.component.inputFile.search`) }}</em>
+            <em>{{ t(`melkor.component.AppInputFile.search`) }}</em>
           </template>
         </i18n-t>
       </div>

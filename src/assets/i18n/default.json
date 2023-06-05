@@ -1,11 +1,11 @@
 {
     "melkor": {
         "component": {
-            "inputFile": {
+            "AppInputFile": {
                 "dragdrop": "Drag & drop or {search}",
                 "search": "browse"
             },
-            "inputIcon": {
+            "AppInputIcon": {
                 "uIActions": "UI actions",
                 "social": "Social",
                 "commonActions": "Common actions",
