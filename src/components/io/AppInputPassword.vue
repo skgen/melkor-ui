@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputPassword"
-    :data-focus="focus || undefined"
+    :data-focus="state.focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppIcon from '@src/components/AppIcon.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
@@ -94,7 +94,7 @@ const type = computed(() => (encrypted.value ? 'password' : 'text'));
 const icon = computed(() => (type.value === 'password' ? 'visibility' : 'visibility_off'));
 
 const {
-  onChange, onFocus, onBlur, state, focus,
+  onChange, onFocus, onBlur, state,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -111,24 +111,43 @@ function handleChange(evt: Event) {
   const { value } = evt.target as HTMLInputElement;
 
   if (value === '') {
-    onChange(null);
+    onChange({ value: null });
   } else {
-    onChange(value);
+    onChange({ value });
   }
 }
 
 const isCancelable = computed(() => props.cancelable && isValue(state.value.value));
 
 function handleCancel() {
-  onChange(null);
-  requestAnimationFrame(() => {
-    if (!passwordInput.value) {
-      return;
-    }
-    passwordInput.value.blur();
-  });
+  onChange({ value: null });
+  onBlur();
 }
 
+function focus() {
+  if (!passwordInput.value) {
+    return;
+  }
+  passwordInput.value.focus();
+}
+
+function blur() {
+  if (!passwordInput.value) {
+    return;
+  }
+  passwordInput.value.blur();
+}
+
+onMounted(() => {
+  if (props.modelValue.focused) {
+    focus();
+  }
+});
+
+defineExpose({
+  focus,
+  blur,
+});
 </script>
 
 <style lang="scss">

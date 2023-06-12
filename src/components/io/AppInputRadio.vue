@@ -98,11 +98,11 @@ function handleChange(evt: Event) {
   const newValue = newOption.value;
 
   if (props.nullable && isSelectedOption(newValue)) {
-    onChange(null);
+    onChange({ value: null });
     return;
   }
 
-  onChange(newValue);
+  onChange({ value: newValue });
 }
 </script>
 

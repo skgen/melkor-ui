@@ -1,8 +1,9 @@
 import {
-  computed, ref, type ComputedRef,
+  computed, type ComputedRef,
 } from 'vue';
 import type { InputComponentBaseProps, InputState, ValidateInput } from '@src/definition';
 import { isValue } from '@src/lib/modules/definition';
+import isEqual from 'lodash/isEqual';
 
 // cant use in defineProps because of compiler
 // export type InputProps<TState extends InputState<any>> = {
@@ -11,12 +12,15 @@ import { isValue } from '@src/lib/modules/definition';
 //   validate?: ValidateInput<TState>;
 // };
 
-export function createInputState<T>(params: Partial<InputState<T>> & { value: InputState<T>['value'] }): InputState<T> {
+type PartialInputState<T> = Partial<InputState<T>> & { value: InputState<T>['value'] };
+
+export function createInputState<T>(params: PartialInputState<T>): InputState<T> {
   return {
     value: params.value,
     valid: params.valid ?? true,
     touched: params.touched ?? false,
     error: params.error ?? null,
+    focused: params.focused ?? false,
   };
 }
 
@@ -47,34 +51,54 @@ export default function useInput<TValue>(options: UseInputOptions<TValue, InputE
   const state = computed(() => props.value.modelValue);
   const validate = computed(() => props.value.validate);
 
-  const focus = ref(false);
-
   function onFocus() {
+    const newState: InputState<TValue> = validateInputState({
+      ...state.value,
+      focused: true,
+    });
+
+    if (!isEqual(state, newState)) {
+      emit('update:modelValue', newState);
+      return;
+    }
+
     emit('focus');
-    focus.value = true;
   }
 
   function onBlur() {
+    const newState: InputState<TValue> = validateInputState({
+      ...state.value,
+      focused: false,
+    });
+
+    if (!isEqual(state, newState)) {
+      emit('update:modelValue', newState);
+      return;
+    }
+
     emit('blur');
-    focus.value = false;
   }
 
-  function onChange(value: TValue) {
-    const newState: InputState<TValue> = validateInputState({
-      value,
-      valid: state.value.valid,
+  function onChange(newStateCandidate: PartialInputState<TValue>) {
+    const scopeState: Pick<InputState<TValue>, 'touched' | 'error'> = {
       touched: true,
       error: null,
+    };
+    const newState: InputState<TValue> = validateInputState({
+      ...state.value,
+      ...scopeState,
+      ...newStateCandidate,
     }, validate.value);
 
-    emit('update:modelValue', newState);
+    if (!isEqual(state, newState)) {
+      emit('update:modelValue', newState);
+    }
   }
 
   return {
     onChange,
     onFocus,
     onBlur,
-    focus,
     state,
   };
 }

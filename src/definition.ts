@@ -35,6 +35,7 @@ export type InputState<T> = {
   valid: boolean;
   touched: boolean;
   error: string | null;
+  focused: boolean;
 };
 
 export type InputOptions<TValue> = {

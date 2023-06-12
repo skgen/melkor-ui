@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputNumber"
-    :data-focus="focus || undefined"
+    :data-focus="state.focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -46,7 +46,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
+import {
+  computed, onMounted, ref, watch,
+} from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
@@ -87,7 +89,7 @@ const numberInput = ref<HTMLInputElement | null>(null);
 const { theme } = useTheme();
 
 const {
-  onChange, onFocus, onBlur, state, focus,
+  onChange, onFocus, onBlur, state,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -113,16 +115,16 @@ function handleChange(evt: Event) {
   const numbered = parseFloat(value);
 
   if (Number.isNaN(numbered)) {
-    onChange(null);
+    onChange({ value: null });
   } else {
-    onChange(numbered);
+    onChange({ value: numbered });
   }
 }
 
 const isCancelable = computed(() => props.cancelable && isValue(state.value.value));
 
 function handleCancel() {
-  onChange(null);
+  onChange({ value: null });
   requestAnimationFrame(() => {
     if (!numberInput.value) {
       return;
@@ -130,6 +132,31 @@ function handleCancel() {
     numberInput.value.blur();
   });
 }
+
+function focus() {
+  if (!numberInput.value) {
+    return;
+  }
+  numberInput.value.focus();
+}
+
+function blur() {
+  if (!numberInput.value) {
+    return;
+  }
+  numberInput.value.blur();
+}
+
+onMounted(() => {
+  if (props.modelValue.focused) {
+    focus();
+  }
+});
+
+defineExpose({
+  focus,
+  blur,
+});
 </script>
 
 <style lang="scss">

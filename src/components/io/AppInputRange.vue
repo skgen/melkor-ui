@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputRange"
-    :data-focus="focus || undefined"
+    :data-focus="state.focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -87,12 +87,13 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const emit = defineEmits<Emits>();
 
+const rangeInput = ref<HTMLInputElement | null>(null);
 const thumb = ref<HTMLDivElement | null>(null);
 
 const { theme } = useTheme();
 
 const {
-  onChange, onFocus, onBlur, state, focus,
+  onChange, onFocus, onBlur, state,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -110,7 +111,7 @@ function handleChange(evt: Event) {
 
   const newValue = parseFloat(value);
 
-  onChange(newValue);
+  onChange({ value: newValue });
 }
 
 onMounted(() => {
@@ -119,6 +120,25 @@ onMounted(() => {
   }
   const style = getComputedStyle(thumb.value);
   thumbSize.value = parseFloat(style.width);
+});
+
+function focus() {
+  if (!rangeInput.value) {
+    return;
+  }
+  rangeInput.value.focus();
+}
+
+function blur() {
+  if (!rangeInput.value) {
+    return;
+  }
+  rangeInput.value.blur();
+}
+
+defineExpose({
+  focus,
+  blur,
 });
 </script>
 

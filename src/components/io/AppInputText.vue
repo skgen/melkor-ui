@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputText"
-    :data-focus="focus || undefined"
+    :data-focus="state.focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
@@ -81,7 +81,7 @@ const textInput = ref<HTMLInputElement | null>(null);
 const { theme } = useTheme();
 
 const {
-  onChange, onFocus, onBlur, state, focus,
+  onChange, onFocus, onBlur, state,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -94,23 +94,43 @@ function handleChange(evt: Event) {
   const { value } = evt.target as HTMLInputElement;
 
   if (value === '') {
-    onChange(null);
+    onChange({ value: null });
   } else {
-    onChange(value);
+    onChange({ value });
   }
 }
 
 const isCancelable = computed(() => props.cancelable && isValue(state.value.value));
 
 function handleCancel() {
-  onChange(null);
-  requestAnimationFrame(() => {
-    if (!textInput.value) {
-      return;
-    }
-    textInput.value.blur();
-  });
+  onChange({ value: null });
+  onBlur();
 }
+
+function focus() {
+  if (!textInput.value) {
+    return;
+  }
+  textInput.value.focus();
+}
+
+function blur() {
+  if (!textInput.value) {
+    return;
+  }
+  textInput.value.blur();
+}
+
+onMounted(() => {
+  if (props.modelValue.focused) {
+    focus();
+  }
+});
+
+defineExpose({
+  focus,
+  blur,
+});
 </script>
 
 <style lang="scss">

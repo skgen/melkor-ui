@@ -68,7 +68,9 @@ const {
 function handleChange(newLevel: NonArray<Value>, index: number) {
   const newValue: Value = [...props.modelValue.value];
   newValue[index] = newLevel;
-  onChange(newValue);
+  onChange({
+    value: newValue,
+  });
 }
 </script>
 

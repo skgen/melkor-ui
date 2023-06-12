@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputColor"
-    :data-focus="focus || undefined"
+    :data-focus="state.focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -16,7 +16,6 @@
           :style="`background-color: ${state.value};`"
         />
         <input
-          ref="colorInput"
           :name="props.name"
           type="color"
           :value="state.value"
@@ -63,7 +62,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import useInput from '@src/composables/useInput';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
@@ -97,12 +96,10 @@ type Emits = {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const colorInput = ref<HTMLInputElement | null>(null);
-
 const { theme } = useTheme();
 
 const {
-  onChange, onFocus, onBlur, state, focus,
+  onChange, onFocus, onBlur, state,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -117,7 +114,7 @@ function handleChange(evt: Event) {
   }
   const { value } = evt.target as HTMLInputElement;
 
-  onChange(value);
+  onChange({ value });
 }
 
 function handleTextChange(evt: Event) {
@@ -129,22 +126,17 @@ function handleTextChange(evt: Event) {
   const filteredValue = value.replaceAll(/[^0-9a-f]+/gi, '').slice(0, 8);
 
   if (filteredValue === '') {
-    onChange(null);
+    onChange({ value: null });
   } else {
-    onChange(`#${filteredValue}`);
+    onChange({ value: `#${filteredValue}` });
   }
 }
 
 const isCancelable = computed(() => props.cancelable && isValue(state.value.value));
 
 function handleCancel() {
-  onChange(null);
-  requestAnimationFrame(() => {
-    if (!colorInput.value) {
-      return;
-    }
-    colorInput.value.blur();
-  });
+  onChange({ value: null });
+  onBlur();
 }
 </script>
 

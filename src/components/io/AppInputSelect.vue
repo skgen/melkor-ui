@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputSelect"
-    :data-focus="focus || undefined"
+    :data-focus="state.focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import isEqual from 'lodash/isEqual';
 import type {
   InputState, ValidateInput,
@@ -79,10 +79,12 @@ type Emits = {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
+const selectInput = ref<HTMLSelectElement | null>(null);
+
 const { theme } = useTheme();
 
 const {
-  onChange, onFocus, onBlur, state, focus,
+  onChange, onFocus, onBlur, state,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -96,12 +98,31 @@ function handleChange(evt: Event) {
   if (!evt.target) {
     return;
   }
-  const { value: index } = evt.target as HTMLInputElement;
+  const { value: index } = evt.target as HTMLSelectElement;
 
   const newOption = props.options[parseInt(index, 10)];
 
-  onChange(newOption.value);
+  onChange({ value: newOption.value });
 }
+
+function focus() {
+  if (!selectInput.value) {
+    return;
+  }
+  selectInput.value.focus();
+}
+
+function blur() {
+  if (!selectInput.value) {
+    return;
+  }
+  selectInput.value.blur();
+}
+
+defineExpose({
+  focus,
+  blur,
+});
 </script>
 
 <style lang="scss">
