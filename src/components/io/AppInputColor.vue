@@ -16,7 +16,6 @@
           :style="`background-color: ${state.value};`"
         />
         <input
-          ref="colorInput"
           :name="props.name"
           type="color"
           :value="state.value"
@@ -63,7 +62,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import useInput from '@src/composables/useInput';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
@@ -96,8 +95,6 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
-
-const colorInput = ref<HTMLInputElement | null>(null);
 
 const { theme } = useTheme();
 
@@ -141,25 +138,6 @@ function handleCancel() {
   onChange({ value: null });
   onBlur();
 }
-
-function focus() {
-  if (!colorInput.value) {
-    return;
-  }
-  colorInput.value.focus();
-}
-
-function blur() {
-  if (!colorInput.value) {
-    return;
-  }
-  colorInput.value.blur();
-}
-
-defineExpose({
-  focus,
-  blur,
-});
 </script>
 
 <style lang="scss">

@@ -3,6 +3,7 @@ import {
 } from 'vue';
 import type { InputComponentBaseProps, InputState, ValidateInput } from '@src/definition';
 import { isValue } from '@src/lib/modules/definition';
+import isEqual from 'lodash/isEqual';
 
 // cant use in defineProps because of compiler
 // export type InputProps<TState extends InputState<any>> = {
@@ -54,9 +55,13 @@ export default function useInput<TValue>(options: UseInputOptions<TValue, InputE
     const newState: InputState<TValue> = validateInputState({
       ...state.value,
       focused: true,
-    }, validate.value);
+    });
 
-    emit('update:modelValue', newState);
+    if (!isEqual(state, newState)) {
+      emit('update:modelValue', newState);
+      return;
+    }
+
     emit('focus');
   }
 
@@ -64,9 +69,13 @@ export default function useInput<TValue>(options: UseInputOptions<TValue, InputE
     const newState: InputState<TValue> = validateInputState({
       ...state.value,
       focused: false,
-    }, validate.value);
+    });
 
-    emit('update:modelValue', newState);
+    if (!isEqual(state, newState)) {
+      emit('update:modelValue', newState);
+      return;
+    }
+
     emit('blur');
   }
 
@@ -81,7 +90,9 @@ export default function useInput<TValue>(options: UseInputOptions<TValue, InputE
       ...newStateCandidate,
     }, validate.value);
 
-    emit('update:modelValue', newState);
+    if (!isEqual(state, newState)) {
+      emit('update:modelValue', newState);
+    }
   }
 
   return {

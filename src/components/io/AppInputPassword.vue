@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppIcon from '@src/components/AppIcon.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
@@ -137,6 +137,12 @@ function blur() {
   }
   passwordInput.value.blur();
 }
+
+onMounted(() => {
+  if (props.modelValue.focused) {
+    focus();
+  }
+});
 
 defineExpose({
   focus,

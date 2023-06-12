@@ -150,25 +150,6 @@ function handleCancel() {
   onChange({ value: null });
   onBlur();
 }
-
-function focus() {
-  if (!dateInput.value) {
-    return;
-  }
-  dateInput.value.focus();
-}
-
-function blur() {
-  if (!dateInput.value) {
-    return;
-  }
-  dateInput.value.blur();
-}
-
-defineExpose({
-  focus,
-  blur,
-});
 </script>
 
 <style lang="scss">

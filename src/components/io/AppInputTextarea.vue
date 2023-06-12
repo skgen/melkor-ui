@@ -12,6 +12,7 @@
       </AppInputLabel>
       <div class="mk-AppInputTextarea-input">
         <textarea
+          ref="textareaInput"
           :name="props.name"
           :value="state.value?? undefined"
           :rows="props.rows"
@@ -33,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
@@ -108,6 +109,12 @@ function blur() {
   }
   textareaInput.value.blur();
 }
+
+onMounted(() => {
+  if (props.modelValue.focused) {
+    focus();
+  }
+});
 
 defineExpose({
   focus,

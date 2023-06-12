@@ -46,7 +46,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
+import {
+  computed, onMounted, ref, watch,
+} from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
@@ -144,6 +146,12 @@ function blur() {
   }
   numberInput.value.blur();
 }
+
+onMounted(() => {
+  if (props.modelValue.focused) {
+    focus();
+  }
+});
 
 defineExpose({
   focus,
