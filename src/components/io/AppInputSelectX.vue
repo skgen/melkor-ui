@@ -9,7 +9,7 @@
     <div class="mk-AppInputSelectX-label">
       <AppInputLabel
         v-if="props.label"
-        ref="label"
+        ref="labelElement"
         @click="handleFocus"
       >
         {{ props.label }}
@@ -20,33 +20,62 @@
         :placement="FloatingPlacement.bottomStart"
       >
         <div
-          ref="input"
+          ref="inputElement"
           class="mk-AppInputSelectX-input"
         >
-          <button
-            ref="cta"
-            class="mk-AppInputSelectX-cta"
-            :disabled="props.disabled"
-            @click="handleFocus"
+          <div
+            ref="containerElement"
+            class="mk-AppInputSelectX-container"
+            role="button"
+            @click="() => !props.disabled ? handleFocus() : null"
           >
-            <div class="mk-AppInputSelectX-value">
+            <div class="mk-AppInputSelectX-content">
               <slot
                 name="value"
                 v-bind="{ option: currentOption }"
               >
                 <template v-if="currentOption">
-                  {{ currentOption.label }}
+                  <div
+                    v-if="currentOption.label"
+                    class="mk-AppInputSelectX-content-value"
+                  >
+                    {{ currentOption.label }}
+                  </div>
                 </template>
               </slot>
+              <div
+                v-if="props.search && isSearchable"
+                class="mk-AppInputSelectX-content-search"
+                :data-value="props.search.value"
+              >
+                <AppInputText
+                  ref="searchElement"
+                  :model-value="props.search"
+                  @update:model-value="(newSearch: InputState<TextInputValue>) => emit('update:search', newSearch)"
+                />
+              </div>
             </div>
-            <AppIcon icon="expand_more" />
-          </button>
+            <div
+              ref="actionbarElement"
+              class="mk-AppInputSelectX-actionbar"
+            >
+              <AppInputTextableCancel
+                v-if="isCancelable"
+                :disabled="props.disabled"
+                @click.stop="handleCancel"
+              />
+              <AppIcon
+                icon="expand_more"
+                class="mk-AppInputSelectX-actionbar-arrow"
+              />
+            </div>
+          </div>
         </div>
         <template #menu>
           <div
-            ref="menu"
+            ref="menuElement"
             class="mk-AppInputSelectX-menu"
-            :style="{ minWidth }"
+            :style="{ minWidth:menuMinWidth }"
             role="listbox"
           >
             <AppMenuGroup>
@@ -86,6 +115,7 @@
                   </div>
                 </slot>
               </AppMenuEntry>
+              <slot name="options-footer" />
             </AppMenuGroup>
           </div>
         </template>
@@ -103,13 +133,17 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import isEqual from 'lodash/isEqual';
+import isNil from 'lodash/isNil';
 import { useElementSize, onClickOutside } from '@vueuse/core';
 import {
   type InputState, type ValidateInput, FloatingPlacement,
+  type TextInputValue,
 } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
+import AppInputText from '@src/components/io/AppInputText.vue';
+import AppInputTextableCancel from '@src/components/io/partials/AppInputTextableCancel.vue';
 import AppMenu from '@src/components/floating/AppMenu.vue';
 import AppMenuEntry from '@src/components/AppMenuEntry.vue';
 import AppMenuGroup from '@src/components/AppMenuGroup.vue';
@@ -134,10 +168,14 @@ type Props = {
   disabled?: boolean;
   fill?: boolean;
   options: AppInputSelectXOption<Value>[];
+  cancelable?: boolean;
+  search?: InputState<TextInputValue>;
+  hideSearchOnBlur?: boolean;
 };
 
 type Emits = {
   (event: 'update:modelValue', value: InputState<Value>): void;
+  (event: 'update:search', value: InputState<Value>): void;
   (event: 'focus'): void;
   (event: 'blur'): void;
 };
@@ -181,20 +219,46 @@ const computedOptions = computed(() => props.options.map((option, index) => {
 
 const currentOption = computed(() => props.options.find(isSelectedOption));
 
+// Menu size
+
+const containerElement = ref<HTMLElement | null>(null);
+
+const { width: nMenuMinWidth } = useElementSize(containerElement, undefined, { box: 'border-box' });
+const menuMinWidth = computed(() => `${nMenuMinWidth.value}px`);
+
+// Content size
+
+const actionbarElement = ref<HTMLElement | null>(null);
+
+const { width: nActionBarWidth } = useElementSize(actionbarElement, undefined, { box: 'border-box' });
+const actionBarWidth = computed(() => `${nActionBarWidth.value}px`);
+
+// Search
+
+const searchElement = ref<HTMLInputElement | null>(null);
+const isSearchable = computed(() => (!isNil(props.search) && (!props.hideSearchOnBlur || state.value.focused)));
+
 // Focus / Blur
 
-const input = ref<HTMLDivElement | null>(null);
-const menu = ref<HTMLDivElement | null>(null);
-const label = ref<HTMLElement | null>(null);
+const inputElement = ref<HTMLElement | null>(null);
+const menuElement = ref<HTMLElement | null>(null);
+const labelElement = ref<HTMLElement | null>(null);
 let clickOutsideExecution: number | null = null;
 
 function handleBlur() {
-  console.log('blur');
   onBlur();
 }
 
 function handleFocus() {
-  console.log('focus');
+  if (props.hideSearchOnBlur) {
+    requestAnimationFrame(() => {
+      if (searchElement.value) {
+        searchElement.value.focus();
+      }
+    });
+  } else if (searchElement.value) {
+    searchElement.value.focus();
+  }
   onFocus();
 }
 
@@ -205,20 +269,21 @@ function handleClickOutside() {
   clickOutsideExecution = requestAnimationFrame(handleBlur);
 }
 
-onClickOutside(input, handleClickOutside, {
-  ignore: [menu, label],
+onClickOutside(inputElement, handleClickOutside, {
+  ignore: [menuElement, labelElement],
 });
 
-onClickOutside(menu, handleClickOutside, {
-  ignore: [input, label],
+onClickOutside(menuElement, handleClickOutside, {
+  ignore: [inputElement, labelElement],
 });
 
-// Menu size
+// Cancel
 
-const cta = ref<HTMLDivElement | null>(null);
+const isCancelable = computed(() => props.cancelable && !isNil(state.value.value));
 
-const { width } = useElementSize(cta, undefined, { box: 'border-box' });
-const minWidth = computed(() => `${width.value}px`);
+function handleCancel() {
+  onChange({ value: null });
+}
 
 // Expose
 
@@ -240,26 +305,57 @@ defineExpose({
     --mk-input-select-x-font-size: var(--app-input-font-size);
     --mk-input-select-x-line-height: var(--app-input-line-height);
     --mk-input-select-x-icon-size: 24px;
-    --mk-input-select-x-padding-x-left: var(--app-input-padding-x);
-    --mk-input-select-x-padding-x-right: calc(var(--app-input-padding-x) * 2 + var(--mk-input-select-x-icon-size));
+    --mk-input-select-x-spacing: var(--app-input-padding-x);
+
+    // --mk-input-select-x-padding-x-left: var(--app-input-padding-x);
+    // --mk-input-select-x-padding-x-left: var(--app-input-padding-x);
+    // --mk-input-select-x-padding-x-right: calc(var(--app-input-padding-x) * 2 + var(--mk-input-select-x-icon-size));
     --mk-input-select-x-padding-y: var(--app-input-padding-y);
 
     $this: &;
 
     display: inline-block;
+    max-width: 100%;
 
-    &-cta {
-        display: block;
-        width: 100%;
-        padding:
-            var(--mk-input-select-x-padding-y)
-            var(--mk-input-select-x-padding-x-right)
-            var(--mk-input-select-x-padding-y)
-            var(--mk-input-select-x-padding-x-left);
+    &-content {
+        display: flex;
+        flex: 1 1 0%;
+        flex-wrap: wrap;
+        gap: calc(var(--mk-input-select-x-spacing) / 2);
+        align-items: center;
+        max-width: calc(100% - v-bind(actionBarWidth));
+        min-height: 19px;
+        padding: var(--mk-input-select-x-padding-y) 0;
+        overflow: hidden;
         font-size: var(--mk-input-select-x-font-size);
         line-height: var(--mk-input-select-x-line-height);
         color: var(--mk-input-select-x-color);
         text-align: left;
+
+        &-search {
+            display: inline-grid;
+            flex: 1 1 auto;
+            grid-template-columns: 0 min-content;
+            color: var(--app-text-color-soft);
+
+            .mk-AppInputText {
+                grid-area: 1 / 2 / auto / auto;
+                width: 100%;
+                min-width: 2px;
+
+                --mk-input-text-background-color: transparent;
+                --mk-input-text-border-width: 0;
+                --mk-input-text-padding-x: 0;
+                --mk-input-text-padding-y: 0;
+            }
+
+            &::after {
+                grid-area: 1 / 2 / auto / auto;
+                white-space: pre;
+                visibility: hidden;
+                content: attr(data-value) " ";
+            }
+        }
     }
 
     &-menu {
@@ -270,10 +366,6 @@ defineExpose({
                 opacity: var(--app-input-opacity-disabled);
             }
         }
-    }
-
-    &-value {
-        min-height: 19px;
     }
 
     &-option {
@@ -305,22 +397,36 @@ defineExpose({
         transition:
             border-color var(--app-transition-duration-color),
             opacity var(--app-transition-duration-opacity);
+    }
 
-        .mk-AppIcon {
-            --mk-icon-size: var(--mk-input-select-x-icon-size);
-
-            position: absolute;
-            top: 50%;
-            right: calc((var(--mk-input-select-x-padding-x-right) - var(--mk-icon-size)) / 2);
-            font-weight: 200;
-            pointer-events: none;
-            transform: translate(0, -50%);
-        }
+    &-container {
+        display: flex;
+        padding: 0 var(--app-input-padding-x);
     }
 
     &-label {
         display: flex;
         flex-direction: column;
+    }
+
+    &-actionbar {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        padding-left: var(--mk-input-select-x-spacing);
+
+        &-arrow.mk-AppIcon {
+            --mk-icon-size: var(--mk-input-select-x-icon-size);
+            --mk-icon-weight: 200;
+
+            // position: absolute;
+            // top: 50%;
+            // right: calc((var(--mk-input-select-x-padding-x-right) - var(--mk-icon-size)) / 2);
+
+            pointer-events: none;
+
+            // transform: translate(0, -50%);
+        }
     }
 
     &[data-is-focused="true"] {

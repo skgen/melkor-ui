@@ -200,6 +200,9 @@ export type SelectInputOption<TValue> = {
 export type SelectInputOptions<TValue> = InputOptions<TValue> & {
   fill?: boolean;
   options: SelectInputOption<TValue>[];
+  cancelable?: boolean;
+  search?: InputState<TextInputValue>;
+  hideSearchOnBlur?: boolean;
 };
 
 // Select X
