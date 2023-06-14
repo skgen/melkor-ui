@@ -155,9 +155,8 @@ defineExpose({
         font-size: var(--mk-input-select-font-size);
         line-height: var(--mk-input-select-line-height);
         color: var(--mk-input-select-color);
-        background-color: var(--mk-input-select-background-color);
-        border: var(--mk-input-select-border-width) solid var(--mk-input-select-border-color);
-        border-radius: var(--mk-input-select-border-radius);
+        background: none;
+        border: none;
         outline: none;
         transition: border-color var(--app-transition-duration-color);
         appearance: none;
@@ -169,6 +168,11 @@ defineExpose({
 
     &-input {
         position: relative;
+        min-width: 180px;
+        overflow: hidden;
+        background-color: var(--mk-input-select-background-color);
+        border: var(--mk-input-select-border-width) solid var(--mk-input-select-border-color);
+        border-radius: var(--mk-input-select-border-radius);
         transition:
             border-color var(--app-transition-duration-color),
             opacity var(--app-transition-duration-opacity);
@@ -187,7 +191,7 @@ defineExpose({
 
     &[data-focus="true"] {
         #{$this} {
-            select {
+            &-input {
                 border-color: var(--app-primary-color);
             }
         }
