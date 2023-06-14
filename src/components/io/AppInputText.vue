@@ -104,7 +104,12 @@ const isCancelable = computed(() => props.cancelable && isValue(state.value.valu
 
 function handleCancel() {
   onChange({ value: null });
-  onBlur();
+  requestAnimationFrame(() => {
+    if (!textInput.value) {
+      return;
+    }
+    textInput.value.blur();
+  });
 }
 
 function focus() {
