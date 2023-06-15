@@ -98,7 +98,7 @@
 import { computed, ref } from 'vue';
 import isEqual from 'lodash/isEqual';
 import isNil from 'lodash/isNil';
-import { useElementSize, onClickOutside } from '@vueuse/core';
+import { onClickOutside } from '@vueuse/core';
 import {
   type InputState, type ValidateInput, FloatingPlacement,
 } from '@src/definition';
