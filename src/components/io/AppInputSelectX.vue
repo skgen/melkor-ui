@@ -32,8 +32,8 @@
           >
             <div class="mk-AppInputSelectX-content">
               <slot
-                v-if="isArray(currentSelection)"
-                v-bind="{ selection: currentSelection }"
+                v-if="isArray(state.value)"
+                v-bind="{ selection: state.value }"
                 name="values"
               >
                 <div
@@ -46,7 +46,7 @@
               <slot
                 v-else
                 name="value"
-                v-bind="{ selection: currentSelection }"
+                v-bind="{ selection: state.value }"
               >
                 <div
                   v-if="currentRender"
@@ -92,42 +92,49 @@
           >
             <AppMenuGroup>
               <slot name="options-header" />
-              <AppMenuEntry
-                v-for="computedOption in computedOptions"
-                :key="computedOption.index"
-                :aria-disabled="computedOption.option.disabled ?? undefined"
-                :interactive="computedOption.interactive"
-                role="option"
-                :aria-selected="computedOption.selected"
-                @click="() => computedOption.interactive ? handleChange(computedOption.option) : void 0"
-              >
-                <slot
-                  name="option"
-                  v-bind="computedOption"
-                >
-                  <div class="mk-AppInputSelectX-option">
-                    <span class="mk-AppInputSelectX-option-label">
-                      <slot
-                        name="option-label"
-                        v-bind="computedOption"
-                      >
-                        {{ computedOption.option.label }}
-                      </slot>
-                    </span>
-                    <span class="mk-AppInputSelectX-option-icon">
-                      <slot
-                        name="option-icon"
-                        v-bind="computedOption"
-                      >
-                        <AppIcon
-                          v-if="computedOption.selected"
-                          icon="check"
-                        />
-                      </slot>
-                    </span>
-                  </div>
+              <AppMenuEntry v-if="!computedOptions.length">
+                <slot name="options-empty">
+                  {{ $t('melkor.component.AppInputSelectX.emptyOptions') }}
                 </slot>
               </AppMenuEntry>
+              <template v-else>
+                <AppMenuEntry
+                  v-for="computedOption in computedOptions"
+                  :key="computedOption.index"
+                  :aria-disabled="computedOption.option.disabled ?? undefined"
+                  :interactive="computedOption.interactive"
+                  role="option"
+                  :aria-selected="computedOption.selected"
+                  @click="() => computedOption.interactive ? handleChange(computedOption.option) : void 0"
+                >
+                  <slot
+                    name="option"
+                    v-bind="computedOption"
+                  >
+                    <div class="mk-AppInputSelectX-option">
+                      <span class="mk-AppInputSelectX-option-label">
+                        <slot
+                          name="option-label"
+                          v-bind="computedOption"
+                        >
+                          {{ `${computedOption.option.value}` }}
+                        </slot>
+                      </span>
+                      <span class="mk-AppInputSelectX-option-icon">
+                        <slot
+                          name="option-icon"
+                          v-bind="computedOption"
+                        >
+                          <AppIcon
+                            v-if="computedOption.selected"
+                            icon="check"
+                          />
+                        </slot>
+                      </span>
+                    </div>
+                  </slot>
+                </AppMenuEntry>
+              </template>
               <slot name="options-footer" />
             </AppMenuGroup>
           </div>
@@ -168,7 +175,6 @@ import useTheme from '@src/composables/useTheme';
 type Value = unknown;
 
 type AppInputSelectXOption<T> = {
-  label: string;
   value: T;
   disabled?: boolean;
 };
@@ -248,18 +254,11 @@ const computedOptions = computed(() => props.options.map((option, index) => {
   };
 }));
 
-const currentSelection = computed(() => {
-  if (isArray(state.value.value)) {
-    return props.options.filter(isSelectedOption);
-  }
-  return props.options.find(isSelectedOption);
-});
-
 const currentRender = computed(() => {
-  if (isArray(currentSelection.value)) {
-    return currentSelection.value.map((option) => option.label).join(', ');
+  if (isArray(state.value.value)) {
+    return state.value.value.join(', ');
   }
-  return currentSelection.value?.label;
+  return `${state.value.value}`;
 });
 
 // Menu size
