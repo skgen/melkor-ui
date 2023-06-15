@@ -179,6 +179,7 @@ defineExpose({
 
         .mk-AppIcon {
             --mk-icon-size: var(--mk-input-select-icon-size);
+            --mk-icon-weight: 200;
 
             position: absolute;
             top: 50%;
