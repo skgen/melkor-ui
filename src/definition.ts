@@ -200,6 +200,22 @@ export type SelectInputOption<TValue> = {
 export type SelectInputOptions<TValue> = InputOptions<TValue> & {
   fill?: boolean;
   options: SelectInputOption<TValue>[];
+  cancelable?: boolean;
+  search?: InputState<TextInputValue>;
+  hideSearchOnBlur?: boolean;
+};
+
+// Select X
+export type SelectXInputModel<TValue> = Required<InputModel<TValue, SelectXInputOptions<TValue>>>;
+
+export type SelectXInputOption<TValue> = {
+  value: TValue;
+  disabled?: boolean;
+};
+
+export type SelectXInputOptions<TValue> = InputOptions<TValue> & {
+  fill?: boolean;
+  options: SelectXInputOption<TValue>[];
 };
 
 // Icon Input

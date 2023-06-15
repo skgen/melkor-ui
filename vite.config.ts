@@ -36,7 +36,7 @@ export default ({ mode }: { mode: string }) => {
     plugins: [
       vue(),
       svgLoader(),
-      dts({
+      isDevelopment ? null : dts({
         staticImport: true,
         insertTypesEntry: true,
         // https://github.com/qmhc/vite-plugin-dts/issues/153 (.json file imports here) 

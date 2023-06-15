@@ -23,6 +23,7 @@ export { default as AppInfiniteScroll } from '@src/components/AppInfiniteScroll.
 export { default as AppPagination } from '@src/components/AppPagination.vue';
 export { default as AppDraggable } from 'vuedraggable';
 export { default as AppMediaQuery } from '@src/components/AppMediaQuery.vue';
+export { default as AppMenuEntry } from '@src/components/AppMenuEntry.vue';
 
 export { default as AppInputCheckbox } from '@src/components/io/AppInputCheckbox.vue';
 export { default as AppInputCheckboxTree } from '@src/components/io/AppInputCheckboxTree.vue';
@@ -34,6 +35,7 @@ export { default as AppInputPassword } from '@src/components/io/AppInputPassword
 export { default as AppInputRadio } from '@src/components/io/AppInputRadio.vue';
 export { default as AppInputRange } from '@src/components/io/AppInputRange.vue';
 export { default as AppInputSelect } from '@src/components/io/AppInputSelect.vue';
+export { default as AppInputSelectX } from '@src/components/io/AppInputSelectX.vue';
 export { default as AppInputText } from '@src/components/io/AppInputText.vue';
 export { default as AppInputTextarea } from '@src/components/io/AppInputTextarea.vue';
 export { default as AppInputToggle } from '@src/components/io/AppInputToggle.vue';

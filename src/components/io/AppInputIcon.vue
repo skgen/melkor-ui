@@ -249,11 +249,11 @@ onClickOutside(input, handleClose);
 
         &-arrow.mk-AppIcon {
             --mk-icon-size: var(--mk-input-icon-icon-size);
+            --mk-icon-weight: 200;
 
             position: absolute;
             top: 50%;
             right: calc((var(--mk-input-icon-padding-x-right) - var(--mk-icon-size)) / 2);
-            font-weight: 200;
             pointer-events: none;
             transform: translate(0, -50%);
         }

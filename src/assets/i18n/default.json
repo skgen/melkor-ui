@@ -25,6 +25,9 @@
                 "home": "Home",
                 "brand": "Brand",
                 "others": "others"
+            },
+            "AppInputSelectX": {
+                "emptyOptions": "No options available"
             }
         },
         "theme": {
