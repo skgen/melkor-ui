@@ -27,21 +27,33 @@
             ref="containerElement"
             class="mk-AppInputSelectX-container"
             role="button"
+            tabIndex="0"
             @click="() => !props.disabled ? handleFocus() : null"
           >
             <div class="mk-AppInputSelectX-content">
               <slot
-                name="value"
-                v-bind="{ option: currentOption }"
+                v-if="isArray(currentSelection)"
+                v-bind="{ selection: currentSelection }"
+                name="values"
               >
-                <template v-if="currentOption">
-                  <div
-                    v-if="currentOption.label"
-                    class="mk-AppInputSelectX-content-value"
-                  >
-                    {{ currentOption.label }}
-                  </div>
-                </template>
+                <div
+                  v-if="currentRender"
+                  class="mk-AppInputSelectX-content-value"
+                >
+                  {{ currentRender }}
+                </div>
+              </slot>
+              <slot
+                v-else
+                name="value"
+                v-bind="{ selection: currentSelection }"
+              >
+                <div
+                  v-if="currentRender"
+                  class="mk-AppInputSelectX-content-value"
+                >
+                  {{ currentRender }}
+                </div>
               </slot>
               <div
                 v-if="props.search && isSearchable"
@@ -79,6 +91,7 @@
             role="listbox"
           >
             <AppMenuGroup>
+              <slot name="options-header" />
               <AppMenuEntry
                 v-for="computedOption in computedOptions"
                 :key="computedOption.index"
@@ -134,6 +147,7 @@
 import { computed, ref } from 'vue';
 import isEqual from 'lodash/isEqual';
 import isNil from 'lodash/isNil';
+import isArray from 'lodash/isArray';
 import { useElementSize, onClickOutside } from '@vueuse/core';
 import {
   type InputState, type ValidateInput, FloatingPlacement,
@@ -148,7 +162,7 @@ import AppMenu from '@src/components/floating/AppMenu.vue';
 import AppMenuEntry from '@src/components/AppMenuEntry.vue';
 import AppMenuGroup from '@src/components/AppMenuGroup.vue';
 import AppIcon from '@src/components/AppIcon.vue';
-import useInput from '@src/composables/useInput';
+import useInput, { validateInputState } from '@src/composables/useInput';
 import useTheme from '@src/composables/useTheme';
 
 type Value = unknown;
@@ -171,6 +185,7 @@ type Props = {
   cancelable?: boolean;
   search?: InputState<TextInputValue>;
   hideSearchOnBlur?: boolean;
+  cancelSearchOnBlur?: boolean;
 };
 
 type Emits = {
@@ -195,10 +210,23 @@ const {
 });
 
 function isSelectedOption(option: AppInputSelectXOption<Value>) {
+  if (isArray(state.value.value)) {
+    const candidate = state.value.value.find((valueOption) => isEqual(option.value, valueOption));
+    return !!candidate;
+  }
   return isEqual(option.value, state.value.value);
 }
 
 function handleChange(newOption: AppInputSelectXOption<Value>) {
+  if (isArray(state.value.value)) {
+    if (isSelectedOption(newOption)) {
+      const newValue = state.value.value.filter((valueOption) => !isEqual(newOption.value, valueOption));
+      onChange({ value: newValue });
+      return;
+    }
+    onChange({ value: [...state.value.value, newOption.value] });
+    return;
+  }
   if (isSelectedOption(newOption)) {
     return;
   }
@@ -208,7 +236,10 @@ function handleChange(newOption: AppInputSelectXOption<Value>) {
 
 const computedOptions = computed(() => props.options.map((option, index) => {
   const selected = isSelectedOption(option);
-  const interactive = !(selected || option.disabled || props.disabled);
+  let interactive = !(selected || option.disabled || props.disabled);
+  if (isArray(state.value.value)) {
+    interactive = !(option.disabled || props.disabled);
+  }
   return {
     option,
     index,
@@ -217,7 +248,19 @@ const computedOptions = computed(() => props.options.map((option, index) => {
   };
 }));
 
-const currentOption = computed(() => props.options.find(isSelectedOption));
+const currentSelection = computed(() => {
+  if (isArray(state.value.value)) {
+    return props.options.filter(isSelectedOption);
+  }
+  return props.options.find(isSelectedOption);
+});
+
+const currentRender = computed(() => {
+  if (isArray(currentSelection.value)) {
+    return currentSelection.value.map((option) => option.label).join(', ');
+  }
+  return currentSelection.value?.label;
+});
 
 // Menu size
 
@@ -246,6 +289,12 @@ const labelElement = ref<HTMLElement | null>(null);
 let clickOutsideExecution: number | null = null;
 
 function handleBlur() {
+  if (props.cancelSearchOnBlur && props.search) {
+    emit('update:search', validateInputState({
+      ...props.search,
+      value: null,
+    }));
+  }
   onBlur();
 }
 
@@ -303,14 +352,13 @@ defineExpose({
     --mk-input-select-x-border-width: var(--app-input-border-width);
     --mk-input-select-x-color: var(--app-input-color);
     --mk-input-select-x-font-size: var(--app-input-font-size);
-    --mk-input-select-x-line-height: var(--app-input-line-height);
     --mk-input-select-x-icon-size: 24px;
-    --mk-input-select-x-spacing: var(--app-input-padding-x);
-
-    // --mk-input-select-x-padding-x-left: var(--app-input-padding-x);
-    // --mk-input-select-x-padding-x-left: var(--app-input-padding-x);
-    // --mk-input-select-x-padding-x-right: calc(var(--app-input-padding-x) * 2 + var(--mk-input-select-x-icon-size));
+    --mk-input-select-x-line-height: var(--app-input-line-height);
+    --mk-input-select-x-option-icon-size: 20px;
+    --mk-input-select-x-padding-x: var(--app-input-padding-x);
     --mk-input-select-x-padding-y: var(--app-input-padding-y);
+    --mk-input-select-x-search-color: var(--app-text-color-soft);
+    --mk-input-select-x-spacing: var(--app-input-padding-x);
 
     $this: &;
 
@@ -324,19 +372,18 @@ defineExpose({
         gap: calc(var(--mk-input-select-x-spacing) / 2);
         align-items: center;
         max-width: calc(100% - v-bind(actionBarWidth));
-        min-height: 19px;
+        min-height: calc(19px + var(--mk-input-select-x-padding-y) * 2);
         padding: var(--mk-input-select-x-padding-y) 0;
         overflow: hidden;
         font-size: var(--mk-input-select-x-font-size);
         line-height: var(--mk-input-select-x-line-height);
         color: var(--mk-input-select-x-color);
-        text-align: left;
 
         &-search {
             display: inline-grid;
             flex: 1 1 auto;
             grid-template-columns: 0 min-content;
-            color: var(--app-text-color-soft);
+            color: var(--mk-input-select-x-search-color);
 
             .mk-AppInputText {
                 grid-area: 1 / 2 / auto / auto;
@@ -374,6 +421,10 @@ defineExpose({
         justify-content: space-between;
         width: 100%;
 
+        &-label {
+            line-height: 20px;
+        }
+
         &-icon {
             position: relative;
             display: flex;
@@ -401,7 +452,7 @@ defineExpose({
 
     &-container {
         display: flex;
-        padding: 0 var(--app-input-padding-x);
+        padding: 0 var(--mk-input-select-x-padding-x);
     }
 
     &-label {
@@ -419,13 +470,7 @@ defineExpose({
             --mk-icon-size: var(--mk-input-select-x-icon-size);
             --mk-icon-weight: 200;
 
-            // position: absolute;
-            // top: 50%;
-            // right: calc((var(--mk-input-select-x-padding-x-right) - var(--mk-icon-size)) / 2);
-
             pointer-events: none;
-
-            // transform: translate(0, -50%);
         }
     }
 
