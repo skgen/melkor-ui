@@ -87,7 +87,8 @@
           <div
             ref="menuElement"
             class="mk-AppInputSelectX-menu"
-            :style="{ minWidth:menuMinWidth }"
+            data-root="mk-AppInputSelectX"
+            :style="{ minWidth: menuMinWidth }"
             role="listbox"
           >
             <AppMenuGroup>
@@ -344,7 +345,8 @@ defineExpose({
 <style lang="scss">
 @import "@style/mixins";
 
-.mk-AppInputSelectX {
+.mk-AppInputSelectX,
+[data-root="mk-AppInputSelectX"] {
     --mk-input-select-x-background-color: var(--app-input-background-color);
     --mk-input-select-x-border-color: var(--app-input-border-color);
     --mk-input-select-x-border-radius: var(--app-input-border-radius);
@@ -358,7 +360,9 @@ defineExpose({
     --mk-input-select-x-padding-y: var(--app-input-padding-y);
     --mk-input-select-x-search-color: var(--app-text-color-soft);
     --mk-input-select-x-spacing: var(--app-input-padding-x);
+}
 
+.mk-AppInputSelectX {
     $this: &;
 
     display: inline-block;
