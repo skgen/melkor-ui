@@ -6,72 +6,85 @@
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
-    <label>
-      <AppInputLabel v-if="props.label">
+    <div class="mk-AppInputIcon-label">
+      <AppInputLabel
+        v-if="props.label"
+        ref="labelElement"
+        @click="handleFocus"
+      >
         {{ props.label }}
       </AppInputLabel>
-      <div
-        ref="input"
-        class="mk-AppInputIcon-input"
+      <AppMenu
+        :fill="props.fill"
+        :model-value="state.focused"
+        :placement="FloatingPlacement.bottomStart"
       >
         <div
-          class="mk-AppInputIcon-select"
-          @click="handleToggle"
+          ref="inputElement"
+          class="mk-AppInputIcon-input"
         >
-          <span class="mk-AppInputIcon-select-value">
-            <template v-if="state.value">
-              <AppIcon :icon="state.value" />
-            </template>
-            <template v-else>
-              -----
-            </template>
-          </span>
-          <AppIcon
-            icon="expand_more"
-            class="mk-AppInputIcon-select-arrow"
-          />
-        </div>
-        <transition name="mk-fade">
           <div
-            v-if="open"
-            class="mk-AppInputIcon-options"
+            class="mk-AppInputIcon-select"
+            @click="handleFocus"
           >
-            <div class="mk-AppInputIcon-options-list">
-              <AppInfiniteScroll
-                scrollable
-                bottom
-                :distance="200"
-                @infinite="handleInfinite"
-              >
-                <template
-                  v-for="(group, key) of currentIcons"
-                  :key="key"
+            <span class="mk-AppInputIcon-select-value">
+              <template v-if="state.value">
+                <AppIcon :icon="state.value" />
+              </template>
+              <template v-else>
+                -----
+              </template>
+            </span>
+            <AppIcon
+              icon="expand_more"
+              class="mk-AppInputIcon-select-arrow"
+            />
+          </div>
+        </div>
+        <template #menu>
+          <div
+            ref="menuElement"
+            class="mk-AppInputIcon-menu"
+            data-root="mk-AppInputIcon"
+          >
+            <div class="mk-AppInputIcon-options">
+              <div class="mk-AppInputIcon-options-list">
+                <AppInfiniteScroll
+                  scrollable
+                  bottom
+                  :distance="200"
+                  @infinite="handleInfinite"
                 >
-                  <div class="mk-AppInputIcon-options-title">
-                    {{ $t(`melkor.component.AppInputIcon.${key}`) }}
-                  </div>
-                  <ul
-                    v-if="group.length > 0"
-                    class="mk-AppInputIcon-options-icons"
+                  <template
+                    v-for="(group, key) of currentIcons"
+                    :key="key"
                   >
-                    <li
-                      v-for="icon of group"
-                      :key="icon"
-                      class="mk-AppInputIcon-options-icon"
-                      data-type="icon"
-                      :data-selected="isSelectedOption(icon)"
-                      @click="() => handleChange(icon)"
+                    <div class="mk-AppInputIcon-options-title">
+                      {{ $t(`melkor.component.AppInputIcon.${key}`) }}
+                    </div>
+                    <ul
+                      v-if="group.length > 0"
+                      class="mk-AppInputIcon-options-icons"
                     >
-                      <AppIcon :icon="icon" />
-                    </li>
-                  </ul>
-                </template>
-              </AppInfiniteScroll>
+                      <li
+                        v-for="icon of group"
+                        :key="icon"
+                        class="mk-AppInputIcon-options-icon"
+                        data-type="icon"
+                        :data-selected="isSelectedOption(icon)"
+                        @click="() => handleChange(icon)"
+                      >
+                        <AppIcon :icon="icon" />
+                      </li>
+                    </ul>
+                  </template>
+                </AppInfiniteScroll>
+              </div>
             </div>
           </div>
-        </transition>
-      </div>
-    </label>
+        </template>
+      </AppMenu>
+    </div>
     <AppInputHint v-if="props.hint">
       {{ props.hint }}
     </AppInputHint>
@@ -84,20 +97,21 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import isEqual from 'lodash/isEqual';
-import type {
-  InputState, ValidateInput,
+import isNil from 'lodash/isNil';
+import { useElementSize, onClickOutside } from '@vueuse/core';
+import {
+  type InputState, type ValidateInput, FloatingPlacement,
 } from '@src/definition';
 import AppIcon from '@src/components/AppIcon.vue';
 import AppInfiniteScroll from '@src/components/AppInfiniteScroll.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
 import AppInputError from '@src/components/io/decoration/AppInputError.vue';
+import AppMenu from '@src/components/floating/AppMenu.vue';
 import useInput from '@src/composables/useInput';
 import useTheme from '@src/composables/useTheme';
 import { getIcons } from '@src/lib/modules/icons';
-
-import { onClickOutside } from '@vueuse/core';
-import { isValue } from '@src/lib/modules/definition';
+import FloatingVue from 'floating-vue';
 
 type Value = string | null;
 
@@ -122,6 +136,7 @@ const emit = defineEmits<Emits>();
 
 const iconsPage = ref(1);
 const icons = getIcons();
+const pageSize = 30;
 
 const currentIcons = computed(() => {
   const ic: Record<string, string[]> = {};
@@ -129,17 +144,17 @@ const currentIcons = computed(() => {
   let keyIndex = 0;
   let levelIndex = 0;
   for (let i = 1; i <= iconsPage.value; i += 1) {
-    for (let j = 0; j < 16; j += 1) {
+    for (let j = 0; j < pageSize; j += 1) {
       const icon = icons[keys[keyIndex]][levelIndex];
-      if (!isValue(ic[keys[keyIndex]])) {
+      if (isNil(ic[keys[keyIndex]])) {
         ic[keys[keyIndex]] = [];
       }
-      if (isValue(icon)) {
+      if (!isNil(icon)) {
         ic[keys[keyIndex]].push(icon);
         levelIndex += 1;
       } else {
         levelIndex = 0;
-        if (isValue(keys[keyIndex + 1])) {
+        if (!isNil(keys[keyIndex + 1])) {
           keyIndex += 1;
         } else {
           return ic;
@@ -160,9 +175,6 @@ function resetIcons() {
 
 const { theme } = useTheme();
 
-const open = ref(false);
-const input = ref<HTMLDivElement | null>(null);
-
 const {
   onChange, onFocus, onBlur, state,
 } = useInput<Value>({
@@ -178,32 +190,47 @@ function handleChange(newIcon: Value) {
   onChange({ value: newIcon });
 }
 
-function handleOpen() {
-  onFocus();
-  open.value = true;
-}
+// Focus / Blur
 
-function handleClose() {
+const inputElement = ref<HTMLElement | null>(null);
+const menuElement = ref<HTMLElement | null>(null);
+const labelElement = ref<HTMLElement | null>(null);
+let clickOutsideExecution: number | null = null;
+
+function handleBlur() {
+  setTimeout(() => {
+    requestAnimationFrame(() => {
+      resetIcons();
+    });
+  }, FloatingVue.options.disposeTimeout);
   onBlur();
-  resetIcons();
-  open.value = false;
 }
 
-function handleToggle() {
-  if (open.value) {
-    handleClose();
-  } else {
-    handleOpen();
+function handleFocus() {
+  onFocus();
+}
+
+function handleClickOutside() {
+  if (clickOutsideExecution !== null) {
+    cancelAnimationFrame(clickOutsideExecution);
   }
+  clickOutsideExecution = requestAnimationFrame(handleBlur);
 }
 
-onClickOutside(input, handleClose);
+onClickOutside(inputElement, handleClickOutside, {
+  ignore: [menuElement, labelElement],
+});
+
+onClickOutside(menuElement, handleClickOutside, {
+  ignore: [inputElement, labelElement],
+});
 </script>
 
 <style lang="scss">
 @import "@style/mixins";
 
-.mk-AppInputIcon {
+.mk-AppInputIcon,
+[data-root="mk-AppInputIcon"] {
     --mk-input-icon-background-color: var(--app-input-background-color);
     --mk-input-icon-border-color: var(--app-input-border-color);
     --mk-input-icon-border-radius: var(--app-input-border-radius);
@@ -212,13 +239,15 @@ onClickOutside(input, handleClose);
     --mk-input-icon-line-height: var(--app-input-line-height);
     --mk-input-icon-color: var(--app-input-color);
     --mk-input-icon-icon-size: 24px;
+    --mk-input-icon-option-background-color: var(--app-input-background-color);
+    --mk-input-icon-option-background-color-hover: var(--app-background-color-highlight);
+    --mk-input-icon-option-icon-size: 20px;
     --mk-input-icon-padding-x-left: var(--app-input-padding-x);
     --mk-input-icon-padding-x-right: calc(var(--app-input-padding-x) * 2 + var(--mk-input-icon-icon-size));
     --mk-input-icon-padding-y: var(--app-input-padding-y);
-    --mk-input-icon-options-distance: 2px;
-    --mk-input-icon-option-background-color: var(--app-input-background-color);
-    --mk-input-icon-option-background-color-hover: var(--app-background-color-highlight);
+}
 
+.mk-AppInputIcon {
     $this: &;
 
     display: inline-block;
@@ -265,22 +294,18 @@ onClickOutside(input, handleClose);
 
     &-input {
         position: relative;
+        min-width: 180px;
         transition:
             border-color var(--app-transition-duration-color),
             opacity var(--app-transition-duration-opacity);
     }
 
+    &-menu {
+        max-width: 100vh;
+    }
+
     &-options {
         $options: &;
-
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        z-index: 1;
-        background-color: var(--mk-input-icon-option-background-color);
-        border: var(--mk-input-icon-border-width) solid var(--mk-input-icon-border-color);
-        border-radius: var(--mk-input-icon-border-radius);
-        transform: translate(0, calc(100% + var(--mk-input-icon-options-distance)));
 
         &-list {
             height: 201px;
@@ -296,7 +321,7 @@ onClickOutside(input, handleClose);
 
         &-icons {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
             padding: 0 calc(var(--mk-input-icon-padding-x-left) - var(--mk-input-icon-padding-y));
 
             & + #{$options} {
@@ -308,18 +333,25 @@ onClickOutside(input, handleClose);
 
         &-icon {
             padding: var(--mk-input-icon-padding-y);
+            border-radius: var(--mk-input-icon-border-radius);
             transition: background-color var(--app-transition-duration-background);
 
             .mk-AppIcon {
                 display: block;
+                cursor: default;
 
-                --mk-icon-size: 24px;
+                --mk-icon-size: var(--mk-input-icon-option-icon-size);
             }
 
             &:hover {
                 background-color: var(--mk-input-icon-option-background-color-hover);
             }
         }
+    }
+
+    &-label {
+        display: flex;
+        flex-direction: column;
     }
 
     &[data-focus="true"] {
