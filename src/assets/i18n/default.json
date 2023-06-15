@@ -27,7 +27,7 @@
                 "others": "others"
             },
             "AppInputSelectX": {
-                "emptyOptions": "No options available"
+                "emptyOptions": "No option available"
             }
         },
         "theme": {
