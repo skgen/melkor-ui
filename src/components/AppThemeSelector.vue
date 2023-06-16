@@ -11,7 +11,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n';
 import type { InputState, SelectInputOption } from '@src/definition';
 import { useThemeStore } from '@src/stores/theme';
 import { computed, ref, watch } from 'vue';
@@ -19,8 +18,6 @@ import { createInputState } from '@src/composables/useInput';
 import AppInputSelect from '@src/components/io/AppInputSelect.vue';
 
 const themeStore = useThemeStore();
-
-const { t } = useI18n();
 
 type SelectInputValue = string;
 
