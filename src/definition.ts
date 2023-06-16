@@ -30,12 +30,12 @@ export type InputComponentBaseProps<TValue> = {
 } & InputOptions<TValue>;
 
 // Input
+// Only add properties that change only when value change
 export type InputState<T> = {
   value: T;
   valid: boolean;
   touched: boolean;
   error: string | null;
-  focused: boolean;
 };
 
 export type InputOptions<TValue> = {

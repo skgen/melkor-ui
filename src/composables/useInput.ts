@@ -1,5 +1,5 @@
 import {
-  computed, type ComputedRef,
+  computed, ref, type ComputedRef,
 } from 'vue';
 import type { InputComponentBaseProps, InputState, ValidateInput } from '@src/definition';
 import { isValue } from '@src/lib/modules/definition';
@@ -20,7 +20,6 @@ export function createInputState<T>(params: PartialInputState<T>): InputState<T>
     valid: params.valid ?? true,
     touched: params.touched ?? false,
     error: params.error ?? null,
-    focused: params.focused ?? false,
   };
 }
 
@@ -51,31 +50,15 @@ export default function useInput<TValue>(options: UseInputOptions<TValue, InputE
   const state = computed(() => props.value.modelValue);
   const validate = computed(() => props.value.validate);
 
+  const focused = ref(false);
+
   function onFocus() {
-    const newState: InputState<TValue> = validateInputState({
-      ...state.value,
-      focused: true,
-    });
-
-    if (!isEqual(state, newState)) {
-      emit('update:modelValue', newState);
-      return;
-    }
-
+    focused.value = true;
     emit('focus');
   }
 
   function onBlur() {
-    const newState: InputState<TValue> = validateInputState({
-      ...state.value,
-      focused: false,
-    });
-
-    if (!isEqual(state, newState)) {
-      emit('update:modelValue', newState);
-      return;
-    }
-
+    focused.value = false;
     emit('blur');
   }
 
@@ -100,5 +83,6 @@ export default function useInput<TValue>(options: UseInputOptions<TValue, InputE
     onFocus,
     onBlur,
     state,
+    focused,
   };
 }

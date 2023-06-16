@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputTextarea"
-    :data-focus="state.focused || undefined"
+    :data-focus="focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
 import AppInputLabel from '@src/components/io/decoration/AppInputLabel.vue';
@@ -77,7 +77,7 @@ const textareaInput = ref<HTMLTextAreaElement | null>(null);
 const { theme } = useTheme();
 
 const {
-  onChange, onFocus, onBlur, state,
+  onChange, onFocus, onBlur, state, focused,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -109,12 +109,6 @@ function blur() {
   }
   textareaInput.value.blur();
 }
-
-onMounted(() => {
-  if (props.modelValue.focused) {
-    focus();
-  }
-});
 
 defineExpose({
   focus,

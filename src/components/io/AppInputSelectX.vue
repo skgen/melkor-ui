@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputSelectX"
-    :data-is-focused="state.focused || undefined"
+    :data-is-focused="focused || undefined"
     :data-fill="props.fill || undefined"
     :aria-disabled="props.disabled || undefined"
   >
@@ -16,7 +16,7 @@
       </AppInputLabel>
       <AppMenu
         :fill="props.fill"
-        :model-value="state.focused"
+        :model-value="focused"
         :placement="FloatingPlacement.bottomStart"
       >
         <div
@@ -210,7 +210,7 @@ const { theme } = useTheme();
 // Data management
 
 const {
-  onChange, onFocus, onBlur, state,
+  onChange, onFocus, onBlur, state, focused,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -279,7 +279,7 @@ const actionBarWidth = computed(() => `${nActionBarWidth.value}px`);
 // Search
 
 const searchElement = ref<HTMLInputElement | null>(null);
-const isSearchable = computed(() => (!isNil(props.search) && (!props.hideSearchOnBlur || state.value.focused)));
+const isSearchable = computed(() => (!isNil(props.search) && (!props.hideSearchOnBlur || focused)));
 
 // Focus / Blur
 

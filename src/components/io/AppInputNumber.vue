@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputNumber"
-    :data-focus="state.focused || undefined"
+    :data-focus="focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -47,7 +47,7 @@
 
 <script lang="ts" setup>
 import {
-  computed, onMounted, ref, watch,
+  computed, ref, watch,
 } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
@@ -89,7 +89,7 @@ const numberInput = ref<HTMLInputElement | null>(null);
 const { theme } = useTheme();
 
 const {
-  onChange, onFocus, onBlur, state,
+  onChange, onFocus, onBlur, state, focused,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -146,12 +146,6 @@ function blur() {
   }
   numberInput.value.blur();
 }
-
-onMounted(() => {
-  if (props.modelValue.focused) {
-    focus();
-  }
-});
 
 defineExpose({
   focus,

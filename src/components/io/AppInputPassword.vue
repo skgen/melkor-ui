@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputPassword"
-    :data-focus="state.focused || undefined"
+    :data-focus="focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import type { InputState, ValidateInput } from '@src/definition';
 import AppIcon from '@src/components/AppIcon.vue';
 import AppInputHint from '@src/components/io/decoration/AppInputHint.vue';
@@ -94,7 +94,7 @@ const type = computed(() => (encrypted.value ? 'password' : 'text'));
 const icon = computed(() => (type.value === 'password' ? 'visibility' : 'visibility_off'));
 
 const {
-  onChange, onFocus, onBlur, state,
+  onChange, onFocus, onBlur, state, focused,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
@@ -142,12 +142,6 @@ function blur() {
   }
   passwordInput.value.blur();
 }
-
-onMounted(() => {
-  if (props.modelValue.focused) {
-    focus();
-  }
-});
 
 defineExpose({
   focus,

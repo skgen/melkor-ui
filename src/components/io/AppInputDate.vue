@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputDate"
-    :data-focus="state.focused || undefined"
+    :data-focus="focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -102,7 +102,7 @@ const dateInput = ref<HTMLInputElement | null>(null);
 const { theme } = useTheme();
 
 const {
-  onChange, onFocus, onBlur, state,
+  onChange, onFocus, onBlur, state, focused,
 } = useInput<Value>({
   props: computed(() => props),
   emit,

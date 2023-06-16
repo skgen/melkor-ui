@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputSelect"
-    :data-focus="state.focused || undefined"
+    :data-focus="focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -88,7 +88,7 @@ const selectInput = ref<HTMLSelectElement | null>(null);
 const { theme } = useTheme();
 
 const {
-  onChange, onFocus, onBlur, state,
+  onChange, onFocus, onBlur, state, focused,
 } = useInput<Value>({
   props: computed(() => props),
   emit,

@@ -2,7 +2,7 @@
   <div
     v-theme="theme"
     class="mk-AppInputIcon"
-    :data-focus="state.focused || undefined"
+    :data-focus="focused || undefined"
     :data-fill="props.fill || undefined"
     :data-disabled="props.disabled || undefined"
   >
@@ -16,7 +16,7 @@
       </AppInputLabel>
       <AppMenu
         :fill="props.fill"
-        :model-value="state.focused"
+        :model-value="focused"
         :placement="FloatingPlacement.bottomStart"
       >
         <div
@@ -176,7 +176,7 @@ function resetIcons() {
 const { theme } = useTheme();
 
 const {
-  onChange, onFocus, onBlur, state,
+  onChange, onFocus, onBlur, state, focused,
 } = useInput<Value>({
   props: computed(() => props),
   emit,
