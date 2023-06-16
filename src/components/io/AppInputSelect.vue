@@ -25,7 +25,12 @@
             :disabled="option.disabled"
             :selected="isSelectedOption(option.value)"
           >
-            {{ option.label }}
+            <slot
+              name="option"
+              v-bind="{ option, index }"
+            >
+              {{ option.value }}
+            </slot>
           </option>
         </select>
         <AppIcon icon="expand_more" />
@@ -64,7 +69,6 @@ type Props = {
   disabled?: boolean;
   fill?: boolean;
   options: {
-    label: string;
     value: Value;
     disabled?: boolean;
   }[];

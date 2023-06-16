@@ -3,7 +3,11 @@
     v-model="state"
     class="mk-AppLocaleSelector"
     :options="options"
-  />
+  >
+    <template #option="{ option }">
+      {{ $t(`melkor.i18n.${option.value}`) }}
+    </template>
+  </AppInputSelect>
 </template>
 
 <script lang="ts" setup>

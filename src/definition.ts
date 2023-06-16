@@ -192,7 +192,6 @@ export type RangeInputOptions = InputOptions<RangeInputValue> & {
 export type SelectInputModel<TValue> = Required<InputModel<TValue, SelectInputOptions<TValue>>>;
 
 export type SelectInputOption<TValue> = {
-  label: string;
   value: TValue;
   disabled?: boolean;
 };
@@ -200,9 +199,6 @@ export type SelectInputOption<TValue> = {
 export type SelectInputOptions<TValue> = InputOptions<TValue> & {
   fill?: boolean;
   options: SelectInputOption<TValue>[];
-  cancelable?: boolean;
-  search?: InputState<TextInputValue>;
-  hideSearchOnBlur?: boolean;
 };
 
 // Select X
@@ -216,6 +212,10 @@ export type SelectXInputOption<TValue> = {
 export type SelectXInputOptions<TValue> = InputOptions<TValue> & {
   fill?: boolean;
   options: SelectXInputOption<TValue>[];
+  cancelable?: boolean;
+  search?: InputState<TextInputValue>;
+  hideSearchOnBlur?: boolean;
+  cancelSearchOnBlur?: boolean;
 };
 
 // Icon Input

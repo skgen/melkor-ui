@@ -3,7 +3,11 @@
     v-model="state"
     class="mk-AppThemeSelector"
     :options="options"
-  />
+  >
+    <template #option="{ option }">
+      {{ $t(`melkor.theme.${option.value}`) }}
+    </template>
+  </AppInputSelect>
 </template>
 
 <script lang="ts" setup>
@@ -21,7 +25,6 @@ const { t } = useI18n();
 type SelectInputValue = string;
 
 const options = computed<SelectInputOption<SelectInputValue>[]>(() => themeStore.themes.map((theme) => ({
-  label: t(`melkor.theme.${theme}`),
   value: theme,
 })));
 
