@@ -279,7 +279,7 @@ const actionBarWidth = computed(() => `${nActionBarWidth.value}px`);
 // Search
 
 const searchElement = ref<HTMLInputElement | null>(null);
-const isSearchable = computed(() => (!isNil(props.search) && (!props.hideSearchOnBlur || focused)));
+const isSearchable = computed(() => (!isNil(props.search) && (!props.hideSearchOnBlur || focused.value)));
 
 // Focus / Blur
 
