@@ -525,9 +525,15 @@ function handleDragEnd() {
 
 <style lang="scss">
 .mk-AppTable {
+    --mk-table-background-color: var(--app-background-color);
+
     width: 100%;
     height: 1px;
     border-collapse: collapse;
+
+    &-body {
+        background-color: var(--mk-table-background-color);
+    }
 
     &-head {
         &-text {
