@@ -46,7 +46,7 @@ export class Time {
     let from = v;
     if (isNil(from)) {
       const now = new Date(Date.now());
-      from = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}:${now.getMilliseconds()}`;
+      from = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}.${now.getMilliseconds()}`;
     }
     const s = Time.parse(from);
     if (!s) {
