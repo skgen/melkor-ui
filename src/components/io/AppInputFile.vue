@@ -8,16 +8,20 @@
     <label>
       <AppInputLabel v-if="props.label">
         {{ props.label }}
+        <!-- <small v-if="!isNil(computedMax)">{{ state.value.length }}/{{ computedMax }}</small> -->
       </AppInputLabel>
       <div
-        ref="dropZoneRef"
+        ref="dropZoneElement"
         class="mk-AppInputFile-input"
+        :data-is-full="isFull || undefined"
       >
         <input
+          v-if="!isFull"
           :name="props.name"
           type="file"
-          multiple
+          :multiple="props.multiple"
           :disabled="props.disabled"
+          :accept="computedAccept ?? undefined"
           @input="handleChange"
         >
         <i18n-t
@@ -53,7 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type {
   FileModel, InputState, ValidateInput,
 } from '@src/definition';
@@ -67,6 +71,8 @@ import { fileToFileModel } from '@src/lib/modules/file';
 import { useI18n } from 'vue-i18n';
 import useTheme from '@src/composables/useTheme';
 import { useDropZone } from '@vueuse/core';
+import isNil from 'lodash/isNil';
+import isNumber from 'lodash/isNumber';
 
 type Value = FileModel[];
 
@@ -78,6 +84,9 @@ type Props = {
   hint?: string;
   disabled?: boolean;
   fill?: boolean;
+  multiple?: boolean;
+  max?: number;
+  accept?: string[];
 };
 
 type Emits = {
@@ -89,7 +98,7 @@ type Emits = {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const dropZoneRef = ref<HTMLDivElement>();
+const dropZoneElement = ref<HTMLDivElement>();
 
 const { theme } = useTheme();
 
@@ -100,20 +109,26 @@ const { onChange, state } = useInput<Value>({
   emit,
 });
 
-function processFiles(files: File[] | null) {
-  if (!isValue(files)) {
-    onChange({ value: [] });
-  } else {
-    const newFiles = [...state.value.value];
-    for (let i = 0; i < files.length; i += 1) {
-      newFiles.push(fileToFileModel(files[i]));
-    }
-    onChange({ value: newFiles });
+const computedMax = computed(() => (isNumber(props.max) && props.max > 0 ? props.max : null));
+const isFull = computed(() => !isNil(computedMax.value) && state.value.value.length >= computedMax.value);
+
+function processFiles(files: File[]) {
+  let newFiles = [...state.value.value];
+  for (let i = 0; i < files.length; i += 1) {
+    newFiles.push(fileToFileModel(files[i]));
   }
+  if (!isNil(computedMax.value)) {
+    newFiles = newFiles.slice(0, computedMax.value);
+  }
+  onChange({ value: newFiles });
 }
 
+watch(computedMax, () => {
+  processFiles([]);
+});
+
 function handleDrop(files: File[] | null) {
-  processFiles(isValue(files) ? [...files] : null);
+  processFiles(isValue(files) ? [...files] : []);
 }
 
 function handleDelete(indexToRemove: number) {
@@ -130,10 +145,12 @@ function handleChange(evt: Event) {
   }
   const { files } = evt.target as HTMLInputElement;
 
-  processFiles(isValue(files) ? [...files] : null);
+  processFiles(isValue(files) ? [...files] : []);
 }
 
-useDropZone(dropZoneRef, handleDrop);
+useDropZone(dropZoneElement, handleDrop);
+
+const computedAccept = computed(() => (props.accept ? props.accept.join(', ') : null));
 </script>
 
 <style lang="scss">
@@ -171,6 +188,11 @@ useDropZone(dropZoneRef, handleDrop);
 
         input {
             @include a11y-hidden;
+        }
+
+        &[data-is-full="true"] {
+            cursor: not-allowed;
+            opacity: var(--app-input-opacity-disabled);
         }
     }
 

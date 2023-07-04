@@ -261,6 +261,9 @@ export type FileInputModel = InputModel<FileInputValue, FileInputOptions>;
 
 export type FileInputOptions = InputOptions<FileInputValue> & {
   fill?: boolean;
+  multiple?: boolean;
+  max?: number;
+  accept?: string[];
 };
 
 // Misc
