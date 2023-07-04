@@ -1,6 +1,7 @@
 import type { ComputedRef, InjectionKey, WritableComputedRef } from 'vue';
 import type { FileType } from '@src/lib/modules/file';
 import type { MelkorConfig } from '@src/plugin';
+import type { Time } from '@src/lib/models/time';
 
 // Helpers
 
@@ -128,6 +129,17 @@ export type DateInputOptions = InputOptions<DateInputValue> & {
   cancelable?: boolean;
   datetime?: boolean;
   showTimezone?: boolean;
+};
+
+// Time
+
+export type TimeInputValue = Time | null;
+
+export type TimeInputModel = InputModel<TimeInputValue, TimeInputOptions>;
+
+export type TimeInputOptions = InputOptions<TimeInputValue> & {
+  fill?: boolean;
+  cancelable?: boolean;
 };
 
 // Checkable

@@ -12,6 +12,8 @@ export * from '@src/composables/useInput';
 export { default as useInput } from '@src/composables/useInput';
 export { default as useTheme } from '@src/composables/useTheme';
 
+export * from '@src/lib/models/time';
+
 export * from '@src/lib/modules/clipboard';
 export * from '@src/lib/modules/date';
 export * from '@src/lib/modules/definition';
