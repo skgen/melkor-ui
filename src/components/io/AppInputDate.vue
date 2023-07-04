@@ -21,6 +21,7 @@
       <div class="mk-AppInputDate-input">
         <input
           ref="dateInput"
+          :value="inputValue"
           :name="props.name"
           :type="type"
           :disabled="props.disabled"
@@ -118,6 +119,16 @@ const previewValue = computed(() => {
     return `${classicDate(state.value.value)} - ${classicTime(state.value.value)}`;
   }
   return classicDate(state.value.value);
+});
+
+const inputValue = computed(() => {
+  if (!isValue(state.value.value)) {
+    return null;
+  }
+  if (props.datetime) {
+    return formatDate(state.value.value, 'yyyy-MM-dd\'T\'HH:mm:ss.SSS');
+  }
+  return formatDate(state.value.value, 'yyyy-MM-dd');
 });
 
 function handleFocus() {
