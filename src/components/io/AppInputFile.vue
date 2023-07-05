@@ -8,7 +8,6 @@
     <label>
       <AppInputLabel v-if="props.label">
         {{ props.label }}
-        <!-- <small v-if="!isNil(computedMax)">{{ state.value.length }}/{{ computedMax }}</small> -->
       </AppInputLabel>
       <div
         ref="dropZoneElement"
@@ -17,12 +16,13 @@
       >
         <input
           v-if="!isFull"
+          :key="inputRenderKey"
           :name="props.name"
           type="file"
           :multiple="props.multiple"
           :disabled="props.disabled"
           :accept="computedAccept ?? undefined"
-          @input="handleChange"
+          @input="handleInput"
         >
         <i18n-t
           keypath="melkor.component.AppInputFile.dragdrop"
@@ -44,14 +44,21 @@
       v-if="state.value.length > 0"
       class="mk-AppInputFile-previews"
     >
-      <AppFilePreview
-        v-for="(file, index) in state.value"
+      <template
+        v-for="(file, index) of state.value"
         :key="index"
-        class="mk-AppInputFile-previews-item"
-        :file="file"
-        :disabled="props.disabled"
-        @delete="() => handleDelete(index)"
-      />
+      >
+        <slot
+          name="file"
+          v-bind="{ file, index, onDelete: () => handleDelete(index) }"
+        >
+          <AppFilePreview
+            :file="file"
+            :disabled="props.disabled"
+            @delete="() => handleDelete(index)"
+          />
+        </slot>
+      </template>
     </div>
   </div>
 </template>
@@ -73,6 +80,7 @@ import useTheme from '@src/composables/useTheme';
 import { useDropZone } from '@vueuse/core';
 import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
+import { nanoid } from 'nanoid';
 
 type Value = FileModel[];
 
@@ -87,6 +95,7 @@ type Props = {
   multiple?: boolean;
   max?: number;
   accept?: string[];
+  maxSize?: number;
 };
 
 type Emits = {
@@ -99,6 +108,7 @@ const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
 const dropZoneElement = ref<HTMLDivElement>();
+const inputRenderKey = ref(nanoid());
 
 const { theme } = useTheme();
 
@@ -110,7 +120,13 @@ const { onChange, state } = useInput<Value>({
 });
 
 const computedMax = computed(() => (isNumber(props.max) && props.max > 0 ? props.max : null));
+const computedMaxSize = computed(() => (isNumber(props.maxSize) && props.maxSize > 0 ? props.maxSize : null));
 const isFull = computed(() => !isNil(computedMax.value) && state.value.value.length >= computedMax.value);
+
+function handleChange(newFiles: FileModel[]) {
+  inputRenderKey.value = nanoid();
+  onChange({ value: newFiles });
+}
 
 function processFiles(files: File[]) {
   let newFiles = [...state.value.value];
@@ -120,10 +136,19 @@ function processFiles(files: File[]) {
   if (!isNil(computedMax.value)) {
     newFiles = newFiles.slice(0, computedMax.value);
   }
-  onChange({ value: newFiles });
+  if (!isNil(computedMaxSize.value)) {
+    const maxSize = computedMaxSize.value;
+    newFiles = newFiles.filter((newFile) => isNil(newFile.size) || newFile.size <= maxSize);
+  }
+
+  handleChange(newFiles);
 }
 
 watch(computedMax, () => {
+  processFiles([]);
+});
+
+watch(computedMaxSize, () => {
   processFiles([]);
 });
 
@@ -135,11 +160,13 @@ function handleDelete(indexToRemove: number) {
   if (props.disabled) {
     return;
   }
-  const newValue = state.value.value.filter((v, index) => index !== indexToRemove);
-  onChange({ value: newValue });
+
+  const newFiles = state.value.value.filter((v, index) => index !== indexToRemove);
+
+  handleChange(newFiles);
 }
 
-function handleChange(evt: Event) {
+function handleInput(evt: Event) {
   if (!evt.target) {
     return;
   }
