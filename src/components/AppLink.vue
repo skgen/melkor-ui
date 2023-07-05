@@ -9,8 +9,7 @@
       v-theme="theme"
       :href="href"
       class="mk-AppLink"
-      :data-active="isActive ? true : null"
-      :data-exact-active="isExactActive ? true : null"
+      :data-active="isLinkActive(isActive, isExactActive) || undefined"
       :data-wrapper="props.asWrapper || undefined"
       :data-underline="props.underline || undefined"
       v-bind="$attrs"
@@ -58,15 +57,22 @@
 import useGlobalConfig from '@src/composables/useGlobalConfig';
 import useTheme from '@src/composables/useTheme';
 import { computed } from 'vue';
+import { LinkMatchStrategy } from '@src/definition';
+import { isNil } from 'lodash';
+import { useRoute } from 'vue-router';
 
 type Props = {
   to?: string;
   asButton?: boolean;
   asWrapper?: boolean;
   underline?: boolean;
+  matchStrategy?: LinkMatchStrategy;
 };
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  to: undefined,
+  matchStrategy: LinkMatchStrategy.exactPath,
+});
 
 const { theme } = useTheme();
 
@@ -78,6 +84,31 @@ const isRelative = computed(() => {
   }
   return (props.to ? !/^(http:\/\/|https:\/\/|file:\/\/|tel:|mailto:)/i.test(props.to) : false);
 });
+
+const route = useRoute();
+
+const isHashActive = computed(() => {
+  if (!config.router.active || !props.to) {
+    return false;
+  }
+  let cHash = '';
+  if (isRelative.value) {
+    cHash = new URL(props.to, window.location.origin).hash;
+  } else {
+    cHash = new URL('', props.to).hash;
+  }
+  return cHash === route.hash;
+});
+
+function isLinkActive(isActive: boolean, isExactActive: boolean) {
+  if (isNil(props.matchStrategy) || props.matchStrategy === LinkMatchStrategy.exactPath) {
+    return isExactActive;
+  }
+  if (props.matchStrategy === LinkMatchStrategy.shallowPath) {
+    return isActive;
+  }
+  return isExactActive && isHashActive.value;
+}
 </script>
 
 <style lang="scss">

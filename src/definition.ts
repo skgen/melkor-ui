@@ -364,6 +364,14 @@ export enum IconShape {
   sharp,
 }
 
+// Link
+
+export enum LinkMatchStrategy {
+  shallowPath,
+  exactPath,
+  exactPathWithHash,
+}
+
 // Provide / inject keys
 
 export const configContextKey = Symbol('Inject key of melkor config') as InjectionKey<MelkorConfig>;
