@@ -10,7 +10,11 @@ export * from '@src/composables/useForm';
 export { default as useForm } from '@src/composables/useForm';
 export * from '@src/composables/useInput';
 export { default as useInput } from '@src/composables/useInput';
+
 export { default as useTheme } from '@src/composables/useTheme';
+
+export * from '@src/composables/useFileSize';
+export { default as useFileSize } from '@src/composables/useFileSize';
 
 export * from '@src/lib/models/time';
 
