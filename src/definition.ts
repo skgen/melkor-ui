@@ -264,6 +264,7 @@ export type FileInputOptions = InputOptions<FileInputValue> & {
   multiple?: boolean;
   max?: number;
   accept?: string[];
+  maxSize?: number;
 };
 
 // Misc
