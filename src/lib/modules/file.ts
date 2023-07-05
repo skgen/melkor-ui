@@ -22,6 +22,6 @@ export function fileToFileModel(file: File): FileModel {
     name: file.name,
     size: file.size,
     type: resolveFileType(file.type),
-    file,
+    rawFile: file,
   };
 }

@@ -27,7 +27,7 @@
           {{ preview.name }}
         </span>
         <span
-          v-if="size"
+          v-if="props.file.size"
           class="mk-AppFilePreview-size"
         >
           {{ size }}
@@ -46,12 +46,11 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
-import fileSize from 'filesize';
 import type { FileModel } from '@src/definition';
 import { isFileModel, fileToFileModel, FileType } from '@src/lib/modules/file';
 import AppIcon from '@src/components/AppIcon.vue';
 import useTheme from '@src/composables/useTheme';
+import useFileSize from '@src/composables/useFileSize';
 
 type Props = {
   file: FileModel | File;
@@ -67,8 +66,6 @@ const emit = defineEmits<Emits>();
 
 const { theme } = useTheme();
 
-const { locale } = useI18n();
-
 const preview = computed(() => {
   if (isFileModel(props.file)) {
     return props.file;
@@ -76,12 +73,7 @@ const preview = computed(() => {
   return fileToFileModel(props.file);
 });
 
-const size = computed(() => {
-  if (preview.value.size) {
-    return fileSize.partial({ standard: 'jedec', locale: locale.value })(preview.value.size);
-  }
-  return null;
-});
+const { size } = useFileSize(computed(() => props.file.size ?? 0));
 
 const isImage = computed(() => preview.value.type === FileType.image);
 </script>

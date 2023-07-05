@@ -273,7 +273,7 @@ export type FileModel = {
   url: string | null;
   size: number | null;
   type: FileType | null;
-  file: File | null;
+  rawFile: File | null;
 };
 
 // Table
