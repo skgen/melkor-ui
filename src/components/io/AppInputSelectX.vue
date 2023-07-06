@@ -328,10 +328,22 @@ onClickOutside(menuElement, handleClickOutside, {
 
 // Cancel
 
-const isCancelable = computed(() => props.cancelable && !isNil(state.value.value));
+const isCancelable = computed(() => {
+  if (!props.cancelable) {
+    return false;
+  }
+  if (isArray(state.value.value)) {
+    return state.value.value.length > 0;
+  }
+  return !isNil(state.value.value);
+});
 
 function handleCancel() {
-  onChange({ value: null });
+  if (isArray(state.value.value)) {
+    onChange({ value: [] });
+  } else {
+    onChange({ value: null });
+  }
 }
 
 // Expose
