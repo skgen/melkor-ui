@@ -32,15 +32,15 @@ function millisecondsToSeconds(n: number) {
 }
 
 export class Time {
-  private h = 0;
+  h = 0;
 
-  private m = 0;
+  m = 0;
 
-  private s = 0;
+  s = 0;
 
-  private ms = 0;
+  ms = 0;
 
-  private time = 0;
+  time = 0;
 
   constructor(v?: string) {
     let from = v;
@@ -95,7 +95,7 @@ export class Time {
     };
   }
 
-  private computeTime(total: number) {
+  computeTime(total: number) {
     const time = Time.explodeTime(total);
     this.ms = time.ms;
     this.s = time.s;
