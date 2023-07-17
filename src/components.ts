@@ -53,6 +53,9 @@ export { default as AppInputError } from '@src/components/io/decoration/AppInput
 export { default as AppInputHint } from '@src/components/io/decoration/AppInputHint.vue';
 export { default as AppInputLabel } from '@src/components/io/decoration/AppInputLabel.vue';
 
+export { default as AppInputFilePreview } from '@src/components/io/partials/AppInputFilePreview.vue';
+export { default as AppInputTextableCancel } from '@src/components/io/partials/AppInputTextableCancel.vue';
+
 export { default as AppTooltip } from '@src/components/floating/AppTooltip.vue';
 export { default as AppMenu } from '@src/components/floating/AppMenu.vue';
 
