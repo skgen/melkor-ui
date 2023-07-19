@@ -1,7 +1,7 @@
 {
   "name": "@patriarche/melkor",
   "license": "MIT",
-  "version": "1.22.0",
+  "version": "1.22.1",
   "files": [
     "dist"
   ],
