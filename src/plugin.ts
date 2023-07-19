@@ -97,7 +97,9 @@ export default (options?: Partial<PluginOptions>) => {
 
       setDocumentTheme(getPreferedTheme());
 
-      app.use(createPinia());
+      if (!app.config.globalProperties.$pinia) {
+        app.use(createPinia());
+      }
 
       registerComponents(app);
       registerDirectives(app);
