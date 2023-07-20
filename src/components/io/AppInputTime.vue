@@ -7,11 +7,9 @@
     :data-disabled="props.disabled || undefined"
   >
     <label>
-      <span class="mk-AppInputTime-label">
-        <AppInputLabel v-if="props.label">
-          {{ props.label }}
-        </AppInputLabel>
-      </span>
+      <AppInputLabel v-if="props.label">
+        {{ props.label }}
+      </AppInputLabel>
       <div class="mk-AppInputTime-input">
         <input
           ref="timeInputElement"
@@ -224,10 +222,8 @@ function handleCancel() {
         }
     }
 
-    &-label {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+    .mk-AppInputLabel {
+        display: block;
         margin-bottom: var(--app-m-1);
     }
 

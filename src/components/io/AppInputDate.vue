@@ -7,7 +7,10 @@
     :data-disabled="props.disabled || undefined"
   >
     <label>
-      <span class="mk-AppInputDate-label">
+      <span
+        v-if="props.label || props.showTimezone && isValue(state.value)"
+        class="mk-AppInputDate-label"
+      >
         <AppInputLabel v-if="props.label">
           {{ props.label }}
         </AppInputLabel>
