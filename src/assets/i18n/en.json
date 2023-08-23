@@ -1,5 +1,5 @@
 {
-    "$melkor": {
+    "melkor": {
         "component": {
             "AppInputFile": {
                 "dragdrop": "Drag & drop or {search}",
@@ -36,7 +36,8 @@
             "dark": "Dark Theme"
         },
         "i18n": {
-            "en": "English"
+            "en": "English",
+            "fr": "French"
         }
     }
 }

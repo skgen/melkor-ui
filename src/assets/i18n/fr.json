@@ -1,0 +1,43 @@
+{
+    "melkor": {
+        "component": {
+            "AppInputFile": {
+                "dragdrop": "Drag & drop ou {search}",
+                "search": "rechercher"
+            },
+            "AppInputIcon": {
+                "uIActions": "Actions d'UI",
+                "social": "Social",
+                "commonActions": "Actions communes",
+                "communication": "Communication",
+                "photo&Image": "Photo & image",
+                "business&Payments": "Business & paiements",
+                "maps": "Cartes",
+                "textFormatting": "Formattage de texte",
+                "audio&Video": "Audio & video",
+                "transportation": "Transport",
+                "activities": "Activitées",
+                "hardware": "Matériel",
+                "android": "Android",
+                "privacy&Security": "Confidentialité et sécurité",
+                "travel": "Voyage",
+                "household": "Intérieur",
+                "home": "Maison",
+                "brand": "Marque",
+                "others": "Autres"
+            },
+            "AppInputSelectX": {
+                "emptyOptions": "Aucune option disponible"
+            }
+        },
+        "theme": {
+            "auto": "Sys-Thème",
+            "light": "Thème clair",
+            "dark": "Thème sombre"
+        },
+        "i18n": {
+            "en": "Anglais",
+            "fr": "Français"
+        }
+    }
+}
