@@ -54,7 +54,6 @@
 </template>
 
 <script lang="ts" setup>
-import useGlobalConfig from '@src/composables/useGlobalConfig';
 import useTheme from '@src/composables/useTheme';
 import { computed } from 'vue';
 import { LinkMatchStrategy } from '@src/definition';
@@ -76,19 +75,12 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { theme } = useTheme();
 
-const config = useGlobalConfig();
-
-const isRelative = computed(() => {
-  if (!config.router.active) {
-    return false;
-  }
-  return (props.to ? !/^(http:\/\/|https:\/\/|file:\/\/|tel:|mailto:)/i.test(props.to) : false);
-});
+const isRelative = computed(() => (props.to ? !/^(http:\/\/|https:\/\/|file:\/\/|tel:|mailto:)/i.test(props.to) : false));
 
 const route = useRoute();
 
 const isHashActive = computed(() => {
-  if (!config.router.active || !props.to) {
+  if (!props.to) {
     return false;
   }
   let cHash = '';

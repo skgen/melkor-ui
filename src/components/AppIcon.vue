@@ -37,7 +37,7 @@ const shape = computed(() => {
   if (props.sharp) {
     return 'sharp';
   }
-  if (config.components.icon.shape === IconShape.sharp) {
+  if (config.components?.icon?.shape === IconShape.sharp) {
     return 'sharp';
   }
   return 'rounded';
