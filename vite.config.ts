@@ -46,10 +46,16 @@ export default ({ mode }: { mode: string }) => {
         tsConfigFilePath: fileURLToPath(new URL('./tsconfig.app.json', import.meta.url)),
       }),
       viteStaticCopy({
-        targets: copyScssFiles.map(file => ({
-          src: `./src/assets/scss/${file}.scss`,
-          dest: 'scss'
-        })),
+        targets: [
+          ...copyScssFiles.map(file => ({
+            src: `./src/assets/scss/${file}.scss`,
+            dest: 'scss'
+          })),
+          {
+            src: `./src/assets/i18n/*.json`,
+            dest: 'i18n'
+          }
+        ],
         watch: {
           options: {
             persistent: true,

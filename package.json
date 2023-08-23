@@ -18,6 +18,12 @@
     },
     "./style/": {
       "import": "./dist/scss/"
+    },
+    "./i18n/en": {
+      "import": "./dist/i18n/en.json"
+    },
+    "./i18n/fr": {
+      "import": "./dist/i18n/fr.json"
     }
   },
   "publishConfig": {
