@@ -19,7 +19,7 @@ type Props = {
 };
 
 type Emits = {
-  (event: 'update:modelValue', value : unknown): void;
+  (event: 'update:model-value', value : unknown): void;
 };
 
 const props = defineProps<Props>();
@@ -34,10 +34,10 @@ const index = computed({
   set(newIndex) {
     if (isEqual(newIndex, props.modelValue)) {
       if (props.collapsible) {
-        emit('update:modelValue', undefined);
+        emit('update:model-value', undefined);
       }
     } else {
-      emit('update:modelValue', newIndex);
+      emit('update:model-value', newIndex);
     }
   },
 });

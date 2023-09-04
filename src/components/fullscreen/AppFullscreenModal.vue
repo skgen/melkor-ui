@@ -2,7 +2,7 @@
   <AppFullscreenView
     :model-value="props.modelValue"
     fill
-    @update:model-value="(state: boolean) => emit('update:modelValue', state)"
+    @update:model-value="(state: boolean) => emit('update:model-value', state)"
   >
     <template #transition="{ active }">
       <div
@@ -42,7 +42,7 @@ type Props = {
 };
 
 type Emits = {
-  (event: 'update:modelValue', value: boolean): void;
+  (event: 'update:model-value', value: boolean): void;
 };
 
 const props = defineProps<Props>();
@@ -64,7 +64,7 @@ const centerAttr = computed(() => {
 });
 
 function handleClickVeil() {
-  emit('update:modelValue', false);
+  emit('update:model-value', false);
 }
 
 </script>

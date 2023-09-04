@@ -17,7 +17,7 @@ type Props = {
 };
 
 type Emits = {
-  (event: 'update:modelValue', value : unknown): void;
+  (event: 'update:model-value', value : unknown): void;
 };
 
 const emit = defineEmits<Emits>();
@@ -30,7 +30,7 @@ const index = computed({
     return props.modelValue;
   },
   set(newIndex) {
-    emit('update:modelValue', newIndex);
+    emit('update:model-value', newIndex);
   },
 });
 

@@ -77,7 +77,7 @@ type Props = {
 };
 
 type Emits = {
-  (event: 'update:modelValue', page: number): void;
+  (event: 'update:model-value', page: number): void;
 };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -96,15 +96,15 @@ const {
 }));
 
 function handlePrev() {
-  emit('update:modelValue', page.value - 1);
+  emit('update:model-value', page.value - 1);
 }
 
 function handleNext() {
-  emit('update:modelValue', page.value + 1);
+  emit('update:model-value', page.value + 1);
 }
 
 function handlePage(pageNumber: number) {
-  emit('update:modelValue', pageNumber);
+  emit('update:model-value', pageNumber);
 }
 
 </script>

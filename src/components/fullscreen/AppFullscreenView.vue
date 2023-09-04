@@ -51,7 +51,7 @@ type Props = {
 };
 
 type Emits = {
-  (event: 'update:modelValue', value: boolean): void;
+  (event: 'update:model-value', value: boolean): void;
 };
 
 const props = defineProps<Props>();
@@ -87,7 +87,7 @@ function handleNotifyStore(active: boolean) {
 }
 
 function handleClose() {
-  emit('update:modelValue', false);
+  emit('update:model-value', false);
 }
 
 watch(renderActive, (newRenderActive) => {

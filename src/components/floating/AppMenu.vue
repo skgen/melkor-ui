@@ -34,7 +34,7 @@ type Props = {
 };
 
 type Emits = {
-  (event: 'update:modelValue', value : boolean): void;
+  (event: 'update:model-value', value : boolean): void;
   (event: 'hide'): void;
 };
 
@@ -57,7 +57,7 @@ function handleHide() {
     return;
   }
   if (props.autoHide) {
-    emit('update:modelValue', false);
+    emit('update:model-value', false);
     emit('hide');
   }
 }

@@ -5,7 +5,7 @@
     :validate="props.validate"
     :checked="props.checked"
     :unchecked="props.unchecked"
-    @update:model-value="(state: InputState<Value>) => emit('update:modelValue', state)"
+    @update:model-value="(state: InputState<Value>) => emit('update:model-value', state)"
   >
     <template #default="{ inputName, checked: isChecked, onChange, state }">
       <div
@@ -87,7 +87,7 @@ type Props = {
 };
 
 type Emits = {
-  (event: 'update:modelValue', value: InputState<Value>): void;
+  (event: 'update:model-value', value: InputState<Value>): void;
 };
 
 const props = defineProps<Props>();

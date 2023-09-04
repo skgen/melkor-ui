@@ -39,7 +39,7 @@ export function validateInputState<TValue>(state: InputState<TValue>, validate?:
 }
 
 type InputEmits<Value> = {
-  (event: 'update:modelValue', value: InputState<Value>): void;
+  (event: 'update:model-value', value: InputState<Value>): void;
   (event: 'focus'): void;
   (event: 'blur'): void;
 };
@@ -74,7 +74,7 @@ export default function useInput<TValue>(options: UseInputOptions<TValue, InputE
     }, validate.value);
 
     if (!isEqual(state, newState)) {
-      emit('update:modelValue', newState);
+      emit('update:model-value', newState);
     }
   }
 
