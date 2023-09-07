@@ -91,53 +91,75 @@
             :style="{ minWidth: menuMinWidth }"
             role="listbox"
           >
-            <AppMenuGroup>
-              <slot name="options-header" />
-              <AppMenuEntry v-if="!computedOptions.length">
-                <slot name="options-empty">
-                  {{ $t('melkor.component.AppInputSelectX.emptyOptions') }}
-                </slot>
-              </AppMenuEntry>
-              <template v-else>
-                <AppMenuEntry
-                  v-for="computedOption in computedOptions"
-                  :key="computedOption.index"
-                  :aria-disabled="computedOption.option.disabled ?? undefined"
-                  :interactive="computedOption.interactive"
-                  role="option"
-                  :aria-selected="computedOption.selected"
-                  @click="() => computedOption.interactive ? handleChange(computedOption.option) : void 0"
-                >
-                  <slot
-                    name="option"
-                    v-bind="computedOption"
-                  >
-                    <div class="mk-AppInputSelectX-option">
-                      <span class="mk-AppInputSelectX-option-label">
-                        <slot
-                          name="option-label"
-                          v-bind="computedOption"
-                        >
-                          {{ `${computedOption.option.value}` }}
-                        </slot>
-                      </span>
-                      <span class="mk-AppInputSelectX-option-icon">
-                        <slot
-                          name="option-icon"
-                          v-bind="computedOption"
-                        >
-                          <AppIcon
-                            v-if="computedOption.selected"
-                            icon="check"
-                          />
-                        </slot>
-                      </span>
-                    </div>
+            <slot
+              name="options"
+              v-bind="computedOptions"
+            >
+              <AppMenuGroup>
+                <slot
+                  name="options-header"
+                  v-bind="computedOptions"
+                />
+
+                <template v-if="!computedOptions.length">
+                  <slot name="options-empty">
+                    <AppMenuEntry>
+                      <slot name="options-empty-label">
+                        {{ $t('melkor.component.AppInputSelectX.emptyOptions') }}
+                      </slot>
+                    </AppMenuEntry>
                   </slot>
-                </AppMenuEntry>
-              </template>
-              <slot name="options-footer" />
-            </AppMenuGroup>
+                </template>
+
+                <template v-else>
+                  <slot
+                    name="options-list"
+                    v-bind="computedOptions"
+                  >
+                    <AppMenuEntry
+                      v-for="computedOption in computedOptions"
+                      :key="computedOption.index"
+                      :aria-disabled="computedOption.option.disabled ?? undefined"
+                      :interactive="computedOption.interactive"
+                      role="option"
+                      :aria-selected="computedOption.selected"
+                      @click="() => computedOption.interactive ? handleChange(computedOption.option) : void 0"
+                    >
+                      <slot
+                        name="option"
+                        v-bind="computedOption"
+                      >
+                        <div class="mk-AppInputSelectX-option">
+                          <span class="mk-AppInputSelectX-option-label">
+                            <slot
+                              name="option-label"
+                              v-bind="computedOption"
+                            >
+                              {{ `${computedOption.option.value}` }}
+                            </slot>
+                          </span>
+                          <span class="mk-AppInputSelectX-option-icon">
+                            <slot
+                              name="option-icon"
+                              v-bind="computedOption"
+                            >
+                              <AppIcon
+                                v-if="computedOption.selected"
+                                icon="check"
+                              />
+                            </slot>
+                          </span>
+                        </div>
+                      </slot>
+                    </AppMenuEntry>
+                  </slot>
+                </template>
+                <slot
+                  name="options-footer"
+                  v-bind="computedOptions"
+                />
+              </AppMenuGroup>
+            </slot>
           </div>
         </template>
       </AppMenu>
