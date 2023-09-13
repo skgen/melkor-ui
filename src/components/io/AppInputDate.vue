@@ -198,7 +198,7 @@ function handleCancel() {
         justify-content: space-between;
         width: 100%;
         min-width: 200px;
-        padding: var(--mk-input-date-padding-y) var(--mk-input-date-padding-x);
+        padding: 0 var(--mk-input-date-padding-x);
         font-size: var(--mk-input-date-font-size);
         line-height: var(--mk-input-date-line-height);
         color: var(--mk-input-date-color);
@@ -217,6 +217,7 @@ function handleCancel() {
 
     &-value {
         flex: 1;
+        padding: var(--mk-input-date-padding-y) 0;
     }
 
     &[data-focus="true"] {

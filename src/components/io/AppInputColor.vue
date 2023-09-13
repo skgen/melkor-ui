@@ -150,6 +150,7 @@ function handleCancel() {
     --mk-input-color-border-width: var(--app-input-border-width);
     --mk-input-color-color: var(--app-input-color);
     --mk-input-color-font-size: var(--app-input-font-size);
+    --mk-input-color-line-height: var(--app-input-line-height);
     --mk-input-color-icon-color: var(--app-input-icon-color);
     --mk-input-color-icon-size: var(--app-input-icon-size);
     --mk-input-color-padding-x: var(--app-input-padding-x);
@@ -195,7 +196,7 @@ function handleCancel() {
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        padding: var(--mk-input-color-padding-y) var(--mk-input-color-padding-x);
+        padding: 0 var(--mk-input-color-padding-x);
         cursor: pointer;
         background-color: var(--mk-input-color-background-color);
         border: var(--mk-input-color-border-width) solid var(--mk-input-color-border-color);
@@ -220,6 +221,7 @@ function handleCancel() {
     &-value {
         display: flex;
         flex: 1;
+        padding: var(--mk-input-color-padding-y) 0;
     }
 
     &[data-focus="true"] {

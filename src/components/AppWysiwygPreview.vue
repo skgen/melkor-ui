@@ -256,14 +256,16 @@ const props = defineProps<Props>();
         }
     }
 
-    input {
-        @include raw {
-            margin: 0;
-            overflow: visible;
-            font: inherit;
-            font-family: inherit;
-            font-size: inherit;
-            line-height: inherit;
+    :not([class*="mk-AppInput"]) > {
+        input {
+            @include raw {
+                margin: 0;
+                overflow: visible;
+                font: inherit;
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+            }
         }
     }
 
