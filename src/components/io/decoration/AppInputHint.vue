@@ -20,5 +20,6 @@ const { theme } = useTheme();
 
     font-size: var(--mk-input-hint-font-size);
     color: var(--mk-input-hint-color);
+    white-space: pre-line;
 }
 </style>
