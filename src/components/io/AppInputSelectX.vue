@@ -409,7 +409,7 @@ defineExpose({
         gap: calc(var(--mk-input-select-x-spacing) / 2);
         align-items: center;
         max-width: calc(100% - v-bind(actionBarWidth));
-        min-height: calc(19px + var(--mk-input-select-x-padding-y) * 2);
+        min-height: calc(var(--mk-input-select-x-font-size) * var(--app-input-line-height) + var(--mk-input-select-x-padding-y) * 2);
         padding: var(--mk-input-select-x-padding-y) 0;
         overflow: hidden;
         font-size: var(--mk-input-select-x-font-size);
