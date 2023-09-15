@@ -2,8 +2,8 @@
     "melkor": {
         "component": {
             "AppInputFile": {
-                "dragdrop": "Drag & drop ou {search}",
-                "search": "rechercher"
+                "dragdrop": "Glisser-déposer ou {search}",
+                "search": "télécharger"
             },
             "AppInputIcon": {
                 "uIActions": "Actions d'UI",
