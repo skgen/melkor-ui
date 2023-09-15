@@ -459,7 +459,7 @@ defineExpose({
         width: 100%;
 
         &-label {
-            line-height: 20px;
+            line-height: var(--mk-input-select-x-option-icon-size);
         }
 
         &-icon {
@@ -469,7 +469,7 @@ defineExpose({
             justify-content: space-between;
 
             .mk-AppIcon {
-                --mk-icon-size: 20px;
+                --mk-icon-size: var(--mk-input-select-x-option-icon-size);
             }
         }
     }
