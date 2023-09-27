@@ -200,6 +200,7 @@ function handleCancel() {
 
     &-value {
         flex: 1;
+        min-height: calc(var(--mk-input-time-font-size) * var(--mk-input-time-line-height) + var(--mk-input-time-padding-y) * 2);
         padding: var(--mk-input-time-padding-y) 0;
     }
 

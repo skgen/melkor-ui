@@ -217,6 +217,7 @@ function handleCancel() {
 
     &-value {
         flex: 1;
+        min-height: calc(var(--mk-input-date-font-size) * var(--mk-input-date-line-height) + var(--mk-input-date-padding-y) * 2);
         padding: var(--mk-input-date-padding-y) 0;
     }
 
