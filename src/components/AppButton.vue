@@ -100,6 +100,10 @@ const isActive = computed(() => props.active || undefined);
         opacity var(--app-transition-duration-background),
         color var(--app-transition-duration-background);
 
+    .mk-AppIcon {
+        --mk-icon-line-height: inherit;
+    }
+
     @mixin icon-color() {
         .mk-AppIcon {
             transition: color var(--app-transition-duration-background);
